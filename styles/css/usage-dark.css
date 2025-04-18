@@ -1,6 +1,15 @@
 /* Dark theme variables */
 :root[data-theme="dark"] {
   
+  /* font-family  */
+  --font-display: 'Eidra Sans', sans-serif;
+  --font-text: 'Eidra Sans', sans-serif;
+  
+  /* font-weight */
+  --weight-loud: Regular;
+  --weight-composed: Medium;
+
+  
   /* background elevation */
   --bg-elevation-base: var(--neutral-solid-1000);
   --bg-elevation-layer-01: var(--neutral-solid-950);

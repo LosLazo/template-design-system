@@ -1,28 +1,33 @@
 <template>
   <div class="input-dropdown" :class="{ 'input-dropdown--expanded': isExpanded }">
-    <Input
-      :id="id"
-      v-model="localValue"
-      :label="label"
-      :placeholder="placeholder"
-      :size="size"
-      :disabled="disabled"
-      :error="error"
-      :success="success"
-      :prefixIcon="prefixIcon"
-      suffixIcon="chevron-down"
-      :class="{ 'input-dropdown__input--expanded': isExpanded }"
+    <div 
+      class="input-dropdown__control"
       @click="toggleDropdown"
-      readonly
-    />
+    >
+      <Input
+        :id="id"
+        :modelValue="displayValue"
+        @update:modelValue="handleInputChange"
+        :label="label"
+        :placeholder="placeholder"
+        :size="size"
+        :disabled="disabled"
+        :error="error"
+        :success="success"
+        :prefixIcon="prefixIcon"
+        suffixIcon="chevron-down"
+        :class="{ 'input-dropdown__input--expanded': isExpanded }"
+        :readonly="!editable"
+      />
+    </div>
     <div v-if="isExpanded" class="input-dropdown__menu">
-      <Menu :items="items" @click="handleItemClick" />
+      <Menu :items="processedItems" @click="handleItemClick" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import Input from './Input.vue'
 import Menu from './Menu.vue'
 
@@ -36,12 +41,14 @@ interface Props {
   success?: string
   prefixIcon?: string
   id: string
-  items: Array<{ label: string; value?: string }>
+  items: Array<{ label: string; value?: string; selected?: boolean }>
+  editable?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
-  disabled: false
+  disabled: false,
+  editable: false
 })
 
 const emit = defineEmits<{
@@ -50,9 +57,16 @@ const emit = defineEmits<{
 }>()
 
 const isExpanded = ref(false)
-const localValue = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
+
+const displayValue = computed(() => {
+  return props.modelValue || props.placeholder || ''
+})
+
+const processedItems = computed(() => {
+  return props.items.map(item => ({
+    ...item,
+    selected: item.label === props.modelValue
+  }))
 })
 
 const toggleDropdown = () => {
@@ -61,8 +75,14 @@ const toggleDropdown = () => {
   }
 }
 
+const handleInputChange = (value: string) => {
+  if (props.editable) {
+    emit('update:modelValue', value)
+  }
+}
+
 const handleItemClick = (item: { label: string; value?: string }) => {
-  localValue.value = item.label
+  emit('update:modelValue', item.label)
   emit('select', item)
   isExpanded.value = false
 }
@@ -87,7 +107,17 @@ onUnmounted(() => {
 <style>
 .input-dropdown {
   position: relative;
+  width: fit-content;
+}
+
+.input-dropdown__control {
+  cursor: pointer;
   width: 100%;
+}
+
+/* Make the input field look clickable even when readonly */
+.input-dropdown__control input {
+  cursor: pointer;
 }
 
 .input-dropdown__menu {

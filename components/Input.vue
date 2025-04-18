@@ -29,10 +29,14 @@
         :type="type"
         :placeholder="placeholder"
         :disabled="disabled"
+        :readonly="readonly"
         :aria-invalid="!!error"
         :aria-describedby="error ? `${id}-error` : undefined"
-        class="input__field body-md"
-        :class="`input__field--${size}`"
+        class="input__field body-sm"
+        :class="[
+          `input__field--${size}`,
+          { 'input__field--readonly': readonly }
+        ]"
         @input="(e) => $emit('update:modelValue', (e.target as HTMLInputElement).value)"
       />
       <!-- <Button
@@ -96,6 +100,7 @@ interface Props {
   type?: string
   size?: 'large' | 'medium' | 'small'
   disabled?: boolean
+  readonly?: boolean
   error?: string
   success?: string
   prefixIcon?: string
@@ -108,6 +113,7 @@ const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   size: 'medium',
   disabled: false,
+  readonly: false,
   showClearButton: false
 })
 
@@ -211,7 +217,7 @@ const buttonSize = computed(() => {
 }
 
 .input__icon--suffix {
-  margin-right: var(--space-small);
+  margin-right: var(--space-tiny);
 }
 
 .input__error {
@@ -299,5 +305,16 @@ const buttonSize = computed(() => {
 .input__clear-button--hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+.input__field--readonly {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Change appearance of readonly fields without looking disabled */
+.input__field--readonly {
+  opacity: 1;
+  color: var(--fg-text-strong);
 }
 </style> 

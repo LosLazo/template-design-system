@@ -18,7 +18,7 @@ defineProps<{
   display: flex;
   gap: var(--space-large);
   align-items: flex-start;
-  width: 100%;
+  width: 80vw;
   padding: var(--space-large) 0;
   border-top: 1px solid var(--fg-border-discrete);
 }
@@ -31,6 +31,7 @@ defineProps<{
 .component-showcase__content {
   flex: 1;
   min-height: 300px;
+  width: 100%;
   /* border: 1px solid var(--neutral-solid-200); */
   border-radius: 4px;
   display: flex;

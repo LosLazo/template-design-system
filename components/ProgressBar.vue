@@ -3,18 +3,23 @@
     <div 
       class="progress-bar__fill" 
       :style="{ width: `${progress}%` }"
-      :class="{ 'progress-bar__fill--animated': animated }"
+      :class="{
+        'progress-bar__fill--looping': looping,
+        'progress-bar__fill--progress': !looping
+      }"
     ></div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   progress: {
     type: Number,
     default: 50
   },
-  animated: {
+  looping: {
     type: Boolean,
     default: false
   }
@@ -24,7 +29,7 @@ defineProps({
 <style>
 .progress-bar {
   width: 100%;
-  height: 5px;
+  height: 4px;
   border-radius: 4px;
   background-color: var(--bg-elements-200);
   border-radius: 4px;
@@ -35,12 +40,15 @@ defineProps({
   height: 100%;
   background-color: var(--fg-object-transparent-strong);
   border-radius: 4px;
-  transition: width 0.3s ease-in-out;
 }
 
-.progress-bar__fill--animated {
+.progress-bar__fill--looping {
   animation: indeterminate 1.5s infinite linear;
   width: 40% !important;
+}
+
+.progress-bar__fill--progress {
+  transition: width 0.1s linear;
 }
 
 @keyframes indeterminate {

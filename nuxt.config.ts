@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     '~/styles/css/global.css',
     '~/styles/css/primitives.css',
     '~/styles/css/usage-light.css',
-    '~/styles/css/usage-dark.css'
+    '~/styles/css/usage-dark.css',
+    '~/styles/css/grid.css'
   ],
   modules: ['@nuxtjs/color-mode'],
   colorMode: {
@@ -15,5 +16,11 @@ export default defineNuxtConfig({
     preference: 'system',
     dataValue: 'theme',
     storageKey: 'nuxt-color-mode'
+  },
+  postcss: {
+    plugins: {
+      'autoprefixer': {},
+      'postcss-nested': {}
+    }
   }
 })

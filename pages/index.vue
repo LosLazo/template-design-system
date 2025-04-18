@@ -1,223 +1,313 @@
 <template>
-  <div class="landing-page">
-    <!-- Navigation -->
-    <nav class="nav">
-      <div class="nav__logo">
-        <img src="/logo.svg" alt="Logo" class="nav__logo-image" />
-      </div>
-      <div class="nav__actions">
-        <a href="https://github.com" class="body-sm color-soft">Github</a>
-        <a href="/login" class="body-sm color-soft">Log in</a>
-        <Button variant="primary" size="small">Start for free</Button>
-      </div>
-    </nav>
-
-    <!-- Demo Pages Navigation -->
-    <nav class="demo-nav">
-      <h2 class="demo-nav__title body-sm color-soft">Demo Pages:</h2>
-      <div class="demo-nav__links">
-        <NuxtLink to="/demo-page-1" class="body-sm color-soft">Over-Stimulated</NuxtLink>
-      </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <main class="hero">
-      <h1 class="hero__title headline-lg">DESIGN, MEET CODE</h1>
-      <p class="hero__subtitle body-lg color-soft">The UI design tool for the AI era</p>
-      <div class="hero__actions">
-        <Button variant="primary" size="medium" suffixIcon="arrow-right">Start for free</Button>
-        <Button variant="ghost" size="medium" prefixIcon="globe">Explore templates</Button>
-      </div>
-    </main>
-
-    <!-- Hero Image -->
-    <div class="hero-image">
-      <Image 
-        src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg" 
-        alt="Abstract architectural black and white image"
-        class="hero-image__img"
-      />
-    </div>
-
-    <!-- Button Showcase -->
-    <ComponentShowcase title="Button">
-      <Button suffixIcon="maximize" size="medium" variant="primary">Hello</Button>
-      <Button suffixIcon="maximize" size="medium" variant="secondary">Hello</Button>
-      <Button suffixIcon="maximize" size="medium" variant="ghost">Hello</Button>
-      <Button suffixIcon="maximize" size="medium" variant="primary"/>
-      <Button suffixIcon="maximize" size="medium" variant="secondary"/>
-      <Button suffixIcon="maximize" size="medium" variant="ghost"/>
-    </ComponentShowcase>
-
-    <!-- Dropdown Showcase -->
-    <ComponentShowcase title="Component Showcase">
-      <Dropdown maxWidth="400px" :items="dropdownItems" />
-    </ComponentShowcase>
-
-    <!-- Toggle Showcase -->
-    <ComponentShowcase title="Toggle">
-      <Toggle v-model="isEnabled" />
-    </ComponentShowcase>
-
-    <!-- Tabs Showcase -->
-    <ComponentShowcase title="Tabs">
-      <Tabs
-        v-model="activeTab"
-        :items="[
-          { id: 'tab1', label: 'Tab 1' },
-          { id: 'tab2', label: 'Tab 2' },
-          { id: 'tab3', label: 'Tab 3', disabled: true }
-        ]"
-      />
-    </ComponentShowcase>
-    
-    <!-- Segmented Controls Showcase -->
-    <ComponentShowcase title="Segmented Controls">
-      <SegmentedControls
-        v-model="activeSegment"
-        :items="[
-          { id: 'option1', label: 'Option 1' },
-          { id: 'option2', label: 'Option 2' },
-          { id: 'option3', label: 'Option 3' }
-        ]"
-      />
-    </ComponentShowcase>
-
-    <!-- Card Showcase -->
-    <ComponentShowcase title="Card">
-      <Card
-        header-text="Header text"
-        subheader-text="Subheader text"
-        body-text="This is the main content of the card that provides more details about the topic."
-        image-src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg"
-        image-alt="Description of image"
-        image-aspect-ratio="16x9"
-      >
-      <template #actions>
-        <Button suffixIcon="maximize" variant="primary" size="small">Learn More</Button>
-        <Button suffixIcon="maximize" variant="secondary" size="small">Cancel</Button>
+  <div class="dashboard-layout">
+    <SideNavigation :items="navigationItems" @itemClick="handleNavItemClick">
+      <template #logo>
+        <div class="dashboard-layout__logo title-md">BRAND</div>
       </template>
-    </Card>
-    </ComponentShowcase>
+      <template #footer>
+        <div class="dashboard-layout__footer">
+          <div class="dashboard-layout__user">
+            <Avatar class="dashboard-layout__user-avatar" />
+            <div class="dashboard-layout__user-info">
+              <div class="body-sm-loud">User Name</div>
+              <div class="body-xs color-soft">user@example.com</div>
+            </div>
+            <Button size="small" icon="chevron-down" variant="ghost" class="dashboard-layout__user-button" />
+          </div>
+        </div>
+      </template>
+    </SideNavigation>
 
-    <!-- Image Showcase -->
-    <ComponentShowcase title="Image">
-      <Image src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg" alt="Image" />
-    </ComponentShowcase>
+    <div class="dashboard-layout__content">
+      <div class="landing-page">
+        <!-- Navigation -->
+        <nav class="nav">
+          <div class="nav__actions">
+            <NuxtLink to="/projects" class="body-sm color-soft">Projects</NuxtLink>
+            <NuxtLink to="/demo-page-1" class="body-sm color-soft">Demo 1</NuxtLink>
+            <NuxtLink to="/portfolio" class="body-sm color-soft">Portfolio</NuxtLink>
+            <Button variant="primary" size="medium">Start for free</Button>
+          </div>
+        </nav>
 
-    <!-- Banner Showcase -->
-    <ComponentShowcase title="Banner">
-      <Banner text="This is a default banner" />
-    </ComponentShowcase>
+        <!-- Hero Section -->
+        <main class="hero">
+          <h1 class="headline-lg">Design, Meet Code</h1>
+          <p class="hero__subtitle body-lg color-soft">The UI design tool for the AI era</p>
+          <div class="hero__actions">
+            <Button variant="primary" size="medium" suffixIcon="arrow-right">Start for free</Button>
+            <Button variant="ghost" size="medium" prefixIcon="globe">Explore templates</Button>
+          </div>
+        </main>
 
-    <!-- Menu Showcase -->
-    <ComponentShowcase title="Menu">
-      <Menu :items="[
-        { label: 'Label 1' },
-        { label: 'Label 2' },
-        { label: 'Label 3' },
-        { label: 'Label 4' }
-      ]" />
-    </ComponentShowcase>
+        <!-- Hero Image -->
+        <div class="hero-image">
+          <Image 
+            src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg" 
+            alt="Abstract architectural black and white image"
+            class="hero-image__img"
+          />
+        </div>
 
-    <!-- Avatar Showcase -->
-    <ComponentShowcase title="Avatar">
-      <div style="display: flex; gap: var(--space-medium); align-items: center;">
-        <Avatar src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg" alt="User avatar" />
-        <Avatar />
+        <!-- Button Showcase -->
+        <ComponentShowcase title="Button">
+          <Button suffixIcon="maximize" size="medium" variant="primary">Hello</Button>
+          <Button suffixIcon="maximize" size="medium" variant="secondary">Hello</Button>
+          <Button suffixIcon="maximize" size="medium" variant="ghost">Hello</Button>
+          <Button suffixIcon="maximize" size="medium" variant="primary"/>
+          <Button suffixIcon="maximize" size="medium" variant="secondary"/>
+          <Button suffixIcon="maximize" size="medium" variant="ghost"/>
+        </ComponentShowcase>
+
+        <!-- Dropdown Showcase -->
+        <ComponentShowcase title="Component Showcase">
+          <Dropdown maxWidth="400px" :items="dropdownItems" />
+        </ComponentShowcase>
+
+        <!-- Toggle Showcase -->
+        <ComponentShowcase title="Toggle">
+          <Toggle v-model="isEnabled" />
+        </ComponentShowcase>
+
+        <!-- Tabs Showcase -->
+        <ComponentShowcase title="Tabs">
+          <Tabs
+            v-model="activeTab"
+            :items="[
+              { id: 'tab1', label: 'Tab 1' },
+              { id: 'tab2', label: 'Tab 2' },
+              { id: 'tab3', label: 'Tab 3', disabled: true }
+            ]"
+          />
+        </ComponentShowcase>
+        
+        <!-- Segmented Controls Showcase -->
+        <ComponentShowcase title="Segmented Controls">
+          <SegmentedControls
+            v-model="activeSegment"
+            :items="[
+              { id: 'option1', label: 'Option 1' },
+              { id: 'option2', label: 'Option 2' },
+              { id: 'option3', label: 'Option 3' }
+            ]"
+          />
+        </ComponentShowcase>
+
+        <!-- Card Showcase -->
+        <ComponentShowcase title="Card">
+          <Card
+            header-text="Header text"
+            subheader-text="Subheader text"
+            body-text="This is the main content of the card that provides more details about the topic."
+            image-src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg"
+            image-alt="Description of image"
+            image-aspect-ratio="16x9"
+          >
+          <template #actions>
+            <Button suffixIcon="maximize" variant="primary" size="small">Learn More</Button>
+            <Button suffixIcon="maximize" variant="secondary" size="small">Cancel</Button>
+          </template>
+        </Card>
+        </ComponentShowcase>
+
+        <!-- Image Showcase -->
+        <ComponentShowcase title="Image">
+          <Image src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg" alt="Image" />
+        </ComponentShowcase>
+
+        <!-- Banner Showcase -->
+        <ComponentShowcase title="Banner">
+          <Banner text="This is a default banner" />
+        </ComponentShowcase>
+
+        <!-- Menu Showcase -->
+        <ComponentShowcase title="Menu">
+          <Menu :items="[
+            { label: 'Label 1' },
+            { label: 'Label 2' },
+            { label: 'Label 3' },
+            { label: 'Label 4' }
+          ]" />
+        </ComponentShowcase>
+
+        <!-- Avatar Showcase -->
+        <ComponentShowcase title="Avatar">
+          <div style="display: flex; gap: var(--space-medium); align-items: center;">
+            <Avatar src="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg" alt="User avatar" />
+            <Avatar />
+          </div>
+        </ComponentShowcase>
+
+        <!-- Message Showcase -->
+        <ComponentShowcase title="Message">
+          <Message 
+            header="This is a message header"
+            body="Longer message text can be placed here. Longer message text can be placed here. Longer message text can be placed here."
+            icon="info"
+          />
+        </ComponentShowcase>
+
+        <!-- Badge Showcase -->
+        <ComponentShowcase title="Badge">
+          <div style="display: flex; gap: var(--space-medium); align-items: center;">
+            <Badge value="1" />
+            <Badge value="10" />
+            <Badge value="900" />
+            <Badge isDot />
+          </div>
+        </ComponentShowcase>
+
+        <!-- Progress Bar Showcase -->
+        <ComponentShowcase title="Progress Bar">
+          <div style="display: flex; flex-direction: column; gap: var(--space-medium); width: 100%;">
+            <ProgressBar :progress="30" />
+            <ProgressBar :progress="60" />
+            <ProgressBar :animated="true" />
+          </div>
+        </ComponentShowcase>
+
+        <!-- Slider Showcase -->
+        <ComponentShowcase title="Slider">
+          <div style="display: flex; flex-direction: column; gap: var(--space-medium); width: 100%;">
+            <div class="body-sm">Basic Slider: {{ sliderValue1 }}</div>
+            <Slider v-model="sliderValue1" />
+            
+            <div class="body-sm">Slider with step of 10: {{ sliderValue2 }}</div>
+            <Slider v-model="sliderValue2" :step="10" />
+            
+            <div class="body-sm">Slider with custom range (0-1000): {{ sliderValue3 }}</div>
+            <Slider v-model="sliderValue3" :min="0" :max="1000" :step="50" />
+          </div>
+        </ComponentShowcase>
+
+        <!-- Spinner Showcase -->
+        <ComponentShowcase title="Spinner">
+          <div style="display: flex; gap: var(--space-large); align-items: center;">
+            <Spinner size="small" />
+            <Spinner size="medium" />
+            <Spinner size="large" />
+          </div>
+        </ComponentShowcase>
+
+        <!-- Loading Screen Showcase -->
+        <ComponentShowcase title="Loading Screen">
+          <Button @click="showLoadingScreen = true">Show Loading Screen</Button>
+          <LoadingScreen v-if="showLoadingScreen" :progress="loadingProgress" />
+        </ComponentShowcase>
+
+        <!-- Input Showcase -->
+        <ComponentShowcase title="Input">
+          <div style="display: flex; flex-direction: column; gap: var(--space-medium); width: 100%; max-width: 400px;">
+            <!-- Basic inputs with different sizes -->
+            <Input
+              id="large-input"
+              v-model="inputValue1"
+              label="Large input"
+              placeholder="Type something..."
+              size="large"
+            />
+            <Input
+              id="medium-input"
+              v-model="inputValue2"
+              label="Medium input with icons"
+              placeholder="Search..."
+              prefixIcon="search"
+              showClearButton
+              size="medium"
+            />
+            <Input
+              id="small-input"
+              v-model="inputValue3"
+              label="Small input"
+              placeholder="Type something..."
+              size="small"
+            />
+          </div>
+        </ComponentShowcase>
+
+        <!-- InputDropdown Showcase -->
+        <ComponentShowcase title="InputDropdown">
+          <div style="display: flex; flex-direction: column; gap: var(--space-medium); width: 100%; max-width: 400px;">
+            <InputDropdown
+              id="dropdown-1"
+              v-model="dropdownValue1"
+              label="Select an option"
+              placeholder="Choose..."
+              :items="[
+                { label: 'Option 1', value: '1' },
+                { label: 'Option 2', value: '2' },
+                { label: 'Option 3', value: '3' }
+              ]"
+              @select="handleDropdownSelect"
+            />
+          </div>
+        </ComponentShowcase>
+
+        <!-- Carousel Showcase -->
+        <ComponentShowcase title="Carousel">
+          <div style="width: 100%;">
+            <Carousel title="Featured Items" :infinite="false">
+              <Card
+                v-for="(item, index) in carouselItems"
+                :key="index"
+                :header-text="item.title"
+                :subheader-text="item.subtitle"
+                :body-text="item.description"
+                :image-src="item.image"
+                :image-alt="item.title"
+                image-aspect-ratio="16x9"
+                width="300px"
+                style="flex-shrink: 0;"
+              >
+                <template #actions>
+                  <Button variant="primary" size="small">Learn More</Button>
+                </template>
+              </Card>
+            </Carousel>
+          </div>
+        </ComponentShowcase>
+
+        <!-- Image Carousel Showcase -->
+        <ComponentShowcase title="Image Carousel">
+          <ImageCarousel
+            :items="[
+              {
+                title: 'Modern Architecture',
+                subtitle: 'Contemporary Design',
+                image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+              },
+              {
+                title: 'Urban Living',
+                subtitle: 'City Lifestyle',
+                image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+              },
+              {
+                title: 'Minimalist Design',
+                subtitle: 'Less is More',
+                image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+              }
+            ]"
+            :interval="5000"
+          />
+        </ComponentShowcase>
+        <ComponentShowcase title="Image Carousel">
+          <ProjectCard 
+            title="Project 1"
+            description="This is the description of the project"
+            image="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg"
+          />
+          <ProjectCard 
+            title="Project 1"
+            description="This is the description of the project"
+            image="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg"
+          /><ProjectCard 
+            title="Project 1"
+            description="This is the description of the project"
+            image="https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg"
+          />
+        </ComponentShowcase>
       </div>
-    </ComponentShowcase>
-
-    <!-- Message Showcase -->
-    <ComponentShowcase title="Message">
-      <Message 
-        header="This is a message header"
-        body="Longer message text can be placed here. Longer message text can be placed here. Longer message text can be placed here."
-        icon="info"
-      />
-    </ComponentShowcase>
-
-    <!-- Badge Showcase -->
-    <ComponentShowcase title="Badge">
-      <div style="display: flex; gap: var(--space-medium); align-items: center;">
-        <Badge value="1" />
-        <Badge value="10" />
-        <Badge value="900" />
-        <Badge isDot />
-      </div>
-    </ComponentShowcase>
-
-    <!-- Progress Bar Showcase -->
-    <ComponentShowcase title="Progress Bar">
-      <div style="display: flex; flex-direction: column; gap: var(--space-medium); width: 100%;">
-        <ProgressBar :progress="30" />
-        <ProgressBar :progress="60" />
-        <ProgressBar :animated="true" />
-      </div>
-    </ComponentShowcase>
-
-    <!-- Spinner Showcase -->
-    <ComponentShowcase title="Spinner">
-      <div style="display: flex; gap: var(--space-large); align-items: center;">
-        <Spinner size="small" />
-        <Spinner size="medium" />
-        <Spinner size="large" />
-      </div>
-    </ComponentShowcase>
-
-    <!-- Loading Screen Showcase -->
-    <ComponentShowcase title="Loading Screen">
-      <Button @click="showLoadingScreen = true">Show Loading Screen</Button>
-      <LoadingScreen v-if="showLoadingScreen" :progress="loadingProgress" />
-    </ComponentShowcase>
-
-    <!-- Input Showcase -->
-    <ComponentShowcase title="Input">
-      <div style="display: flex; flex-direction: column; gap: var(--space-medium); width: 100%; max-width: 400px;">
-        <!-- Basic inputs with different sizes -->
-        <Input
-          id="large-input"
-          v-model="inputValue1"
-          label="Large input"
-          placeholder="Type something..."
-          size="large"
-        />
-        <Input
-          id="medium-input"
-          v-model="inputValue2"
-          label="Medium input with icons"
-          placeholder="Search..."
-          prefixIcon="search"
-          showClearButton
-          size="medium"
-        />
-        <Input
-          id="small-input"
-          v-model="inputValue3"
-          label="Small input"
-          placeholder="Type something..."
-          size="small"
-        />
-      </div>
-    </ComponentShowcase>
-
-    <!-- InputDropdown Showcase -->
-    <ComponentShowcase title="InputDropdown">
-      <div style="display: flex; flex-direction: column; gap: var(--space-medium); width: 100%; max-width: 400px;">
-        <InputDropdown
-          id="dropdown-1"
-          v-model="dropdownValue1"
-          label="Select an option"
-          placeholder="Choose..."
-          :items="[
-            { label: 'Option 1', value: '1' },
-            { label: 'Option 2', value: '2' },
-            { label: 'Option 3', value: '3' }
-          ]"
-          @select="handleDropdownSelect"
-        />
-      </div>
-    </ComponentShowcase>
+    </div>
   </div>
 </template>
 
@@ -235,6 +325,71 @@ body {
   align-items: start;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+}
+
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.dashboard-layout__content {
+  flex: 1;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.dashboard-layout__logo {
+  color: var(--brand-primary-600);
+  font-weight: var(--weight-loud);
+  font-size: 24px;
+}
+
+.dashboard-layout__footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-layout__user {
+  display: flex;
+  align-items: center;
+  gap: var(--unit-12);
+  border-radius: var(--unit-8);
+  padding: var(--unit-8);
+  transition: background-color 0.2s ease;
+}
+
+.dashboard-layout__user:hover {
+  background-color: var(--bg-elements-50);
+  cursor: pointer;
+}
+
+.dashboard-layout__user-avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.dashboard-layout__user-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.dashboard-layout__user-info .body-sm-loud {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-layout__user-button {
+  opacity: 0.6;
+}
+
+.dashboard-layout__user:hover .dashboard-layout__user-button {
+  opacity: 1;
 }
 
 .landing-page {
@@ -249,10 +404,10 @@ body {
 
 .nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: var(--space-medium) 0;
-  width: calc(100vw - var(--unit-64));
+  width: 100%;
 }
 
 .nav__logo {
@@ -331,7 +486,8 @@ body {
 </style>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useColorMode } from '#imports'
 const colorMode = useColorMode()
 const dropdownItems = [
   {
@@ -347,6 +503,53 @@ const dropdownItems = [
     content: 'Content for item 3'
   }
 ]
+
+// Navigation items for the side navigation
+const navigationItems = [
+  {
+    label: 'Dashboard',
+    icon: 'grid',
+    active: true
+  },
+  {
+    label: 'Projects',
+    icon: 'folder',
+    badge: true
+  },
+  {
+    label: 'Tasks',
+    icon: 'check-square'
+  },
+  {
+    label: 'Calendar',
+    icon: 'calendar'
+  },
+  {
+    label: 'Messages',
+    icon: 'message-square',
+    badge: true
+  },
+  {
+    label: 'Documents',
+    icon: 'file-text'
+  },
+  {
+    label: 'Analytics',
+    icon: 'bar-chart-2'
+  },
+  {
+    label: 'Settings',
+    icon: 'settings'
+  }
+]
+
+const selectedItem = ref(navigationItems[0])
+
+const handleNavItemClick = ({ item, index }) => {
+  navigationItems.forEach(navItem => navItem.active = false)
+  navigationItems[index].active = true
+  selectedItem.value = item
+}
 
 // Add reactive states for components
 const isEnabled = ref(false)
@@ -387,6 +590,11 @@ import Spinner from '../components/Spinner.vue'
 import LoadingScreen from '../components/LoadingScreen.vue'
 import Input from '../components/Input.vue'
 import InputDropdown from '../components/InputDropdown.vue'
+import Carousel from '../components/Carousel.vue'
+import ImageCarousel from '../components/ImageCarousel.vue'
+import Slider from '../components/Slider.vue'
+import SideNavigation from '../patterns/SideNavigation.vue'
+import Icon from '../components/Icon.vue'
 
 const showLoadingScreen = ref(false)
 const loadingProgress = ref(0)
@@ -424,4 +632,42 @@ const dropdownValue1 = ref('')
 const handleDropdownSelect = (item) => {
   console.log('Selected item:', item)
 }
+
+// Carousel items data
+const carouselItems = ref([
+  {
+    title: 'Modern Architecture',
+    subtitle: 'Contemporary Design',
+    description: 'Explore the latest trends in modern architecture and design.',
+    image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+  },
+  {
+    title: 'Urban Living',
+    subtitle: 'City Lifestyle',
+    description: 'Discover the perfect balance of comfort and style in urban spaces.',
+    image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+  },
+  {
+    title: 'Minimalist Design',
+    subtitle: 'Less is More',
+    description: 'Experience the beauty of simplicity in modern minimalist design.',
+    image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+  },
+  {
+    title: 'Sustainable Living',
+    subtitle: 'Eco-Friendly',
+    description: 'Learn about sustainable design practices for a better future.',
+    image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+  },
+  {
+    title: 'Luxury Interiors',
+    subtitle: 'Premium Design',
+    description: 'Indulge in the finest luxury interior design concepts.',
+    image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg'
+  }
+])
+
+const sliderValue1 = ref(25)
+const sliderValue2 = ref(50)
+const sliderValue3 = ref(750)
 </script> 

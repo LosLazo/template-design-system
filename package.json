@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "feather-icons": "^4.29.2",
+    "mcp-figma": "^0.1.1",
     "nuxt": "^3.16.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -18,9 +19,13 @@
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
   "devDependencies": {
     "@nuxtjs/color-mode": "^3.5.2",
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-vue": "^5.2.3",
     "@vitest/browser": "^3.1.1",
     "@vitest/coverage-v8": "^3.1.1",
+    "autoprefixer": "^10.4.21",
     "playwright": "^1.51.1",
+    "postcss-nested": "^7.0.2",
     "sass": "^1.86.3",
     "sass-loader": "^16.0.5",
     "vitest": "^3.1.1"

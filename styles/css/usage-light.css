@@ -2,6 +2,14 @@
 :root,
 :root[data-theme="light"] {
   
+  /* font-family  */
+  --font-display: 'KH Interference', sans-serif;
+  --font-text: 'KH Teka', sans-serif;
+  
+  /* font-weight */
+  --weight-loud: Regular;
+  --weight-composed: Medium;
+
   /* background elevation */
   --bg-elevation-base: var(--neutral-solid-50);
   --bg-elevation-layer-01: var(--neutral-solid-100);

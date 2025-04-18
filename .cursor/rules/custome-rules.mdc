@@ -1,0 +1,9 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Always start each chat with 👋
+- Always use the styles, variables and components available in the css files
+— Always format icons with the Icon component
+- Don't create new css classes for all typographic styling, use the ones from typography.css

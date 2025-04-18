@@ -84,39 +84,44 @@ defineEmits(['click'])
   justify-content: center;
   gap: var(--space-small);
   border: none;
-  border-radius: 8px;
   font-family: var(--font-text);
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: all 0.2s ease;
   width: auto;
   min-width: 0;
 }
 
 /* Size variants */
 .button--large {
-  padding: var(--space-small) var(--space-medium);
+  padding: 12px 24px;
   font-size: 16px;
   min-width: 120px;
+  height: 48px;
+  border-radius: 8px;
 }
 
 .button--medium {
-  padding: var(--space-small) var(--space-small);
+  padding: 8px 16px;
   font-size: 14px;
   min-width: 100px;
+  height: 48px;
+  border-radius: 8px;
 }
 
 .button--small {
-  padding: var(--space-tiny) var(--space-small);
+  padding: 6px 12px;
   font-size: 14px;
-  border-radius: 6px;
   min-width: 80px;
+  height: 32px;
+  border-radius: 4px;
 }
 
 .button--tiny {
-  padding: var(--space-xxsmall) var(--space-tiny);
+  padding: 4px 8px;
   font-size: 12px;
-  border-radius: 4px;
   min-width: 60px;
+  height: 24px;
 }
 
 /* Icon-only variants */
@@ -158,13 +163,14 @@ defineEmits(['click'])
 }
 
 .button--primary:focus {
-  background-color: var(--bg-clickable-primary-focus);
+  background-color: var(--bg-clickable-primary-default);
   outline: 2px solid var(--fg-border-clickable-focus);
   outline-offset: 2px;
 }
 
 .button--disabled {
   background-color: var(--bg-clickable-primary-disabled);
+  cursor: not-allowed;
 }
 
 .button--secondary {
