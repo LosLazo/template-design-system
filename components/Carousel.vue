@@ -1,30 +1,28 @@
 <template>
   <div class="carousel">
     <h2 v-if="title" class="body-xl">{{ title }}</h2>
-    <div class="carousel__container">
+    <div class="carousel__container" ref="containerRef">
       <div 
         class="carousel__items" 
+        ref="itemsRef"
         :style="{ transform: `translateX(${translateX}px)` }"
       >
         <slot></slot>
       </div>
-      <div 
-        v-if="showNavigation" 
-        class="carousel__navigation"
-      >
+      <div class="carousel__navigation">
         <Button
           variant="secondary"
           size="small"
           prefixIcon="chevron-left"
-          :disabled="!canGoPrev"
-          @click="goPrev"
+          @click="prev"
+          :disabled="isAtStart"
         />
         <Button
           variant="secondary"
           size="small"
           prefixIcon="chevron-right"
-          :disabled="!canGoNext"
-          @click="goNext"
+          @click="next"
+          :disabled="isAtEnd"
         />
       </div>
     </div>
@@ -32,80 +30,176 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import Button from './Button.vue'
 
 interface Props {
-  title?: string
-  infinite?: boolean
+  title?: string,
+  itemSelector?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  infinite: false
+  itemSelector: '.carousel-item' // Default selector for items
 })
 
-const currentIndex = ref(0)
+const containerRef = ref<HTMLElement | null>(null)
+const itemsRef = ref<HTMLElement | null>(null)
 const translateX = ref(0)
-const containerWidth = ref(0)
-const itemWidth = ref(0)
-const totalItems = ref(0)
+const currentIndex = ref(0)
+const itemGap = ref(16) // --space-medium in pixels
+const isAtStart = ref(true)
+const isAtEnd = ref(false)
 
-const showNavigation = computed(() => {
-  return totalItems.value > 0 && containerWidth.value < (itemWidth.value * totalItems.value)
-})
+// Get all carousel items
+const getCarouselItems = () => {
+  if (!itemsRef.value) return []
+  
+  // If a selector is provided, use it to find items
+  if (props.itemSelector) {
+    return Array.from(itemsRef.value.querySelectorAll(props.itemSelector))
+  }
+  
+  // Fallback to direct children
+  return Array.from(itemsRef.value.children)
+}
 
-const canGoPrev = computed(() => {
-  return props.infinite || currentIndex.value > 0
-})
+// Calculate the gap between items
+const calculateItemGap = () => {
+  if (!itemsRef.value) return 16
+  
+  // Try to get computed style
+  const computedStyle = window.getComputedStyle(itemsRef.value)
+  const gapValue = computedStyle.getPropertyValue('gap')
+  
+  if (gapValue) {
+    const numericGap = parseInt(gapValue)
+    if (!isNaN(numericGap)) {
+      return numericGap
+    }
+  }
+  
+  return 16 // Default gap
+}
 
-const canGoNext = computed(() => {
-  if (props.infinite) return true
-  const maxTranslate = -(totalItems.value * itemWidth.value - containerWidth.value)
-  return translateX.value > maxTranslate
-})
+// Check carousel limits
+const updateNavigationState = () => {
+  if (!containerRef.value || !itemsRef.value) return
+  
+  const containerWidth = containerRef.value.offsetWidth
+  const contentWidth = itemsRef.value.scrollWidth
+  const maxTranslate = -(contentWidth - containerWidth)
+  
+  // Check if we're at the start (can't go backward)
+  isAtStart.value = translateX.value >= 0
+  
+  // Check if we're at the end (can't go forward)
+  isAtEnd.value = translateX.value <= maxTranslate || contentWidth <= containerWidth
+}
 
-const updateDimensions = () => {
-  const container = document.querySelector('.carousel__container')
-  const items = document.querySelector('.carousel__items')
-  if (container && items) {
-    containerWidth.value = container.clientWidth
-    itemWidth.value = items.children[0]?.clientWidth || 0
-    totalItems.value = items.children.length
+// Move to the next item
+const next = () => {
+  // Safety check
+  if (!containerRef.value || !itemsRef.value) return
+  
+  // Get container and content dimensions
+  const containerWidth = containerRef.value.offsetWidth
+  const contentWidth = itemsRef.value.scrollWidth
+  
+  // Calculate how much we can scroll
+  const maxTranslate = -(contentWidth - containerWidth)
+  
+  // Get current visible element width
+  const items = getCarouselItems()
+  if (items.length === 0) return
+  
+  // Find the width of the current item to scroll by
+  let currentItemWidth = 300 // Default fallback
+  if (currentIndex.value < items.length) {
+    const currentItem = items[currentIndex.value] as HTMLElement
+    currentItemWidth = currentItem.offsetWidth + itemGap.value
+    
+    console.log('Next - Current item details:', {
+      element: currentItem,
+      width: currentItem.offsetWidth,
+      gap: itemGap.value,
+      totalWidth: currentItemWidth
+    })
+  }
+  
+  // Calculate new position
+  const newPosition = Math.max(maxTranslate, translateX.value - currentItemWidth)
+  
+  // Only move if we can go further
+  if (newPosition !== translateX.value) {
+    translateX.value = newPosition
+    
+    // Update current index
+    currentIndex.value = Math.min(items.length - 1, currentIndex.value + 1)
+    
+    // Update navigation state
+    updateNavigationState()
   }
 }
 
-const goPrev = () => {
-  if (!canGoPrev.value) return
+// Move to the previous item
+const prev = () => {
+  // Safety check
+  if (!itemsRef.value) return
   
-  if (currentIndex.value === 0 && props.infinite) {
-    currentIndex.value = totalItems.value - 1
-  } else {
-    currentIndex.value--
+  // Get all items
+  const items = getCarouselItems()
+  if (items.length === 0) return
+  
+  // Find width of previous item (if it exists)
+  const prevIndex = Math.max(0, currentIndex.value - 1)
+  
+  let prevItemWidth = 300 // Default fallback
+  if (prevIndex < items.length) {
+    const prevItem = items[prevIndex] as HTMLElement
+    prevItemWidth = prevItem.offsetWidth + itemGap.value
+    
+    console.log('Prev - Previous item details:', {
+      element: prevItem,
+      width: prevItem.offsetWidth,
+      gap: itemGap.value,
+      totalWidth: prevItemWidth
+    })
   }
-  translateX.value = -currentIndex.value * itemWidth.value
-}
-
-const goNext = () => {
-  if (!canGoNext.value) return
   
-  if (currentIndex.value === totalItems.value - 1 && props.infinite) {
-    currentIndex.value = 0
-    translateX.value = 0
-  } else {
-    currentIndex.value++
-    // Calculate the maximum allowed translation
-    const maxTranslate = -(totalItems.value * itemWidth.value - containerWidth.value)
-    translateX.value = Math.max(maxTranslate, -currentIndex.value * itemWidth.value)
+  // Calculate new position
+  const newPosition = Math.min(0, translateX.value + prevItemWidth)
+  
+  // Only move if we're not at the start
+  if (newPosition !== translateX.value) {
+    translateX.value = newPosition
+    currentIndex.value = prevIndex
+    
+    // Update navigation state
+    updateNavigationState()
   }
 }
 
 onMounted(() => {
-  updateDimensions()
-  window.addEventListener('resize', updateDimensions)
+  // Initialize at the start
+  translateX.value = 0
+  currentIndex.value = 0
+  
+  // Calculate the item gap from CSS
+  itemGap.value = calculateItemGap()
+  
+  // Initial check for navigation state
+  updateNavigationState()
+  
+  console.log('Carousel mounted:', {
+    items: getCarouselItems(),
+    itemCount: getCarouselItems().length,
+    gap: itemGap.value
+  })
 })
 
-onUnmounted(() => {
-  window.removeEventListener('resize', updateDimensions)
+// Watch for content changes that might affect navigation state
+watch(() => getCarouselItems().length, () => {
+  updateNavigationState()
 })
 </script>
 
@@ -122,7 +216,7 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   overflow: visible;
-  padding-bottom: var(--space-large); /* Add space for navigation */
+  padding-bottom: var(--space-large);
 }
 
 .carousel__items {
@@ -133,7 +227,13 @@ onUnmounted(() => {
   transition: transform 0.3s ease;
   padding: var(--space-small) 0;
   overflow: visible;
-  width: max-content; /* Allow the content to determine the width */
+  width: max-content;
+  min-height: 400px;
+}
+
+.carousel-item {
+  transition: transform 0.3s ease;
+  height: 100%;
 }
 
 .carousel__navigation {
@@ -144,5 +244,11 @@ onUnmounted(() => {
   gap: var(--space-tiny);
   background-color: var(--bg-elevation-base);
   border-radius: var(--units-radius-for-surface-clickable);
+  z-index: 10;
+}
+
+/* Force cursor styles for carousel buttons */
+.carousel__navigation :deep(button[disabled]) {
+  cursor: not-allowed !important;
 }
 </style> 

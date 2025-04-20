@@ -79,7 +79,7 @@ onMounted(() => {
 .tabs {
   display: flex;
   gap: var(--space-medium);
-  border-bottom: 1px solid var(--fg-border-disabled);
+  border-bottom: 1px solid var(--fg-border-discrete);
   position: relative;
 }
 
@@ -111,9 +111,9 @@ onMounted(() => {
 
 .tabs__indicator {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
-  height: 2px;
+  height: 1px;
   background-color: var(--fg-border-strong);
   transition: all 0.3s ease;
   z-index: 1;

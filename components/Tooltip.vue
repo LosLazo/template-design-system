@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
+// withDefaults is a compiler macro and doesn't need to be imported
 
 interface Props {
   text?: string
@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 .tooltip__content {
   background-color: var(--fg-object-solid-1000, #101010);
-  color: var(--permanent-white, #FFFFFF);
+  color: var(--fg-text-strong-inverse);
   font-size: 12px;
   line-height: 1.3em;
   padding: 12px 12px;

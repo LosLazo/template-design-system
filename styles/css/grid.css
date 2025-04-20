@@ -204,3 +204,31 @@
 .row-content-between { justify-content: space-between; }
 .row-content-around { justify-content: space-around; }
 .row-content-evenly { justify-content: space-evenly; } 
+
+
+/* testing new grid system */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-small);
+  width: 100%;
+  padding-top: 32px;
+}
+
+.split-1 {
+  grid-column: span 12;
+}
+
+.split-2 {
+  grid-column: span 6;
+}
+
+.split-3 {
+  grid-column: span 4;
+}
+
+.split-4 {
+  grid-column: span 3;
+}
+

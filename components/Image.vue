@@ -7,27 +7,37 @@
     ]"
   >
     <img
+      v-if="src"
       :src="src"
       :alt="alt"
       class="image"
     />
+    <div
+      v-else-if="backgroundColor"
+      class="image-background"
+      :style="{ backgroundColor }"
+    ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-type AspectRatio = '16x9' | '5x4' | '4x3' | '1x1'
+import { computed } from 'vue'
+
+type AspectRatio = '1x1' | '16x9' | '4x3' | '4x5' | '3x2' | '5x4'
 type Orientation = 'landscape' | 'portrait'
 
 interface Props {
-  src: string
-  alt: string
+  src?: string
+  alt?: string
   aspectRatio?: AspectRatio
   orientation?: Orientation
+  backgroundColor?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   aspectRatio: '16x9',
-  orientation: 'landscape'
+  orientation: 'landscape',
+  alt: ''
 })
 
 const isPortrait = computed(() => props.orientation === 'portrait')
@@ -40,13 +50,21 @@ const isPortrait = computed(() => props.orientation === 'portrait')
   overflow: hidden;
 }
 
-.image {
+.image,
+.image-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.image {
   object-fit: cover;
+}
+
+.image-background {
+  background-color: var(--bg-elements-300);
 }
 
 /* Aspect ratio classes */
@@ -60,6 +78,14 @@ const isPortrait = computed(() => props.orientation === 'portrait')
 
 .image-container--4x3 {
   padding-bottom: 75%; /* 3/4 = 0.75 */
+}
+
+.image-container--4x5 {
+  padding-bottom: 125%; /* 5/4 = 1.25 */
+}
+
+.image-container--3x2 {
+  padding-bottom: 66.67%; /* 2/3 = 0.6667 */
 }
 
 .image-container--1x1 {
@@ -82,6 +108,14 @@ const isPortrait = computed(() => props.orientation === 'portrait')
 
 .image-container--portrait.image-container--4x3 {
   --aspect-ratio-padding: 133.33%; /* 4/3 = 1.3333 */
+}
+
+.image-container--portrait.image-container--4x5 {
+  --aspect-ratio-padding: 80%; /* 4/5 = 0.8 */
+}
+
+.image-container--portrait.image-container--3x2 {
+  --aspect-ratio-padding: 150%; /* 3/2 = 1.5 */
 }
 
 .image-container--portrait.image-container--1x1 {

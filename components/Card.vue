@@ -15,9 +15,9 @@
     <div class="card__content">
       <div class="card__header">
         <p v-if="headerText" class="body-sm-loud">{{headerText }}</p>
-        <p v-if="subheaderText" class="body-sm color-soft">{{ subheaderText }}</p>
+        <p v-if="title" class="body-sm color-strong">{{ title }}</p>
       </div>
-      <p v-if="bodyText" class="body-sm color-soft">{{ bodyText }}</p>
+      <p v-if="text" class="body-sm color-soft">{{ text }}</p>
       <div v-if="$slots.actions" class="card__actions">
         <slot name="actions"></slot>
       </div>
@@ -40,11 +40,11 @@ type WidthValue = number | `${number}` | `span ${number}`
 
 interface Props {
   headerText?: string
-  subheaderText?: string
-  bodyText?: string
+  title?: string
+  text?: string
   imageSrc?: string
   imageAlt?: string
-  imageAspectRatio?: '16x9' | '5x4' | '4x3' | '1x1'
+  imageAspectRatio?: '1x1' | '16x9' | '4x3' | '4x5' | '3x2' | '5x4'
   imageOrientation?: 'landscape' | 'portrait'
   href?: string
   width?: WidthValue
@@ -90,12 +90,10 @@ const cardStyle = computed(() => {
 }
 
 .card__content {
-    padding: var(--space-medium);
-    gap: var(--space-small);
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 24px 24px 24px 0px;
+    padding: 8px 24px 8px 0px;
     text-align: left;
 }
 

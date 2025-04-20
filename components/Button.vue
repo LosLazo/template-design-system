@@ -169,8 +169,12 @@ defineEmits(['click'])
 }
 
 .button--disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+.button--primary.button--disabled {
   background-color: var(--bg-clickable-primary-disabled);
-  cursor: not-allowed;
 }
 
 .button--secondary {
@@ -181,6 +185,13 @@ defineEmits(['click'])
 .button--secondary:hover {
   background-color: var(--bg-clickable-hover);
 }
+.button--secondary:active {
+  background-color: var(--bg-clickable-pressed);
+}
+.button--secondary.button--disabled {
+  color: var(--fg-text-disabled);
+  border-color: var(--fg-border-disabled);
+}
 
 .button--ghost {
   background-color: transparent;
@@ -189,6 +200,12 @@ defineEmits(['click'])
 .button--ghost:hover {
   background-color: var(--bg-clickable-hover);
 }
+.button--ghost:active {
+  background-color: var(--bg-clickable-pressed);
+}
+.button--ghost.button--disabled {
+  color: var(--fg-text-disabled);
+}
 
 .button--danger {
   background-color: var(--bg-clickable-danger-danger);
@@ -196,6 +213,12 @@ defineEmits(['click'])
 }
 .button--danger:hover {
   background-color: var(--bg-clickable-danger-danger-hover);
+}
+.button--danger:active {
+  background-color: var(--bg-clickable-danger-danger-pressed);
+}
+.button--danger.button--disabled {
+  background-color: var(--bg-clickable-danger-disabled);
 }
 
 .button__icon {

@@ -1,7 +1,10 @@
 <template>
-  <div class="banner" :class="{ 'banner--dismissible': dismissible }">
+  <div class="banner" :class="[
+    { 'banner--dismissible': dismissible },
+    `banner--${variant || 'default'}`
+  ]">
     <div class="banner__content body-sm">
-      {{ text }}
+      {{ text || title }}
       <Button v-if="dismissible" variant="ghost" size="small" suffixIcon="x" @click="$emit('dismiss')" />
     </div>
   </div>
@@ -13,7 +16,15 @@ import Button from './Button.vue'
 defineProps({
   text: {
     type: String,
-    required: true
+    default: ''
+  },
+  title: {
+    type: String,
+    default: ''
+  },
+  variant: {
+    type: String,
+    default: 'default'
   },
   dismissible: {
     type: Boolean,
@@ -28,7 +39,16 @@ defineEmits(['dismiss'])
 .banner {
   width: 100%;
   background-color: var(--bg-elevation-background–inverse);
-  padding: var(--space-small) var(--space-medium);
+  padding: var(--space-tiny) 32px;
+  color: var(--fg-text-strong-inverse);
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.banner--info {
   color: var(--fg-text-strong-inverse);
 }
 

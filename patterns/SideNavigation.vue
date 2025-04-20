@@ -1,55 +1,65 @@
 <template>
-  <div class="sidenav" :class="{ 'sidenav--collapsed': isCollapsed }">
+  <div class="sidenav" :class="{ 
+    'sidenav--collapsed': isCollapsed && !isMobile, 
+    'sidenav--mobile': isMobile,
+    'sidenav--mobile-expanded': isMobile && isMobileExpanded 
+  }">
     
     <div class="sidenav__content">
       <div class="sidenav__header">
           <slot name="logo"></slot>
-      </div>
-      <Divider color="discrete" margin="var(--space-medium)" />
-      <ul class="sidenav__menu">
-        <div 
-          v-for="(item, index) in items" 
-          :key="index" 
-          class="nav-item"
-          :class="{ 'nav-item--active': item.active }"
-          @click="handleItemClick(item, index)"
-          @mouseenter="handleItemHover(index, true)"
-          @mouseleave="handleItemHover(index, false)"
-        >
-          <div class="nav-item__content">
-            <Icon 
-              v-if="item.icon" 
-              :name="item.icon" 
-              :size="20" 
-              class="nav-item__icon" 
-            />
-            <span class="nav-item__label body-sm">{{ item.label }}</span>
+          <div v-if="isMobile" class="sidenav__mobile-toggle" @click="toggleMobileMenu">
+            <Icon :name="isMobileExpanded ? 'x' : 'menu'" :size="24" />
           </div>
+      </div>
+      <div class="sidenav__scrollable">
+        <Divider color="discrete" margin="var(--space-medium)" />
+        <ul class="sidenav__menu">
           <div 
-            v-if="item.badge" 
-            class="nav-item__badge"
-          ></div>
-          <Tooltip 
-            v-if="isCollapsed" 
-            :text="item.label"
-            position="right"
-            :visible="hoveredItemIndex === index"
-            class="nav-item__tooltip"
-          />
-        </div>
-      </ul>
+            v-for="(item, index) in items" 
+            :key="index" 
+            class="nav-item"
+            :class="{ 'nav-item--active': item.active }"
+            @click="handleItemClick(item, index)"
+            @mouseenter="handleItemHover(index, true)"
+            @mouseleave="handleItemHover(index, false)"
+          >
+            <div class="nav-item__content">
+              <Icon 
+                v-if="item.icon" 
+                :name="item.icon" 
+                :size="20" 
+                class="nav-item__icon" 
+              />
+              <span class="nav-item__label body-sm">{{ item.label }}</span>
+            </div>
+            <div 
+              v-if="item.badge" 
+              class="nav-item__badge"
+            ></div>
+            <Tooltip 
+              v-if="isCollapsed && !isMobile" 
+              :text="item.label"
+              position="right"
+              :visible="hoveredItemIndex === index"
+              class="nav-item__tooltip"
+            />
+          </div>
+        </ul>
+      </div>
     </div>
     
-    <div class="sidenav__footer">
+    <div class="sidenav__footer" v-if="!isMobile || isMobileExpanded">
       <slot name="footer"></slot>
       <div 
+        v-if="!isMobile"
         class="sidenav__toggle" 
         @click="toggleCollapse"
         @mouseenter="showCollapseTooltip = true"
         @mouseleave="showCollapseTooltip = false"
       >
         <Icon :name="isCollapsed ? 'chevron-right' : 'chevron-left'" :size="20" />
-        <span v-if="!isCollapsed" class="body-sm">Collapse</span>
+        <span v-if="!isCollapsed" class="body-sm" style="margin: 0px;">Collapse</span>
         <Tooltip 
           v-if="isCollapsed" 
           :text="'Expand'" 
@@ -63,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import Tooltip from '../components/Tooltip.vue'
 import Divider from '../components/Divider.vue'
 import Icon from '../components/Icon.vue'
@@ -88,6 +98,8 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['itemClick', 'update:isCollapsed'])
 
 const isCollapsed = ref(props.isCollapsed)
+const isMobile = ref(false)
+const isMobileExpanded = ref(false)
 
 // Watch for prop changes to update internal state
 watch(() => props.isCollapsed, (newValue) => {
@@ -106,16 +118,43 @@ const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value
 }
 
+const toggleMobileMenu = () => {
+  isMobileExpanded.value = !isMobileExpanded.value
+  if (isMobileExpanded.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+}
+
 const handleItemClick = (item: NavigationItem, index: number) => {
   if (item.onClick) {
     item.onClick()
   }
   emit('itemClick', { item, index })
+  if (isMobile.value) {
+    isMobileExpanded.value = false
+    document.body.style.overflow = ''
+  }
 }
 
 const handleItemHover = (index: number, isHovered: boolean) => {
   hoveredItemIndex.value = isHovered ? index : null
 }
+
+const checkMobile = () => {
+  isMobile.value = window.innerWidth < 768
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+  document.body.style.overflow = ''
+})
 </script>
 
 <style scoped>
@@ -124,21 +163,76 @@ const handleItemHover = (index: number, isHovered: boolean) => {
   width: 280px;
   display: flex;
   flex-direction: column;
-  position: sticky;
   background-color: var(--color-surface);
   transition: width 0.3s ease;
   flex-shrink: 0;
   padding: 16px;
   justify-content: space-between;
-  z-index: 10;
+  z-index: 1000;
   background-color: var(--bg-clickable-hover-inverse);
   backdrop-filter: blur(128px);
   border-radius: 8px;
   overflow: visible;
+  height: calc(100vh - 32px);
 }
 
 .sidenav--collapsed {
-  width: 60px;
+  width: 68px;
+}
+
+/* Mobile styles */
+.sidenav--mobile {
+  width: calc(100% - 32px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: auto;
+  border-radius: 8;
+  padding: 0;
+  margin: 16px;
+
+}
+
+.sidenav--mobile .sidenav__content {
+  flex-direction: column;
+  width: 100%;
+}
+
+.sidenav--mobile .sidenav__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.sidenav--mobile-expanded {
+  height: 100vh;
+}
+
+.sidenav--mobile-expanded .sidenav__scrollable {
+  height: calc(100vh - 64px);
+  overflow-y: visible;
+  display: block;
+  padding: 16px;
+}
+
+.sidenav--mobile:not(.sidenav--mobile-expanded) .sidenav__scrollable {
+  display: none;
+}
+
+.sidenav__mobile-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.sidenav__scrollable {
+  flex: 1;
+
 }
 
 /* Header */
@@ -160,19 +254,26 @@ const handleItemHover = (index: number, isHovered: boolean) => {
 .sidenav__menu {
   list-style: none;
   padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Navigation items */
-.nav-item {
+.nav-item, .sidenav__toggle {
   position: relative;
   cursor: pointer;
   padding: 8px;
   border-radius: 4px;
   min-width: 36px;
+  color: var(--fg-text-defined);
+  width: 100%;
 }
 
 .nav-item:hover {
   background-color: var(--bg-clickable-hover);
+  color: var(--fg-text-strong);
 }
 
 .nav-item__content {
@@ -188,23 +289,9 @@ const handleItemHover = (index: number, isHovered: boolean) => {
 
 .nav-item__label {
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   transition: opacity 0.2s ease;
-}
-
-.nav-item__badge {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--color-accent);
-}
-
-/* Active state */
-.nav-item--active .nav-item__content,
-.nav-item--active .nav-item__icon {
-  color: var(--color-primary);
-  font-weight: var(--font-weight-bold);
+  margin: 0px !important;
 }
 
 /* Collapsed state */
@@ -247,6 +334,7 @@ const handleItemHover = (index: number, isHovered: boolean) => {
 
 .sidenav__toggle:hover {
   color: var(--text-primary);
+  background-color: var(--bg-clickable-hover);
 }
 
 .sidenav--collapsed .sidenav__toggle {
