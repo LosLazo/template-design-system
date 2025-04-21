@@ -4,14 +4,20 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' CHOKIDAR_USEPOLLING=1 nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@sanity/client": "^6.29.0",
+    "@sanity/image-url": "^1.0.2",
+    "cors": "^2.8.5",
+    "esm": "^3.2.25",
+    "express": "^5.1.0",
     "feather-icons": "^4.29.2",
     "mcp-figma": "^0.1.1",
+    "nodemon": "^3.1.9",
     "nuxt": "^3.16.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"

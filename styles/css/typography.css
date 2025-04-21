@@ -23,6 +23,7 @@
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
     margin: 16px 0px;
+    max-width: 60ch;
 }
 .supertype-lg { font-size: 216px; }
 .supertype-md { font-size: 156px; }
@@ -41,6 +42,7 @@
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
     margin: 16px 0px;
+    max-width: 60ch;
 }
 .headline-lg, h1 { font-size: 80px; }
 .headline-md { font-size: 56px; }
@@ -59,6 +61,7 @@
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
     margin: 8px 0px;
+    max-width: 60ch;
 }
 .title-lg { font-size: 24px; }
 .title-md { font-size: 20px; }
@@ -80,6 +83,7 @@ p {
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
     margin: 8px 0px;
+    max-width: 60ch;
 }
 
 .body-xl-loud,
@@ -94,6 +98,7 @@ h3 {
     letter-spacing: 0px;
     text-box-trim: trim-both;
     text-box-edge: cap alphabetic;
+    max-width: 60ch;
 }
 
 .body-xl, 

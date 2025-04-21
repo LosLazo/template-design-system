@@ -12,15 +12,6 @@
   --breakpoint-xl: 1200px;
 }
 
-/* Grid Container */
-.container {
-  width: 100%;
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
-  margin-right: auto;
-  margin-left: auto;
-}
-
 /* Container with max-width */
 .container-fluid {
   width: 100%;

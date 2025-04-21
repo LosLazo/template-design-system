@@ -3,12 +3,12 @@
 :root[data-theme="light"] {
   
   /* font-family  */
-  --font-display: 'KH Interference', sans-serif;
-  --font-text: 'KH Teka', sans-serif;
+  --font-display: 'Eidra Sans Display';
+  --font-text: 'Eidra Sans Text';
   
   /* font-weight */
-  --weight-loud: Regular;
-  --weight-composed: Medium;
+  --weight-loud: Bold;
+  --weight-composed: Regular;
 
   /* background elevation */
   --bg-elevation-base: var(--neutral-solid-50);

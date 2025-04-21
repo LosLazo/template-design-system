@@ -27,7 +27,8 @@
 </template>
 
 <script setup>
-
+ import Image from '~/composables/components/Image.vue'
+ import Avatar from '~/composables/components/Avatar.vue'
 </script>
 
 <style scoped>

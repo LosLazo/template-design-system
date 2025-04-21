@@ -34,15 +34,15 @@
 }
 
 @font-face {
-    font-family: 'Eidra Sans';
-    src: url('/assets/fonts/KHTekaPro-Medium.otf') format('opentype');
+    font-family: 'Eidra Sans Display';
+    src: url('/assets/fonts/EidraSans-Bold.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Eidra Sans';
-    src: url('/assets/fonts/KHTekaPro-Medium.otf') format('opentype');
+    font-family: 'Eidra Sans Text';
+    src: url('/assets/fonts/EidraSans-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }

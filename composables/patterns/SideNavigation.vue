@@ -19,12 +19,17 @@
             v-for="(item, index) in items" 
             :key="index" 
             class="nav-item"
-            :class="{ 'nav-item--active': item.active }"
-            @click="handleItemClick(item, index)"
-            @mouseenter="handleItemHover(index, true)"
-            @mouseleave="handleItemHover(index, false)"
+            :class="{ 
+              'nav-item--active': item.active,
+              'nav-item--expanded': expandedItemIndex === index && !isCollapsed 
+            }"
           >
-            <div class="nav-item__content">
+            <div 
+              class="nav-item__content"
+              @click="handleItemClick(item, index)"
+              @mouseenter="handleItemHover(index, true)"
+              @mouseleave="handleItemHover(index, false)"
+            >
               <Icon 
                 v-if="item.icon" 
                 :name="item.icon" 
@@ -32,11 +37,20 @@
                 class="nav-item__icon" 
               />
               <span class="nav-item__label body-sm">{{ item.label }}</span>
+              <Icon 
+                v-if="item.children && item.children.length > 0 && !isCollapsed" 
+                :name="expandedItemIndex === index ? 'chevron-up' : 'chevron-down'" 
+                :size="16" 
+                class="nav-item__dropdown-icon"
+                @click.stop="toggleExpandItem(index)"
+              />
             </div>
+            
             <div 
               v-if="item.badge" 
               class="nav-item__badge"
             ></div>
+            
             <Tooltip 
               v-if="isCollapsed && !isMobile" 
               :text="item.label"
@@ -44,6 +58,21 @@
               :visible="hoveredItemIndex === index"
               class="nav-item__tooltip"
             />
+            
+            <!-- Child items -->
+            <div 
+              v-if="item.children && item.children.length > 0 && expandedItemIndex === index && !isCollapsed" 
+              class="nav-item__children"
+            >
+              <div 
+                v-for="(child, childIndex) in item.children" 
+                :key="`${index}-${childIndex}`"
+                class="nav-item__child"
+                @click.stop="handleChildItemClick(item, child, index, childIndex)"
+              >
+                <span class="nav-item__child-label body-sm">{{ child.label }}</span>
+              </div>
+            </div>
           </div>
         </ul>
       </div>
@@ -74,9 +103,15 @@
 
 <script setup lang="ts">
 import { ref, watch, onMounted, onUnmounted } from 'vue'
-import Tooltip from '../components/Tooltip.vue'
-import Divider from '../components/Divider.vue'
-import Icon from '../components/Icon.vue'
+import Tooltip from '~/composables/components/Tooltip.vue'
+import Divider from '~/composables/components/Divider.vue'
+import Icon from '~/composables/components/Icon.vue'
+
+interface ChildNavigationItem {
+  label: string
+  link?: string
+  internal?: boolean
+}
 
 interface NavigationItem {
   label: string
@@ -84,6 +119,9 @@ interface NavigationItem {
   active?: boolean
   badge?: boolean
   onClick?: () => void
+  link?: string
+  internal?: boolean
+  children?: ChildNavigationItem[]
 }
 
 interface Props {
@@ -100,10 +138,16 @@ const emit = defineEmits(['itemClick', 'update:isCollapsed'])
 const isCollapsed = ref(props.isCollapsed)
 const isMobile = ref(false)
 const isMobileExpanded = ref(false)
+const expandedItemIndex = ref<number | null>(null)
 
 // Watch for prop changes to update internal state
 watch(() => props.isCollapsed, (newValue) => {
   isCollapsed.value = newValue
+  
+  // Close any expanded items when collapsing
+  if (newValue) {
+    expandedItemIndex.value = null
+  }
 })
 
 // Watch for internal state changes to emit update events
@@ -118,6 +162,14 @@ const toggleCollapse = () => {
   isCollapsed.value = !isCollapsed.value
 }
 
+const toggleExpandItem = (index: number) => {
+  if (expandedItemIndex.value === index) {
+    expandedItemIndex.value = null
+  } else {
+    expandedItemIndex.value = index
+  }
+}
+
 const toggleMobileMenu = () => {
   isMobileExpanded.value = !isMobileExpanded.value
   if (isMobileExpanded.value) {
@@ -128,10 +180,36 @@ const toggleMobileMenu = () => {
 }
 
 const handleItemClick = (item: NavigationItem, index: number) => {
-  if (item.onClick) {
-    item.onClick()
+  // Only handle the click if there are no children, or we're in collapsed mode
+  if (!item.children || item.children.length === 0 || isCollapsed.value) {
+    if (item.onClick) {
+      item.onClick()
+    }
+    emit('itemClick', { item, index })
+    if (isMobile.value) {
+      isMobileExpanded.value = false
+      document.body.style.overflow = ''
+    }
+  } else if (!isCollapsed.value) {
+    // If it has children and we're not collapsed, toggle the expansion
+    toggleExpandItem(index)
   }
-  emit('itemClick', { item, index })
+}
+
+const handleChildItemClick = (
+  parentItem: NavigationItem, 
+  childItem: ChildNavigationItem, 
+  parentIndex: number, 
+  childIndex: number
+) => {
+  emit('itemClick', { 
+    item: childItem, 
+    parentItem, 
+    index: parentIndex,
+    childIndex,
+    isChild: true 
+  })
+  
   if (isMobile.value) {
     isMobileExpanded.value = false
     document.body.style.overflow = ''
@@ -190,7 +268,6 @@ onUnmounted(() => {
   border-radius: 8;
   padding: 0;
   margin: 16px;
-
 }
 
 .sidenav--mobile .sidenav__content {
@@ -232,7 +309,7 @@ onUnmounted(() => {
 
 .sidenav__scrollable {
   flex: 1;
-
+  overflow-y: auto;
 }
 
 /* Header */
@@ -254,97 +331,113 @@ onUnmounted(() => {
 .sidenav__menu {
   list-style: none;
   padding: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0;
 }
 
 /* Navigation items */
-.nav-item, .sidenav__toggle {
+.nav-item {
   position: relative;
-  cursor: pointer;
-  padding: 8px;
+  margin-bottom: 4px;
   border-radius: 4px;
-  min-width: 36px;
-  color: var(--fg-text-defined);
-  width: 100%;
-}
-
-.nav-item:hover {
-  background-color: var(--bg-clickable-hover);
-  color: var(--fg-text-strong);
+  transition: background-color 0.2s ease;
 }
 
 .nav-item__content {
+  cursor: pointer;
   display: flex;
   align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
   gap: 12px;
-  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.nav-item__content:hover {
+  background-color: var(--bg-clickable-hover);
+}
+
+.nav-item--active .nav-item__content {
+  background-color: var(--bg-clickable-active);
 }
 
 .nav-item__icon {
-  flex-shrink: 0;
+  min-width: 20px;
 }
 
 .nav-item__label {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  transition: opacity 0.2s ease;
-  margin: 0px !important;
-}
-
-/* Collapsed state */
-.sidenav--collapsed .nav-item__content {
-  justify-content: center;
-  padding: var(--spacing-sm) 0;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin: 0px;
 }
 
 .sidenav--collapsed .nav-item__label {
-  width: 0;
-  opacity: 0;
   display: none;
 }
 
-.sidenav--collapsed .nav-item__badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.nav-item__badge {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--fg-accent-emphasis);
 }
 
-/* Footer */
-.sidenav__footer {
-  padding: var(--spacing-md);
-}
-
-.sidenav--collapsed .sidenav__footer {
-  display: flex;
+.sidenav--collapsed .nav-item__content {
   justify-content: center;
+  padding: 8px;
 }
 
-/* Toggle button */
+/* Footer and toggle button */
+.sidenav__footer {
+  margin-top: 16px;
+}
+
 .sidenav__toggle {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  justify-content: start;
   cursor: pointer;
-  color: var(--text-secondary);
-  position: relative;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  gap: 8px;
 }
 
 .sidenav__toggle:hover {
-  color: var(--text-primary);
   background-color: var(--bg-clickable-hover);
 }
 
 .sidenav--collapsed .sidenav__toggle {
-  justify-content: center;
+  padding: 8px;
 }
 
-.nav-item__tooltip {
-  position: absolute;
-  left: 48px;
-  top: 50%;
-  transform: translateY(-50%);
+.nav-item__dropdown-icon {
+  margin-left: auto;
+}
+
+/* Child items */
+.nav-item__children {
+  background-color: var(--bg-clickable-hover-inverse);
+  margin-left: 24px;
+  margin-top: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.nav-item__child {
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+
+.nav-item__child:hover {
+  background-color: var(--bg-clickable-hover);
+}
+
+.nav-item__child-label {
+  display: block;
+  color: var(--fg-object-muted);
 }
 </style> 

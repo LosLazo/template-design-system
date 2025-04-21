@@ -2,7 +2,7 @@
   <NuxtLayout name="default">
     <Breadcrumb />
     <div class="hero-section">
-      <h1 class="headline-lg" style="max-width: 20ch;">Components</h1>
+      <h1 class="supertype-sm" style="max-width: 20ch;">Components</h1>
     </div> 
     <Tabs 
       v-model="activeTab"

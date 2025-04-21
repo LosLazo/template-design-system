@@ -1,6 +1,6 @@
 <template>
   <div class="carousel">
-    <h2 v-if="title" class="body-xl">{{ title }}</h2>
+    <h3 v-if="title" style="margin: 0px;">{{ title }}</h3>
     <div class="carousel__container" ref="containerRef">
       <div 
         class="carousel__items" 
@@ -9,22 +9,22 @@
       >
         <slot></slot>
       </div>
-      <div class="carousel__navigation">
-        <Button
-          variant="secondary"
-          size="small"
-          prefixIcon="chevron-left"
-          @click="prev"
-          :disabled="isAtStart"
-        />
-        <Button
-          variant="secondary"
-          size="small"
-          prefixIcon="chevron-right"
-          @click="next"
-          :disabled="isAtEnd"
-        />
-      </div>
+    </div>
+    <div class="carousel__navigation">
+      <Button
+        variant="secondary"
+        size="small"
+        prefixIcon="chevron-left"
+        @click="prev"
+        :disabled="isAtStart"
+      />
+      <Button
+        variant="secondary"
+        size="small"
+        prefixIcon="chevron-right"
+        @click="next"
+        :disabled="isAtEnd"
+      />
     </div>
   </div>
 </template>
@@ -98,19 +98,29 @@ const updateNavigationState = () => {
 
 // Move to the next item
 const next = () => {
+  console.log('Next button clicked')
+  
   // Safety check
-  if (!containerRef.value || !itemsRef.value) return
+  if (!containerRef.value || !itemsRef.value) {
+    console.warn('Container or items ref not found')
+    return
+  }
   
   // Get container and content dimensions
   const containerWidth = containerRef.value.offsetWidth
   const contentWidth = itemsRef.value.scrollWidth
   
+  // Get all carousel items
+  const items = getCarouselItems()
+  console.log('Carousel items found:', items.length)
+  
+  if (items.length === 0) {
+    console.warn('No carousel items found')
+    return
+  }
+  
   // Calculate how much we can scroll
   const maxTranslate = -(contentWidth - containerWidth)
-  
-  // Get current visible element width
-  const items = getCarouselItems()
-  if (items.length === 0) return
   
   // Find the width of the current item to scroll by
   let currentItemWidth = 300 // Default fallback
@@ -118,16 +128,12 @@ const next = () => {
     const currentItem = items[currentIndex.value] as HTMLElement
     currentItemWidth = currentItem.offsetWidth + itemGap.value
     
-    console.log('Next - Current item details:', {
-      element: currentItem,
-      width: currentItem.offsetWidth,
-      gap: itemGap.value,
-      totalWidth: currentItemWidth
-    })
+    console.log('Current item:', currentIndex.value, 'Width:', currentItemWidth)
   }
   
   // Calculate new position
   const newPosition = Math.max(maxTranslate, translateX.value - currentItemWidth)
+  console.log('New position:', newPosition, 'Current position:', translateX.value)
   
   // Only move if we can go further
   if (newPosition !== translateX.value) {
@@ -138,6 +144,9 @@ const next = () => {
     
     // Update navigation state
     updateNavigationState()
+    console.log('Carousel moved to position:', translateX.value, 'Index:', currentIndex.value)
+  } else {
+    console.log('Cannot move further')
   }
 }
 
@@ -209,14 +218,13 @@ watch(() => getCarouselItems().length, () => {
   display: flex;
   flex-direction: column;
   overflow: visible;
-  gap: var(--space-tiny);
+  gap: var(--space-medium);
 }
 
 .carousel__container {
   position: relative;
   width: 100%;
   overflow: visible;
-  padding-bottom: var(--space-large);
 }
 
 .carousel__items {
@@ -225,7 +233,6 @@ watch(() => getCarouselItems().length, () => {
   grid-auto-columns: max-content;
   gap: var(--space-medium);
   transition: transform 0.3s ease;
-  padding: var(--space-small) 0;
   overflow: visible;
   width: max-content;
   min-height: 400px;

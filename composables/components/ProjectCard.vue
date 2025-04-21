@@ -16,7 +16,7 @@
           />
         </div>
         <div class="project-card__footer">
-          <h2 class="title-sm project-card__title">{{ title }}</h2>
+          <h2 class="body-md project-card__title">{{ title }}</h2>
           <Icon 
             name="arrow-right"
             :size="20"
@@ -43,7 +43,7 @@
           />
         </div>
         <div class="project-card__footer">
-          <h2 class="title-sm project-card__title">{{ title }}</h2>
+          <h2 class="body-md project-card__title">{{ title }}</h2>
           <Icon 
             name="arrow-right"
             :size="20"
@@ -172,7 +172,7 @@ defineEmits<{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--permanent-white) !important;
+  color: var(--fg-text-strong) !important;
   z-index: 1;
 }
 

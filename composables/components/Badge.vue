@@ -9,21 +9,48 @@
 <script setup>
 import { computed } from 'vue'
 
+/**
+ * @component Badge
+ * @description Displays a small numerical value or indicator
+ * @example <Badge value="5" />
+ * @example <Badge value="5" max="99" />
+ * @example <Badge isDot />
+ */
+
 const props = defineProps({
+  /**
+   * Content to be displayed inside the badge
+   * @type {Number|String}
+   * @default ''
+   */
   value: {
     type: [Number, String],
     default: ''
   },
+  /**
+   * Maximum value to show before adding a '+' suffix
+   * @type {Number}
+   * @default 99
+   */
   max: {
     type: Number,
     default: 99
   },
+  /**
+   * Whether to display as a small dot without content
+   * @type {Boolean}
+   * @default false
+   */
   isDot: {
     type: Boolean,
     default: false
   }
 })
 
+/**
+ * Formats the badge value based on the max prop
+ * @returns {String|Number} Formatted value with '+' suffix if it exceeds the max
+ */
 const formattedValue = computed(() => {
   if (typeof props.value === 'number') {
     return props.value > props.max ? `${props.max}+` : props.value

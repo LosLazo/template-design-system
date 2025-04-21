@@ -1,120 +1,246 @@
 <template>
   <NuxtLayout name="default">
-    <div class="hero-section">
-      <h1 class="headline-lg col-12" style="text-align: center;">Ask anything</h1>
-      <Input 
-        class="col-12"  
-        placeholder="Should I use a modal or a side panel?" 
-        suffix-icon="search" 
-        id="search-input"
-        v-model="searchQuery"
-      />
-    </div>
-    <div class="grid">
-      <ProjectCard
-        title="Start designing"
-        backgroundColor="#1E1E1E"
-        aspectRatio="16x9"
-        class="split-3"
-      />
-      <ProjectCard
-        title="Start coding"
-        backgroundColor="#1E1E1E"
-        aspectRatio="16x9"
-        class="split-3"
-      />
-      <ProjectCard
-        title="For AI agents"
-        backgroundColor="#1E1E1E"
-        aspectRatio="16x9"
-        class="split-3"
-      />
-    </div>
-    <div class="grid">
-      <Carousel title="News" :infinite="false" class="col-12">
-          <ProjectCard
-            v-for="(item, index) in carouselItems"
-            :key="index"
-            :title="item.title"
-            :image="item.image"
-            :backgroundColor="item.backgroundColor"
-            :interactive="true"
-            :aspectRatio="item.aspectRatio"
-            :orientation="item.orientation"
-            :link="item.link"
-            class="carousel-item"
+    <section class="home">
+      <div class="home__hero grid">
+        <h1 class="headline-lg col-12 home__title">Ask anything</h1>
+        <div class="home__search col-span-6 col-start-4">
+          <Input 
+            placeholder="Should I use a modal or a side panel?" 
+            suffix-icon="search" 
+            id="search-input"
+            v-model="searchQuery"
+            class="home__search-input"
           />
-      </Carousel>
-    </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- Loading state with animation -->
+        <div v-if="loading">
+          <div class="home__loader"></div>
+          <p class="home__loading-text">Loading content...</p>
+        </div>
+        
+        <!-- Error state -->
+        <div v-else-if="error" class="home__error">
+          <p>{{ error }}</p>
+          <button @click="loadHomeContent" class="home__retry-button">Retry</button>
+        </div>
+        
+        <!-- Content from CMS -->
+        <div v-else-if="homePageContent" class="home__cms-content">
+          <SanityBlockContent 
+            v-if="homePageContent.pageBuilder" 
+            :blocks="homePageContent.pageBuilder" 
+          />
+          <SanityBlockContent 
+            v-else-if="homePageContent.content" 
+            :blocks="homePageContent.content" 
+          />
+          <SanityBlockContent 
+            v-else-if="homePageContent.blocks" 
+            :blocks="homePageContent.blocks" 
+          />
+          <div v-else class="home__no-content">
+            <p>No content found. Please add content in the CMS.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </NuxtLayout>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import ProjectCard from '~/components/ProjectCard.vue'
-import Input from '~/components/Input.vue'
+import { ref, onMounted } from 'vue'
+import Input from '~/composables/components/Input.vue'
+import SanityBlockContent from '~/composables/components/SanityBlockContent.vue'
+import { useSanityClient } from '~/utils/sanityClient'
 
+// State
 const searchQuery = ref("")
+const loading = ref(true)
+const homePageContent = ref(null)
+const error = ref(null)
 
-// Carousel items data
-const carouselItems = ref([
-  {
-    title: 'Best Practices for designers',
-    subtitle: 'Eco-Friendly',
-    description: 'Learn about sustainable design practices for a better future.',
-    backgroundColor: '#27ae60', // Green color
-    aspectRatio: '16x9',
-    orientation: 'landscape',
-    link: '/article'
-  },
-  {
-    title: 'Modern Architecture',
-    subtitle: 'Contemporary Design',
-    description: 'Explore the latest trends in modern architecture and design.',
-    image: 'https://cdn.cosmos.so/7cd64f0c-9e0b-4e22-985a-fc464c560185?format=jpeg',
-    aspectRatio: '4x5',
-    orientation: 'portrait',
-    link: '/article'
-  },
-  {
-    title: 'Urban Living',
-    subtitle: 'City Lifestyle',
-    description: 'Discover the perfect balance of comfort and style in urban spaces.',
-    backgroundColor: '#3498db', // Blue color
-    aspectRatio: '4x3',
-    orientation: 'landscape',
-    link: '/article'
-  },
-  {
-    title: 'Minimalist Design',
-    subtitle: 'Less is More',
-    description: 'Experience the beauty of simplicity in modern minimalist design.',
-    image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg',
-    aspectRatio: '1x1',
-    orientation: 'landscape',
-    link: '/article'
-  },
-  {
-    title: 'Luxury Interiors',
-    subtitle: 'Premium Design',
-    description: 'Indulge in the finest luxury interior design concepts.',
-    image: 'https://cdn.cosmos.so/0c0eb690-73ce-4a3c-b2b6-68d3d9e9ece6?format=jpeg',
-    aspectRatio: '3x2',
-    orientation: 'landscape',
-    link: '/article'
+// Load home page content from Sanity
+const loadHomeContent = async () => {
+  loading.value = true
+  error.value = null
+  
+  try {
+    const { client } = useSanityClient()
+    
+    // Query for the home page content
+    const result = await client.fetch(`
+      *[_type in ["homePage", "home", "homepage"]][0] {
+        ...,
+        pageBuilder[] {
+          ...,
+          _type,
+          _key
+        }
+      }
+    `)
+    
+    if (!result) {
+      error.value = "Home page not found in CMS"
+    } else {
+      homePageContent.value = result
+    }
+  } catch (err) {
+    console.error('Error fetching home page content:', err)
+    error.value = "Failed to load content. Please try again."
+  } finally {
+    loading.value = false
   }
-])
-</script>
-
-<style>
-.hero-section {
-  padding: 128px 0px 64px 0px;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-large);
-  display: flex;
-  flex-direction: column;
 }
 
+// Initialize on mount
+onMounted(loadHomeContent)
+</script>
 
+<style scoped>
+:root {
+  --home-max-width: 1200px;
+  --home-padding: var(--space-large, 24px);
+  --home-title-spacing: 48px;
+  --home-hero-padding-top: 128px;
+  --home-hero-padding-bottom: 64px;
+}
+
+/* Home page container */
+.home {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Hero section styling */
+.home__hero {
+  padding: 128px 0 64px 0;
+  gap: 48px;
+  width: 100%;
+}
+
+.home__title {
+  text-align: center;
+  margin-bottom: var(--home-title-spacing);
+}
+
+.home__search {
+  width: 100%;
+  grid-column: 4 / 10 !important;
+}
+
+.home__search-input {
+  width: 100%;
+  grid-column: 4 / 10 !important;
+}
+
+/* Content area */
+.home__content {
+  max-width: var(--home-max-width);
+  padding: var(--home-padding) 0;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.home__cms-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+/* Loading styles */
+.home__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--space-large) * 2);
+  gap: var(--space-medium);
+}
+
+.home__loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--bg-clickable-hover);
+  border-top: 4px solid var(--fg-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.home__loading-text {
+  color: var(--fg-text-soft);
+}
+
+/* Error styles */
+.home__error {
+  background-color: var(--bg-surface-disabled);
+  border-radius: var(--radius-medium, 8px);
+  padding: var(--space-large);
+  color: var(--fg-error);
+  text-align: center;
+  margin: var(--space-large) 0;
+}
+
+.home__retry-button {
+  background-color: var(--bg-clickable);
+  color: var(--fg-text-strong);
+  border: none;
+  padding: var(--space-small) var(--space-medium);
+  margin-top: var(--space-medium);
+  border-radius: var(--radius-small, 4px);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.home__retry-button:hover {
+  background-color: var(--bg-clickable-hover);
+}
+
+.home__no-content {
+  text-align: center;
+  padding: var(--space-large);
+  color: var(--fg-text-soft);
+  background-color: var(--bg-surface-disabled);
+  border-radius: var(--radius-medium, 8px);
+  width: 100%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .home__content {
+    padding: var(--home-padding);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --home-hero-padding-top: 64px;
+    --home-hero-padding-bottom: 32px;
+    --home-title-spacing: 32px;
+  }
+  
+  .home__search {
+    grid-column: 2 / 12;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --home-padding: var(--space-medium, 16px);
+  }
+  
+  .home__title {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+}
 </style> 

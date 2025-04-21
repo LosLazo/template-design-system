@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import Footer from '~/patterns/Footer.vue'
+import Footer from '~/composables/patterns/Footer.vue'
 </script>
 
 <style>
