@@ -15,3 +15,13 @@ description:
 <Avatar shape="squircle" size={64} />
 ```
 
+## Component API Overview
+
+```typescript
+interface AvatarComponent {
+
+
+
+}
+```
+

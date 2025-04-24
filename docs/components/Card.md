@@ -15,3 +15,19 @@ description:
 <Card title="Spanning Card" width="span 2"> <template #actions> <Button>Action</Button> </template> </Card>
 ```
 
+## Computed Properties
+
+| Name | Description | Returns |
+|------|-------------|---------|
+| `cardStyle` |  | {Object} CSS style object |
+
+## Component API Overview
+
+```typescript
+interface CardComponent {
+
+  readonly cardStyle: /* computed */;
+
+}
+```
+

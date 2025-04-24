@@ -15,3 +15,19 @@ description:
 <Toggle v-model="notifications" disabled />
 ```
 
+## Methods
+
+| Name | Parameters | Description | Returns |
+|------|------------|-------------|---------|
+| `toggle()` | - |  | - |
+
+## Component API Overview
+
+```typescript
+interface ToggleComponent {
+
+
+  toggle(): void;
+}
+```
+

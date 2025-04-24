@@ -15,3 +15,13 @@ description:
 <Tooltip position="left" :visible="true">Help text with <strong>formatting</strong></Tooltip>
 ```
 
+## Component API Overview
+
+```typescript
+interface TooltipComponent {
+
+
+
+}
+```
+

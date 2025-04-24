@@ -15,3 +15,19 @@ description:
 <Image backgroundColor="#f0f0f0" aspectRatio="1x1" />
 ```
 
+## Computed Properties
+
+| Name | Description | Returns |
+|------|-------------|---------|
+| `isPortrait` |  | {boolean} True if orientation is 'portrait' |
+
+## Component API Overview
+
+```typescript
+interface ImageComponent {
+
+  readonly isPortrait: /* computed */;
+
+}
+```
+

@@ -16,3 +16,19 @@ description:
 <Checkbox v-model="isDisabled" disabled />
 ```
 
+## Methods
+
+| Name | Parameters | Description | Returns |
+|------|------------|-------------|---------|
+| `toggle()` | - |  | - |
+
+## Component API Overview
+
+```typescript
+interface CheckboxComponent {
+
+
+  toggle(): void;
+}
+```
+

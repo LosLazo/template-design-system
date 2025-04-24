@@ -13,3 +13,13 @@ description:
 <ProjectCard title="Project Name" image="/path/to/image.jpg" link="/projects/project-name" interactive />
 ```
 
+## Component API Overview
+
+```typescript
+interface ProjectCardComponent {
+
+
+
+}
+```
+

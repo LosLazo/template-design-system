@@ -15,3 +15,13 @@ description:
 <Spinner size="small" color="#ff0000" />
 ```
 
+## Component API Overview
+
+```typescript
+interface SpinnerComponent {
+
+
+
+}
+```
+

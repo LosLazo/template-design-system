@@ -16,3 +16,13 @@ description:
 <Button state="loading">Loading</Button>
 ```
 
+## Component API Overview
+
+```typescript
+interface ButtonComponent {
+
+
+
+}
+```
+

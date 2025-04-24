@@ -80,19 +80,151 @@ function parseJSDocComment(comment) {
   return result;
 }
 
-// Extract interface properties from a component
+// Extract props from the component in multiple ways
 function extractProps(content) {
-  const propsRegex = /interface\s+Props\s*{([^}]*)}/s;
-  const propsMatch = content.match(propsRegex);
+  let allProps = [];
   
-  if (!propsMatch) return [];
+  // Method 1: Get props from interfaces
+  const propsInterface = extractPropsFromInterface(content);
+  allProps = [...allProps, ...propsInterface];
   
-  const propsBlock = propsMatch[1];
-  const propRegex = /\/\*\*\s*([\s\S]*?)\s*\*\/\s*(\w+)(\??)\s*:\s*([^;]*);/g;
+  // Method 2: Extract props from defineProps
+  const definePropsRegex = /defineProps<(?:{([^}]*)}|([^>]*)>\(\))/s;
+  const definePropsMatch = content.match(definePropsRegex);
+  
+  if (definePropsMatch) {
+    const propsContent = definePropsMatch[1] || definePropsMatch[2];
+    if (propsContent) {
+      const propsFromDefine = extractPropsFromInterfaceBody(propsContent);
+      
+      // Add only props that aren't already in the array
+      propsFromDefine.forEach(prop => {
+        if (!allProps.some(p => p.name === prop.name)) {
+          allProps.push(prop);
+        }
+      });
+    }
+  }
+  
+  // Method 3: Look for direct withDefaults declarations
+  const withDefaultsRegex = /withDefaults\s*\(\s*defineProps<(?:{([^}]*)}|([^>]*)>\(\))\s*,\s*({[^}]*})\s*\)/s;
+  const withDefaultsMatch = content.match(withDefaultsRegex);
+  
+  if (withDefaultsMatch) {
+    const propsContent = withDefaultsMatch[1] || withDefaultsMatch[2];
+    const defaultsObj = withDefaultsMatch[3];
+    
+    if (propsContent) {
+      const propsFromWithDefaults = extractPropsFromInterfaceBody(propsContent);
+      
+      // Extract default values
+      const defaultValues = extractDefaultValuesFromObject(defaultsObj);
+      
+      // Merge with defaults
+      propsFromWithDefaults.forEach(prop => {
+        if (defaultValues[prop.name]) {
+          prop.default = defaultValues[prop.name];
+        }
+        
+        // Add only props that aren't already in the array
+        if (!allProps.some(p => p.name === prop.name)) {
+          allProps.push(prop);
+        }
+      });
+    }
+  }
+  
+  // Method 4: Direct property declarations
+  const propDeclarationRegex = /(?:const|let|var)\s+(\w+)\s*=\s*(?:ref|reactive)\s*\(([^)]*)\)/g;
+  let propMatch;
+  
+  while ((propMatch = propDeclarationRegex.exec(content)) !== null) {
+    const propName = propMatch[1];
+    const initialValue = propMatch[2].trim();
+    
+    // Only consider public props (filter out internal state variables)
+    if (!propName.startsWith('_') && 
+        !propName.endsWith('Ref') && 
+        !allProps.some(p => p.name === propName)) {
+      
+      allProps.push({
+        name: propName,
+        type: 'any', // We can't reliably determine the type from reactive/ref
+        optional: true,
+        description: `Property ${propName}`,
+        default: initialValue !== '' ? initialValue : null
+      });
+    }
+  }
+  
+  return allProps;
+}
+
+// Extract default values from an object literal
+function extractDefaultValuesFromObject(objectStr) {
+  const defaultValues = {};
+  
+  // Extract individual property defaults
+  const propertyRegex = /(\w+)\s*:\s*([^,}]*)/g;
+  let propertyMatch;
+  
+  while ((propertyMatch = propertyRegex.exec(objectStr)) !== null) {
+    const propName = propertyMatch[1];
+    const defaultValue = propertyMatch[2].trim();
+    defaultValues[propName] = defaultValue;
+  }
+  
+  return defaultValues;
+}
+
+// Extract props from interface definition
+function extractPropsFromInterface(content) {
   const props = [];
   
+  // Find all interfaces that could define props
+  const interfaceRegex = /interface\s+(\w+)(?:\s+extends\s+(\w+))?\s*{([^}]*)}/gs;
   let match;
-  while ((match = propRegex.exec(propsBlock)) !== null) {
+  
+  while ((match = interfaceRegex.exec(content)) !== null) {
+    const interfaceName = match[1];
+    const extendsInterface = match[2]; // Might be undefined
+    const interfaceBody = match[3];
+    
+    // Skip if it's not related to props
+    if (!interfaceName.includes('Props') && interfaceName !== 'Props') {
+      continue;
+    }
+    
+    // Extract properties from this interface
+    const propsFromThisInterface = extractPropsFromInterfaceBody(interfaceBody);
+    props.push(...propsFromThisInterface);
+    
+    // TODO: If the interface extends another interface, we should also extract those props
+    // This would require recursively finding the extended interface
+  }
+  
+  // If no interfaces found but there's a direct Props type
+  if (props.length === 0) {
+    // Try to find props defined with type syntax
+    const typePropsRegex = /type\s+Props\s*=\s*{([^}]*)}/s;
+    const typeMatch = content.match(typePropsRegex);
+    if (typeMatch) {
+      const typeBody = typeMatch[1];
+      const propsFromType = extractPropsFromInterfaceBody(typeBody);
+      props.push(...propsFromType);
+    }
+  }
+  
+  return props;
+}
+
+// Extract props from the interface body
+function extractPropsFromInterfaceBody(interfaceBody) {
+  const props = [];
+  const propRegex = /\/\*\*\s*([\s\S]*?)\s*\*\/\s*(?:readonly\s+)?(\w+)(\??)\s*:\s*([^;]*);/g;
+  
+  let match;
+  while ((match = propRegex.exec(interfaceBody)) !== null) {
     const comment = match[1].trim();
     const name = match[2];
     const optional = match[3] === '?';
@@ -107,6 +239,28 @@ function extractProps(content) {
       optional,
       description: parsedComment.description,
       default: parsedComment.tags.default ? parsedComment.tags.default[0] : null
+    });
+  }
+  
+  // Try to find props without JSDoc comments
+  const simplePropRegex = /(?:readonly\s+)?(\w+)(\??)\s*:\s*([^;]*);/g;
+  while ((match = simplePropRegex.exec(interfaceBody)) !== null) {
+    const name = match[1];
+    
+    // Skip if we already found this prop with JSDoc
+    if (props.some(p => p.name === name)) {
+      continue;
+    }
+    
+    const optional = match[2] === '?';
+    const type = match[3].trim();
+    
+    props.push({
+      name,
+      type,
+      optional,
+      description: '', // No description available
+      default: null
     });
   }
   
@@ -158,8 +312,85 @@ function extractSlots(componentComment) {
   });
 }
 
+// Extract methods from the component
+function extractMethods(content) {
+  const methods = [];
+  
+  // Match function declarations
+  const funcRegex = /\/\*\*\s*([\s\S]*?)\s*\*\/\s*(?:export\s+)?(?:async\s+)?(?:function\s+)?(?:const\s+)?(\w+)\s*=\s*(?:async\s*)?\(([^)]*)\)[^=]*=>/g;
+  let match;
+  
+  while ((match = funcRegex.exec(content)) !== null) {
+    const comment = match[1].trim();
+    const name = match[2];
+    const params = match[3].trim();
+    
+    // Skip lifecycle hooks and internal methods that start with underscore
+    if (name.startsWith('on') || name.startsWith('_') || name === 'setup') {
+      continue;
+    }
+    
+    // Parse the JSDoc comment
+    const parsedComment = parseJSDocComment(comment);
+    
+    // Check if this is marked as private
+    if (parsedComment.tags.private || parsedComment.tags.internal) {
+      continue;
+    }
+    
+    methods.push({
+      name,
+      params,
+      description: parsedComment.description,
+      returns: parsedComment.tags.returns ? parsedComment.tags.returns[0] : null,
+      paramDescriptions: parsedComment.tags.param || []
+    });
+  }
+  
+  return methods;
+}
+
+// Extract computed properties from the component
+function extractComputedProps(content) {
+  const computedProps = [];
+  
+  // Match computed property declarations with JSDoc
+  const computedRegex = /\/\*\*\s*([\s\S]*?)\s*\*\/\s*const\s+(\w+)\s*=\s*computed\s*\(\s*\(\)\s*=>/g;
+  let match;
+  
+  while ((match = computedRegex.exec(content)) !== null) {
+    const comment = match[1].trim();
+    const name = match[2];
+    
+    // Parse the JSDoc comment
+    const parsedComment = parseJSDocComment(comment);
+    
+    // Skip private computed props
+    if (parsedComment.tags.private || parsedComment.tags.internal) {
+      continue;
+    }
+    
+    computedProps.push({
+      name,
+      description: parsedComment.description,
+      returns: parsedComment.tags.returns ? parsedComment.tags.returns[0] : null
+    });
+  }
+  
+  return computedProps;
+}
+
 // Generate markdown documentation for a component
-function generateComponentMarkdown(componentName, componentComment, props, emits, slots, example) {
+function generateComponentMarkdown(
+  componentName, 
+  componentComment, 
+  props, 
+  emits, 
+  slots, 
+  methods, 
+  computedProps, 
+  example
+) {
   let markdown = `---
 title: ${componentName}
 description: ${componentComment.description.split('\n')[0]}
@@ -186,12 +417,42 @@ ${example}
   if (props.length > 0) {
     markdown += `## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
+| Name | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
 `;
     
     props.forEach(prop => {
-      markdown += `| \`${prop.name}\` | \`${prop.type}\` | ${prop.default || 'Required'} | ${prop.description.replace(/\n/g, ' ')} |\n`;
+      markdown += `| \`${prop.name}\` | \`${prop.type}\` | ${prop.optional ? 'No' : 'Yes'} | ${prop.default || '-'} | ${prop.description.replace(/\n/g, ' ')} |\n`;
+    });
+    
+    markdown += '\n';
+  }
+  
+  // Add computed properties section
+  if (computedProps.length > 0) {
+    markdown += `## Computed Properties
+
+| Name | Description | Returns |
+|------|-------------|---------|
+`;
+    
+    computedProps.forEach(prop => {
+      markdown += `| \`${prop.name}\` | ${prop.description.replace(/\n/g, ' ')} | ${prop.returns || '-'} |\n`;
+    });
+    
+    markdown += '\n';
+  }
+  
+  // Add methods section
+  if (methods.length > 0) {
+    markdown += `## Methods
+
+| Name | Parameters | Description | Returns |
+|------|------------|-------------|---------|
+`;
+    
+    methods.forEach(method => {
+      markdown += `| \`${method.name}(${method.params})\` | ${method.paramDescriptions.join(', ') || '-'} | ${method.description.replace(/\n/g, ' ')} | ${method.returns || '-'} |\n`;
     });
     
     markdown += '\n';
@@ -226,6 +487,19 @@ ${example}
     
     markdown += '\n';
   }
+
+  // Add component API summary
+  markdown += `## Component API Overview
+
+\`\`\`typescript
+interface ${componentName}Component {
+${props.map(p => `  ${p.name}${p.optional ? '?' : ''}: ${p.type};`).join('\n')}
+${computedProps.map(c => `  readonly ${c.name}: /* computed */;`).join('\n')}
+${methods.map(m => `  ${m.name}(${m.params}): void;`).join('\n')}
+}
+\`\`\`
+
+`;
   
   return markdown;
 }
@@ -265,10 +539,50 @@ async function processComponentFile(filePath, fileName) {
     // Component name
     const componentName = fileName.replace('.vue', '');
     
-    // Extract props, emits, and example
-    const props = extractProps(scriptContent);
+    // Extract props from interface and withDefaults
+    let props = extractProps(scriptContent);
+    
+    // Filter out internal refs and state variables
+    const internalRefs = [
+      'containerRef', 'itemsRef', 'translateX', 'currentIndex', 
+      'itemGap', 'isAtStart', 'isAtEnd', 'isDragging', 'sliderEl', 
+      'railEl', 'isExpanded', 'displayValue'
+    ];
+    
+    // Only keep actual props
+    props = props.filter(prop => {
+      // Keep if explicitly marked with @prop
+      if (prop.description && prop.description.includes('@prop')) {
+        return true;
+      }
+      
+      // Skip common internal state variables by name pattern
+      if (internalRefs.includes(prop.name) || 
+          prop.name.endsWith('Ref') || 
+          prop.name.startsWith('_') || 
+          prop.name === 'emit' || 
+          prop.name === 'slots') {
+        return false;
+      }
+      
+      return true;
+    });
+    
+    // Extract emits, slots, methods, and computed properties
     const emits = extractEmits(scriptContent);
     const slots = extractSlots(componentComment);
+    const methods = extractMethods(scriptContent);
+    
+    // Filter out private methods that might have been incorrectly captured
+    const publicMethods = methods.filter(method => {
+      return !method.name.startsWith('_') && 
+             !method.name.startsWith('on') &&
+             !['updateNavigationState', 'calculateItemGap', 'getCarouselItems', 
+               'handleClickOutside', 'updateValueFromEvent', 'onDrag', 
+               'stopDrag'].includes(method.name);
+    });
+    
+    const computedProps = extractComputedProps(scriptContent);
     const example = componentComment.tags.example ? componentComment.tags.example.join('\n') : null;
     
     // Generate markdown
@@ -278,6 +592,8 @@ async function processComponentFile(filePath, fileName) {
       props,
       emits,
       slots,
+      publicMethods,
+      computedProps,
       example
     );
     

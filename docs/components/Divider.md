@@ -15,9 +15,21 @@ description:
 
 ## Props
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| `orientation` | `'horizontal' | 'vertical'` | 'horizontal' | The orientation of the divider |
-| `color` | `'strong' | 'defined' | 'soft' | 'subtle' | 'discrete' | 'disabled'` | 'defined' | The color strength of the divider |
-| `margin` | `string | number` | 'var(--space-medium)' | Margin around the divider in pixels or CSS value |
+| Name | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| `orientation` | `'horizontal' | 'vertical'` | No | 'horizontal' | The orientation of the divider |
+| `color` | `'strong' | 'defined' | 'soft' | 'subtle' | 'discrete' | 'disabled'` | No | 'defined' | The color strength of the divider |
+| `margin` | `string | number` | No | 'var(--space-medium)' | Margin around the divider in pixels or CSS value |
+
+## Component API Overview
+
+```typescript
+interface DividerComponent {
+  orientation?: 'horizontal' | 'vertical';
+  color?: 'strong' | 'defined' | 'soft' | 'subtle' | 'discrete' | 'disabled';
+  margin?: string | number;
+
+
+}
+```
 

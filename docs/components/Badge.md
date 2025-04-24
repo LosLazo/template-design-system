@@ -16,3 +16,19 @@ description:
 <Badge value="NEW" />
 ```
 
+## Computed Properties
+
+| Name | Description | Returns |
+|------|-------------|---------|
+| `formattedValue` |  | {String|Number} Formatted value with '+' suffix if it exceeds the max |
+
+## Component API Overview
+
+```typescript
+interface BadgeComponent {
+
+  readonly formattedValue: /* computed */;
+
+}
+```
+
