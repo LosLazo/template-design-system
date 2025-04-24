@@ -46,7 +46,7 @@
   </NuxtLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // Content prop is passed from the parent component
 const props = defineProps({
   content: {

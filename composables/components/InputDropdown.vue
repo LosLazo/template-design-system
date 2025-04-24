@@ -31,17 +31,76 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import Input from './Input.vue'
 import Menu from './Menu.vue'
 
+/**
+ * @component InputDropdown
+ * @description An input component with dropdown menu functionality.
+ * Combines the functionality of an input field with selectable options.
+ * @example
+ * <InputDropdown
+ *   id="dropdown1"
+ *   v-model="selectedOption"
+ *   :items="[{label: 'Option 1'}, {label: 'Option 2'}]"
+ *   label="Select an option"
+ * />
+ */
+
 interface Props {
+  /**
+   * Current value of the input field
+   */
   modelValue: string
+  
+  /**
+   * Label text for the input field
+   */
   label?: string
+  
+  /**
+   * Placeholder text for the input field
+   */
   placeholder?: string
+  
+  /**
+   * Size of the input field
+   * @default 'medium'
+   */
   size?: 'large' | 'medium' | 'small'
+  
+  /**
+   * Whether the input is disabled
+   * @default false
+   */
   disabled?: boolean
+  
+  /**
+   * Error message to display
+   */
   error?: string
+  
+  /**
+   * Success message to display
+   */
   success?: string
+  
+  /**
+   * Icon to display before the input text
+   */
   prefixIcon?: string
+  
+  /**
+   * Unique identifier for the input field
+   */
   id: string
+  
+  /**
+   * Array of items to display in the dropdown
+   */
   items: Array<{ label: string; value?: string; selected?: boolean }>
+  
+  /**
+   * Whether the input text can be edited manually
+   * @default false
+   */
   editable?: boolean
 }
 
@@ -51,17 +110,41 @@ const props = withDefaults(defineProps<Props>(), {
   editable: false
 })
 
+/**
+ * Define emitted events
+ */
 const emit = defineEmits<{
+  /**
+   * Emitted when the input value changes
+   * @param value - The new input value
+   */
   'update:modelValue': [value: string]
+  
+  /**
+   * Emitted when an item is selected from the dropdown
+   * @param item - The selected item object
+   */
   'select': [item: { label: string; value?: string }]
 }>()
 
+/**
+ * Whether the dropdown is currently expanded
+ * @private
+ */
 const isExpanded = ref(false)
 
+/**
+ * The value to display in the input field
+ * @private
+ */
 const displayValue = computed(() => {
   return props.modelValue || props.placeholder || ''
 })
 
+/**
+ * Processed items with selected state
+ * @private
+ */
 const processedItems = computed(() => {
   return props.items.map(item => ({
     ...item,
@@ -69,25 +152,39 @@ const processedItems = computed(() => {
   }))
 })
 
+/**
+ * Toggle the dropdown expansion state
+ */
 const toggleDropdown = () => {
   if (!props.disabled) {
     isExpanded.value = !isExpanded.value
   }
 }
 
+/**
+ * Handle input field value changes
+ * @param value - The new input value
+ */
 const handleInputChange = (value: string) => {
   if (props.editable) {
     emit('update:modelValue', value)
   }
 }
 
+/**
+ * Handle item selection from the dropdown
+ * @param item - The selected item
+ */
 const handleItemClick = (item: { label: string; value?: string }) => {
   emit('update:modelValue', item.label)
   emit('select', item)
   isExpanded.value = false
 }
 
-// Close dropdown when clicking outside
+/**
+ * Close dropdown when clicking outside
+ * @private
+ */
 const handleClickOutside = (event: MouseEvent) => {
   const target = event.target as HTMLElement
   if (!target.closest('.input-dropdown')) {

@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useSanityClient } from '~/utils/sanityClient'
 import Card from '~/composables/components/Card.vue'

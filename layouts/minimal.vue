@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Footer from '~/composables/patterns/Footer.vue'
 </script>
 

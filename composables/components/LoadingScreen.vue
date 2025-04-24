@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Spinner from './Spinner.vue'
 import ProgressBar from './ProgressBar.vue'
 

@@ -42,22 +42,64 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * @component Dropdown
+ * @description An expandable/collapsible dropdown component that displays items with titles and expandable content.
+ * Features smooth animations and customizable max-width settings.
+ * 
+ * @example <Dropdown :items="[{title: 'Section 1', content: 'This is the content for section 1'}]" />
+ * @example <Dropdown :items="dropdownItems" maxWidth="600px" />
+ * @example <Dropdown :items="faqItems" maxWidth="span 6" />
+ */
 import { ref, computed } from 'vue'
 
+/**
+ * Represents a dropdown item with title and content
+ * @typedef {Object} DropdownItem
+ * @property {string} title - The title displayed in the dropdown header
+ * @property {string} content - The content displayed when the dropdown is expanded
+ */
 interface DropdownItem {
-  title: string
-  content: string
+  /**
+   * The title displayed in the dropdown header
+   */
+  title: string;
+  
+  /**
+   * The content displayed when the dropdown is expanded
+   */
+  content: string;
 }
 
+/**
+ * Dropdown component props
+ * @typedef {Object} DropdownProps
+ */
 interface Props {
-  items: DropdownItem[]
-  maxWidth?: string | number
+  /**
+   * Array of dropdown items to display
+   * @type {DropdownItem[]}
+   * @required
+   */
+  items: DropdownItem[];
+  
+  /**
+   * Maximum width of the dropdown
+   * Can be a CSS value (e.g. '600px'), a number (interpreted as pixels),
+   * or a grid column span value (e.g. 'span 6')
+   * @type {string|number}
+   */
+  maxWidth?: string | number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   maxWidth: undefined
 })
 
+/**
+ * Computed styles for the dropdown based on maxWidth prop
+ * Handles different formats of maxWidth (pixels, grid spans, etc.)
+ */
 const dropdownStyles = computed(() => {
   if (!props.maxWidth) return {}
   
@@ -74,26 +116,55 @@ const dropdownStyles = computed(() => {
   return { maxWidth: props.maxWidth }
 })
 
+/**
+ * Indices of currently expanded dropdown items
+ */
 const expandedIndices = ref<number[]>([])
+
+/**
+ * Index of the item currently being expanded (for animation)
+ */
 const isExpanding = ref<number | null>(null)
+
+/**
+ * Index of the item currently being collapsed (for animation)
+ */
 const isCollapsing = ref<number | null>(null)
 
+/**
+ * Start the expand animation for a dropdown item
+ * @param {number} index - Index of the item being expanded
+ */
 const startExpand = (index: number) => {
   isExpanding.value = index
 }
 
+/**
+ * End the expand animation
+ */
 const endExpand = () => {
   isExpanding.value = null
 }
 
+/**
+ * Start the collapse animation for a dropdown item
+ * @param {number} index - Index of the item being collapsed
+ */
 const startCollapse = (index: number) => {
   isCollapsing.value = index
 }
 
+/**
+ * End the collapse animation
+ */
 const endCollapse = () => {
   isCollapsing.value = null
 }
 
+/**
+ * Toggle expansion state of a dropdown item
+ * @param {number} index - Index of the item to toggle
+ */
 const toggleItem = (index: number) => {
   if (expandedIndices.value.includes(index)) {
     // Remove the index if it's already expanded

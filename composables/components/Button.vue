@@ -37,16 +37,74 @@
 import { computed } from 'vue'
 import Icon from './Icon.vue'
 
+/**
+ * @component Button
+ * @description A versatile button component with multiple variants, sizes, and states.
+ * Supports icons and loading state.
+ * 
+ * @example <Button>Click me</Button>
+ * @example <Button variant="secondary" size="medium">Secondary Button</Button>
+ * @example <Button prefixIcon="arrow-right">With Icon</Button>
+ * @example <Button state="loading">Loading</Button>
+ */
+
+/**
+ * Button variant types
+ * @typedef {'primary'|'secondary'|'ghost'|'danger'} ButtonVariant
+ */
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
+
+/**
+ * Button size options
+ * @typedef {'large'|'medium'|'small'|'tiny'} ButtonSize
+ */
 type ButtonSize = 'large' | 'medium' | 'small' | 'tiny'
+
+/**
+ * Button state options
+ * @typedef {'default'|'loading'} ButtonState
+ */
 type ButtonState = 'default' | 'loading'
 
+/**
+ * Button component props
+ * @typedef {Object} ButtonProps
+ */
 interface Props {
+  /**
+   * Disables the button when true
+   * @type {boolean}
+   */
   disabled?: boolean
+
+  /**
+   * Icon to display before the button text
+   * @type {string}
+   */
   prefixIcon?: string
+
+  /**
+   * Icon to display after the button text
+   * @type {string}
+   */
   suffixIcon?: string
+
+  /**
+   * Size of the button
+   * @type {ButtonSize}
+   */
   size?: ButtonSize
+
+  /**
+   * Current state of the button
+   * @type {ButtonState}
+   */
   state?: ButtonState
+
+  /**
+   * Visual style variant of the button
+   * @type {ButtonVariant}
+   */
   variant?: ButtonVariant
 }
 
@@ -59,6 +117,10 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'primary'
 })
 
+/**
+ * Computes the appropriate icon size based on button size
+ * @returns {number} Icon size in pixels
+ */
 const iconSize = computed<number>(() => {
   switch (props.size) {
     case 'large':
@@ -74,6 +136,11 @@ const iconSize = computed<number>(() => {
   }
 })
 
+/**
+ * Events emitted by the Button component
+ * @typedef {Object} ButtonEmits
+ * @property {Function} click - Emitted when the button is clicked
+ */
 defineEmits(['click'])
 </script>
 

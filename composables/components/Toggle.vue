@@ -1,7 +1,38 @@
 <script setup lang="ts">
+/**
+ * @component Toggle
+ * @description A toggle switch component for boolean inputs, similar to a checkbox but with a sliding visual design.
+ * Used for enabling/disabling settings or features.
+ * 
+ * @example <Toggle v-model="enabled" />
+ * @example <Toggle v-model="darkMode" size="small" />
+ * @example <Toggle v-model="notifications" disabled />
+ */
+
+/**
+ * Toggle component props
+ * @typedef {Object} ToggleProps
+ */
 interface Props {
+  /**
+   * Current state of the toggle (v-model)
+   * @type {boolean}
+   * @required
+   */
   modelValue: boolean;
+  
+  /**
+   * Whether the toggle is disabled
+   * @type {boolean}
+   * @default false
+   */
   disabled?: boolean;
+  
+  /**
+   * Size variant for the toggle
+   * @type {'small'|'default'}
+   * @default 'default'
+   */
   size?: 'small' | 'default';
 }
 
@@ -10,10 +41,19 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'default'
 });
 
+/**
+ * Events emitted by the Toggle component
+ * @typedef {Object} ToggleEmits
+ * @property {Function} update:modelValue - Emitted when the toggle state changes
+ */
 const emit = defineEmits<{
   'update:modelValue': [value: boolean];
 }>();
 
+/**
+ * Toggles the switch state when clicked
+ * Does nothing if the toggle is disabled
+ */
 const toggle = () => {
   if (!props.disabled) {
     emit('update:modelValue', !props.modelValue);

@@ -50,7 +50,7 @@
   </NuxtLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import Input from '~/composables/components/Input.vue'
 import SanityBlockContent from '~/composables/components/SanityBlockContent.vue'

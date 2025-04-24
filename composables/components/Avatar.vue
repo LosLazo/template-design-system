@@ -15,26 +15,63 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+/**
+ * @component Avatar
+ * @description A versatile avatar component for displaying user images with fallback icon support.
+ * Supports different shapes (circle or squircle) and customizable sizing.
+ * 
+ * @example <Avatar />
+ * @example <Avatar src="/path/to/image.jpg" alt="User Name" />
+ * @example <Avatar shape="squircle" size={64} />
+ */
 import Icon from './Icon.vue'
 
+/**
+ * Avatar component props
+ * @typedef {Object} AvatarProps
+ */
 defineProps({
+  /**
+   * Image source URL for the avatar
+   * When not provided, falls back to a user icon
+   * @type {string}
+   * @default ''
+   */
   src: {
     type: String,
     default: ''
   },
+  
+  /**
+   * Alternative text for the avatar image (for accessibility)
+   * @type {string}
+   * @default 'User avatar'
+   */
   alt: {
     type: String,
     default: 'User avatar'
   },
+  
+  /**
+   * Size of the avatar in pixels (applied to both width and height)
+   * @type {number}
+   * @default 40
+   */
   size: {
     type: Number,
     default: 40
   },
+  
+  /**
+   * Shape of the avatar
+   * @type {'circle'|'squircle'}
+   * @default 'circle'
+   */
   shape: {
-    type: String,
+    type: String as () => 'circle' | 'squircle',
     default: 'circle',
-    validator: (value) => ['circle', 'squircle'].includes(value)
+    validator: (value: string) => ['circle', 'squircle'].includes(value)
   }
 })
 </script>

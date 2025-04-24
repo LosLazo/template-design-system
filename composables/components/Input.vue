@@ -93,19 +93,105 @@ import { computed } from 'vue'
 import Icon from './Icon.vue'
 import Button from './Button.vue'
 
+/**
+ * @component Input
+ * @description A form input component with support for various states, icons, and validation.
+ * Provides a consistent interface for text input with built-in error handling and visual feedback.
+ * 
+ * @example <Input v-model="value" label="Username" placeholder="Enter username" />
+ * @example <Input v-model="email" type="email" prefixIcon="mail" error="Invalid email format" />
+ * @example <Input v-model="search" suffixIcon="search" showClearButton />
+ */
+
+/**
+ * Input component props
+ * @typedef {Object} InputProps
+ */
 interface Props {
+  /**
+   * Current value of the input (v-model)
+   * @type {string}
+   * @required
+   */
   modelValue: string
+  
+  /**
+   * Label text displayed above the input
+   * @type {string}
+   */
   label?: string
+  
+  /**
+   * Placeholder text displayed when input is empty
+   * @type {string}
+   */
   placeholder?: string
+  
+  /**
+   * HTML input type (text, password, email, etc.)
+   * @type {string}
+   * @default 'text'
+   */
   type?: string
+  
+  /**
+   * Size variant of the input
+   * @type {'large'|'medium'|'small'}
+   * @default 'medium'
+   */
   size?: 'large' | 'medium' | 'small'
+  
+  /**
+   * Whether the input is disabled
+   * @type {boolean}
+   * @default false
+   */
   disabled?: boolean
+  
+  /**
+   * Whether the input is read-only
+   * @type {boolean}
+   * @default false
+   */
   readonly?: boolean
+  
+  /**
+   * Error message to display below the input
+   * @type {string}
+   */
   error?: string
+  
+  /**
+   * Success message to display below the input
+   * @type {string}
+   */
   success?: string
+  
+  /**
+   * Icon to display at the start of the input
+   * @type {string}
+   */
   prefixIcon?: string
+  
+  /**
+   * Icon to display at the end of the input
+   * @type {string}
+   */
   suffixIcon?: string
+  
+  /**
+   * Unique identifier for the input element
+   * Used for accessibility (connecting label and error messages)
+   * @type {string}
+   * @required
+   */
   id: string
+  
+  /**
+   * Whether to show a clear button when the input has a value
+   * @type {boolean}
+   * @default false
+   */
   showClearButton?: boolean
 }
 
@@ -117,19 +203,35 @@ const props = withDefaults(defineProps<Props>(), {
   showClearButton: false
 })
 
+/**
+ * Events emitted by the Input component
+ * @typedef {Object} InputEmits
+ * @property {Function} update:modelValue - Emitted when the input value changes
+ */
 const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
 
+/**
+ * Computed property for two-way binding with v-model
+ * @type {ComputedRef<string>}
+ */
 const localValue = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value)
 })
 
+/**
+ * Clears the input value
+ */
 const clearInput = () => {
   emit('update:modelValue', '')
 }
 
+/**
+ * Computed property for icon size based on input size
+ * @returns {number} Size of icon in pixels
+ */
 const iconSize = computed(() => {
   switch (props.size) {
     case 'large':
@@ -143,6 +245,10 @@ const iconSize = computed(() => {
   }
 })
 
+/**
+ * Computed property for button size based on input size
+ * @returns {string} Button size variant
+ */
 const buttonSize = computed(() => {
   switch (props.size) {
     case 'large':

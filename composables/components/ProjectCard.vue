@@ -60,13 +60,56 @@ import Image from './Image.vue'
 import Icon from './Icon.vue'
 import { computed } from 'vue'
 
+/**
+ * @component ProjectCard
+ * @description A card component for displaying project information with an image and title.
+ * Features interactive hover effects and can function as a link or clickable element.
+ * @example
+ * <ProjectCard
+ *   title="Project Name"
+ *   image="/path/to/image.jpg"
+ *   link="/projects/project-name"
+ *   interactive
+ * />
+ */
+
 interface Props {
+  /**
+   * The title of the project
+   */
   title: string
+  
+  /**
+   * URL or path to the project image
+   */
   image?: string
+  
+  /**
+   * Background color for the image area when image is loading or unavailable
+   */
   backgroundColor?: string
+  
+  /**
+   * Whether the card should have hover effects
+   * @default false
+   */
   interactive?: boolean
+  
+  /**
+   * Aspect ratio of the card
+   * @default '4x5'
+   */
   aspectRatio?: '1x1' | '16x9' | '4x3' | '4x5' | '3x2'
+  
+  /**
+   * Orientation of the card
+   * @default 'landscape'
+   */
   orientation?: 'landscape' | 'portrait'
+  
+  /**
+   * URL or path for the card to link to
+   */
   link?: string
 }
 
@@ -76,7 +119,10 @@ const props = withDefaults(defineProps<Props>(), {
   orientation: 'landscape'
 })
 
-// Transform the aspect ratio format from 4x5 to CSS value
+/**
+ * Calculated aspect ratio for CSS
+ * @private
+ */
 const computedAspectRatio = computed(() => {
   if (!props.aspectRatio) return '1/1';
   
@@ -97,7 +143,13 @@ const computedAspectRatio = computed(() => {
     : `${width}/${height}`;
 })
 
+/**
+ * Define emitted events
+ */
 defineEmits<{
+  /**
+   * Emitted when the card is clicked (only when no link is provided)
+   */
   (e: 'click'): void
 }>()
 </script>

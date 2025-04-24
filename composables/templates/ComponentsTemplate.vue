@@ -2,8 +2,90 @@
   <NuxtLayout name="default">
     <Breadcrumb />
     <div class="hero-section">
-      <h1 class="headline-lg" style="max-width: 20ch;">{{ componentData?.title || content.title || 'Component' }}</h1>
+      <h1 class="headline-lg" style="max-width: 20ch;">{{ componentData?.title || 'Component' }}</h1>
       <p v-if="componentData?.description" class="body-lg">{{ componentData.description }}</p>
+      
+      <!-- Documentation Guide Section -->
+      <div v-if="isDev && !componentData && !loading" class="documentation-guide">
+        <h2 class="title-md">Component Documentation Guide</h2>
+        <p class="body-md">Follow this guide to properly annotate components for documentation generation:</p>
+        
+        <div class="documentation-guide__section">
+          <h3 class="title-sm">1. Component Overview</h3>
+          <pre class="documentation-guide__code">
+/**
+ * @component ComponentName
+ * @description Brief description of what the component does and when to use it.
+ * 
+ * @example &lt;ComponentName prop="value" /&gt;
+ * @example &lt;ComponentName&gt;Child content&lt;/ComponentName&gt;
+ */</pre>
+        </div>
+        
+        <div class="documentation-guide__section">
+          <h3 class="title-sm">2. Type Definitions (TypeScript)</h3>
+          <pre class="documentation-guide__code">
+/**
+ * Valid options for component prop
+ * @typedef {'option1'|'option2'|'option3'} PropOptions
+ */
+type PropOptions = 'option1' | 'option2' | 'option3'</pre>
+        </div>
+        
+        <div class="documentation-guide__section">
+          <h3 class="title-sm">3. Props Documentation</h3>
+          <pre class="documentation-guide__code">
+/**
+ * Component props
+ * @typedef {Object} ComponentProps
+ */
+const props = defineProps({
+  /**
+   * Description of what this prop does
+   * @type {String|Number}
+   * @default 'default value'
+   */
+  propName: {
+    type: [String, Number],
+    default: 'default value'
+  }
+})</pre>
+        </div>
+        
+        <div class="documentation-guide__section">
+          <h3 class="title-sm">4. Methods & Computed Properties</h3>
+          <pre class="documentation-guide__code">
+/**
+ * Description of what this function does
+ * @param {Object} param - Description of parameter
+ * @returns {String} Description of return value
+ */
+const computedValue = computed(() => {
+  // implementation
+})</pre>
+        </div>
+        
+        <div class="documentation-guide__section">
+          <h3 class="title-sm">5. Emits Documentation</h3>
+          <pre class="documentation-guide__code">
+/**
+ * Events emitted by the component
+ * @typedef {Object} ComponentEmits
+ * @property {Function} change - Emitted when value changes, payload: newValue
+ */
+defineEmits(['change', 'update'])</pre>
+        </div>
+        
+        <div class="documentation-guide__section">
+          <h3 class="title-sm">6. Slots Documentation</h3>
+          <pre class="documentation-guide__code">
+/**
+ * @slot default - Default slot description
+ * @slot header - Header slot description
+ * @slot footer - Footer slot description
+ */</pre>
+        </div>
+      </div>
     </div> 
     <div class="component__cms-content">
       
@@ -29,20 +111,20 @@
       <div v-else-if="componentData" class="component__cms-content">
         <!-- Render the component content through SanityBlockContent -->
         <SanityBlockContent 
-          v-if="componentData.content && componentData.content.length > 0" 
+          v-if="componentData.content && Array.isArray(componentData.content) && componentData.content.length > 0" 
           :blocks="componentData.content" 
         />
         <SanityBlockContent 
-          v-else-if="componentData.pageBuilder && componentData.pageBuilder.length > 0" 
+          v-else-if="componentData.pageBuilder && Array.isArray(componentData.pageBuilder) && componentData.pageBuilder.length > 0" 
           :blocks="componentData.pageBuilder" 
         />
         <SanityBlockContent 
-          v-else-if="componentData.blocks && componentData.blocks.length > 0" 
-          :blocks="componentData.blocks" 
+          v-else-if="componentData.blocks && Array.isArray(componentData.blocks) && componentData.blocks.length > 0"
+          :blocks="componentData.blocks"
         />
         
         <!-- Usage examples section -->
-        <div v-if="componentData.examples && componentData.examples.length > 0" class="component__examples">
+        <div v-if="componentData.examples && Array.isArray(componentData.examples) && componentData.examples.length > 0" class="component__examples">
           <h2 class="headline-md">Examples</h2>
           <div v-for="(example, index) in componentData.examples" :key="example._key || index" class="component__example">
             <h3 v-if="example.title" class="title-md">{{ example.title }}</h3>
@@ -57,7 +139,7 @@
         </div>
         
         <!-- Props documentation section -->
-        <div v-if="componentData.props && componentData.props.length > 0" class="component__props">
+        <div v-if="componentData.props && Array.isArray(componentData.props) && componentData.props.length > 0" class="component__props">
           <h2 class="headline-md">Properties</h2>
           <table class="component__props-table">
             <thead>
@@ -92,9 +174,9 @@
   </NuxtLayout>
 </template>
 
-<script setup>
-import { ref, computed, onMounted, inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import SanityBlockContent from '~/composables/components/SanityBlockContent.vue'
 import Breadcrumb from '~/composables/components/Breadcrumb.vue'
 import Spinner from '~/composables/components/Spinner.vue'
@@ -118,7 +200,6 @@ const props = defineProps({
 
 // Get the component slug/id from the route if available
 const route = useRoute();
-const router = useRouter();
 
 const componentSlug = computed(() => {
   // Handle case where slug is an array (from route.params)
@@ -142,8 +223,8 @@ const componentSlug = computed(() => {
 
 // State
 const loading = ref(true);
-const componentData = ref(null);
-const error = ref(null);
+const componentData = ref<any>(null);
+const error = ref<string | null>(null);
 
 // Load component data from Sanity
 const loadComponentData = async () => {
@@ -193,7 +274,7 @@ const loadComponentData = async () => {
       componentData.value = result;
     } else {
       // Check if component exists in content object directly
-      if (props.content.title && props.content.title.toLowerCase().includes(slug.toLowerCase())) {
+      if (props.content?.title && typeof props.content.title === 'string' && props.content.title.toLowerCase().includes(String(slug).toLowerCase())) {
         console.log('Using content prop as component data');
         componentData.value = props.content;
       } else {
@@ -207,15 +288,14 @@ const loadComponentData = async () => {
         `);
         
         console.log('Available components:', allComponents);
-        
         const componentNames = allComponents && allComponents.length > 0 
-          ? allComponents.map(c => c.title).join(', ')
+          ? allComponents.map((c: { title: string }) => c.title).join(', ')
           : 'None found';
           
         error.value = `Component "${slug}" not found. Available components: ${componentNames}`;
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('Error fetching component data:', err);
     error.value = `Failed to load component: ${err.message}`;
   } finally {
@@ -328,5 +408,31 @@ onMounted(loadComponentData);
 .components__debug pre {
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+/* Documentation Guide Styles */
+.documentation-guide {
+  margin-top: var(--space-large);
+  padding: var(--space-medium);
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.documentation-guide__section {
+  margin-top: var(--space-medium);
+}
+
+.documentation-guide__code {
+  margin-top: var(--space-small);
+  padding: var(--space-medium);
+  background-color: var(--color-code-bg, #f6f8fa);
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
 }
 </style> 

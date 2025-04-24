@@ -1,8 +1,41 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, nextTick } from 'vue';
 
+/**
+ * @component Tabs
+ * @description A tabbed interface component that allows switching between different content sections.
+ * Features an animated indicator that follows the selected tab.
+ * 
+ * @example <Tabs v-model="activeTab" :items="[{id: 'tab1', label: 'First Tab'}, {id: 'tab2', label: 'Second Tab'}]" />
+ * @example <Tabs v-model="activeSection" :items="tabs" />
+ * @example <Tabs v-model="view" :items="[{id: 1, label: 'Details'}, {id: 2, label: 'Reviews', disabled: true}]" />
+ */
+
+/**
+ * Tab item interface
+ * @typedef {Object} TabItem
+ * @property {string|number} id - Unique identifier for the tab
+ * @property {string} label - Display text for the tab
+ * @property {boolean} [disabled] - Whether the tab is disabled
+ */
+
+/**
+ * Tabs component props
+ * @typedef {Object} TabsProps
+ */
 interface Props {
+  /**
+   * Currently selected tab ID (v-model)
+   * @type {string|number}
+   * @required
+   */
   modelValue: string | number;
+  
+  /**
+   * Array of tab items to display
+   * @type {TabItem[]}
+   * @required
+   */
   items: Array<{
     id: string | number;
     label: string;
@@ -12,10 +45,20 @@ interface Props {
 
 const props = defineProps<Props>();
 
+/**
+ * Events emitted by the Tabs component
+ * @typedef {Object} TabsEmits
+ * @property {Function} update:modelValue - Emitted when a tab is selected
+ */
 const emit = defineEmits<{
   'update:modelValue': [value: string | number];
 }>();
 
+/**
+ * Selects a tab by its ID and emits the update event
+ * Does nothing if the tab is disabled
+ * @param {string|number} id - ID of the tab to select
+ */
 const selectTab = (id: string | number) => {
   if (props.items.find(item => item.id === id)?.disabled) return;
   emit('update:modelValue', id);
@@ -29,7 +72,9 @@ const indicatorStyle = ref({
   transform: 'translateX(0px)',
 });
 
-// Update indicator position when active tab changes
+/**
+ * Watch for changes to the selected tab and update the indicator position
+ */
 watch(() => props.modelValue, () => {
   nextTick(() => {
     const activeTab = tabsRef.value?.querySelector('.tabs__item--active') as HTMLElement;
@@ -42,7 +87,9 @@ watch(() => props.modelValue, () => {
   });
 });
 
-// Initialize indicator position
+/**
+ * Initialize the indicator position when the component is mounted
+ */
 onMounted(() => {
   const activeTab = tabsRef.value?.querySelector('.tabs__item--active') as HTMLElement;
   if (activeTab) {

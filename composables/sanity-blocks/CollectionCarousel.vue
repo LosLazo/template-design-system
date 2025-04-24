@@ -33,7 +33,7 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useSanityClient } from '~/utils/sanityClient'
 import Carousel from '~/composables/components/Carousel.vue'

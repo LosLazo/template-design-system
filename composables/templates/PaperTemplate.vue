@@ -39,7 +39,7 @@
   </NuxtLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Breadcrumb from '~/composables/components/Breadcrumb.vue';
 // Content prop is passed from the parent component
 const props = defineProps({

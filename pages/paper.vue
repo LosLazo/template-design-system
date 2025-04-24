@@ -26,7 +26,7 @@
   </NuxtLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
  import Image from '~/composables/components/Image.vue'
  import Avatar from '~/composables/components/Avatar.vue'
 </script>

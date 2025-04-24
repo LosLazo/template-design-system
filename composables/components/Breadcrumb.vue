@@ -20,12 +20,37 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { CONTENT_TYPES, useSanityClient } from '~/utils/sanityClient';
 
+/**
+ * @component Breadcrumb
+ * @description Displays a navigation breadcrumb path showing the user's current location within the application.
+ * Automatically generates breadcrumbs based on the current route or uses provided items.
+ * 
+ * @example <Breadcrumb />
+ * @example <Breadcrumb :items="[{label: 'Home', path: '/'}, {label: 'Components', path: '/components'}]" />
+ */
+
+/**
+ * Interface for breadcrumb navigation items
+ * @typedef {Object} BreadcrumbItem
+ * @property {string} label - Display text for the breadcrumb item
+ * @property {string} path - URL path for the breadcrumb item
+ */
 interface BreadcrumbItem {
   label: string;
   path: string;
 }
 
+/**
+ * Breadcrumb component props
+ * @typedef {Object} BreadcrumbProps
+ */
 const props = defineProps({
+  /**
+   * Optional array of breadcrumb items to display
+   * If not provided, breadcrumbs will be generated automatically based on the current route
+   * @type {BreadcrumbItem[]}
+   * @default []
+   */
   items: {
     type: Array as () => BreadcrumbItem[],
     default: () => []
@@ -36,7 +61,10 @@ const route = useRoute();
 const generatedItems = ref<BreadcrumbItem[]>([]);
 const loading = ref(true);
 
-// Use either provided items or auto-generated ones
+/**
+ * Computed property that returns either the provided items or auto-generated breadcrumbs
+ * @returns {BreadcrumbItem[]} Array of breadcrumb items to display
+ */
 const breadcrumbItems = computed(() => {
   if (props.items && props.items.length > 0) {
     // If items are explicitly provided, use those
@@ -46,7 +74,11 @@ const breadcrumbItems = computed(() => {
   return generatedItems.value;
 });
 
-// Generate breadcrumb from the current route
+/**
+ * Generates breadcrumb items based on the current route
+ * Fetches page titles from Sanity when available
+ * @async
+ */
 const generateBreadcrumbs = async () => {
   loading.value = true;
   const path = route.path;

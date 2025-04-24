@@ -22,7 +22,7 @@ body {
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 const colorMode = useColorMode()
 
 // Initialize theme on mount

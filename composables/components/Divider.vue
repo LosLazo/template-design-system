@@ -12,6 +12,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+/**
+ * @component Divider
+ * @description A versatile divider component for visual separation of content.
+ * Supports both horizontal and vertical orientations with various color strengths.
+ * @example
+ * <Divider />
+ * <Divider orientation="vertical" color="strong" margin="16" />
+ */
+
 interface Props {
   /**
    * The orientation of the divider

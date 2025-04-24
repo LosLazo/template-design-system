@@ -6,17 +6,24 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 
 /**
  * @component Badge
- * @description Displays a small numerical value or indicator
+ * @description Displays a small numerical value or indicator that can be used for notifications, counts, or status indicators.
+ * The badge can be displayed as a number with optional maximum value or as a simple dot.
+ * 
  * @example <Badge value="5" />
- * @example <Badge value="5" max="99" />
+ * @example <Badge value="100" max="99" />
  * @example <Badge isDot />
+ * @example <Badge value="NEW" />
  */
 
+/**
+ * Badge component props
+ * @typedef {Object} BadgeProps
+ */
 const props = defineProps({
   /**
    * Content to be displayed inside the badge
@@ -29,6 +36,7 @@ const props = defineProps({
   },
   /**
    * Maximum value to show before adding a '+' suffix
+   * If the value exceeds this number, it will display as "{max}+"
    * @type {Number}
    * @default 99
    */
@@ -38,6 +46,7 @@ const props = defineProps({
   },
   /**
    * Whether to display as a small dot without content
+   * When true, the badge appears as a simple colored dot indicator
    * @type {Boolean}
    * @default false
    */

@@ -23,14 +23,65 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+/**
+ * @component Image
+ * @description A responsive image component that maintains aspect ratio and supports various image formats.
+ * Handles different aspect ratios and orientations, and provides a placeholder when no image is available.
+ * 
+ * @example <Image src="/images/photo.jpg" alt="A beautiful landscape" />
+ * @example <Image src="/images/portrait.jpg" aspectRatio="4x5" orientation="portrait" />
+ * @example <Image backgroundColor="#f0f0f0" aspectRatio="1x1" />
+ */
+
+/**
+ * Valid aspect ratio options
+ * @typedef {'1x1'|'16x9'|'4x3'|'4x5'|'3x2'|'5x4'} AspectRatio
+ */
 type AspectRatio = '1x1' | '16x9' | '4x3' | '4x5' | '3x2' | '5x4'
+
+/**
+ * Image orientation options
+ * @typedef {'landscape'|'portrait'} Orientation
+ */
 type Orientation = 'landscape' | 'portrait'
 
+/**
+ * Image component props
+ * @typedef {Object} ImageProps
+ */
 interface Props {
+  /**
+   * Source URL for the image
+   * @type {string}
+   */
   src?: string
+  
+  /**
+   * Alt text for accessibility
+   * @type {string}
+   * @default ''
+   */
   alt?: string
+  
+  /**
+   * Aspect ratio of the image container
+   * @type {AspectRatio}
+   * @default '16x9'
+   */
   aspectRatio?: AspectRatio
+  
+  /**
+   * Orientation of the image
+   * @type {Orientation}
+   * @default 'landscape'
+   */
   orientation?: Orientation
+  
+  /**
+   * Background color when no image is provided
+   * Can be any valid CSS color value
+   * @type {string}
+   */
   backgroundColor?: string
 }
 
@@ -40,6 +91,10 @@ const props = withDefaults(defineProps<Props>(), {
   alt: ''
 })
 
+/**
+ * Computed property to determine if the image should be displayed in portrait mode
+ * @returns {boolean} True if orientation is 'portrait'
+ */
 const isPortrait = computed(() => props.orientation === 'portrait')
 </script>
 

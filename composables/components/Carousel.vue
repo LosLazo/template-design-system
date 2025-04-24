@@ -33,8 +33,31 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import Button from './Button.vue'
 
+/**
+ * @component Carousel
+ * @description A horizontally scrollable carousel component with navigation buttons.
+ * Allows users to browse through a collection of items with next/previous buttons.
+ * @example
+ * <Carousel title="Featured Products">
+ *   <div class="carousel-item">Item 1</div>
+ *   <div class="carousel-item">Item 2</div>
+ *   <div class="carousel-item">Item 3</div>
+ * </Carousel>
+ * 
+ * @slot default - Place carousel items here, preferably with the .carousel-item class
+ */
+
 interface Props {
+  /**
+   * Optional title to display above the carousel
+   * @default undefined
+   */
   title?: string,
+  
+  /**
+   * CSS selector to identify carousel items
+   * @default '.carousel-item'
+   */
   itemSelector?: string
 }
 
@@ -42,15 +65,53 @@ const props = withDefaults(defineProps<Props>(), {
   itemSelector: '.carousel-item' // Default selector for items
 })
 
+/**
+ * Reference to the container element
+ * @private
+ */
 const containerRef = ref<HTMLElement | null>(null)
+
+/**
+ * Reference to the items wrapper element
+ * @private
+ */
 const itemsRef = ref<HTMLElement | null>(null)
+
+/**
+ * Current horizontal translation value in pixels
+ * @private
+ */
 const translateX = ref(0)
+
+/**
+ * Current index of the first visible item
+ * @private
+ */
 const currentIndex = ref(0)
+
+/**
+ * Gap between carousel items in pixels
+ * @private
+ */
 const itemGap = ref(16) // --space-medium in pixels
+
+/**
+ * Whether the carousel is at the start position
+ * @private
+ */
 const isAtStart = ref(true)
+
+/**
+ * Whether the carousel is at the end position
+ * @private
+ */
 const isAtEnd = ref(false)
 
-// Get all carousel items
+/**
+ * Get all carousel items
+ * @private
+ * @returns {Array<Element>} Array of carousel item elements
+ */
 const getCarouselItems = () => {
   if (!itemsRef.value) return []
   
@@ -63,7 +124,11 @@ const getCarouselItems = () => {
   return Array.from(itemsRef.value.children)
 }
 
-// Calculate the gap between items
+/**
+ * Calculate the gap between items
+ * @private
+ * @returns {number} Gap size in pixels
+ */
 const calculateItemGap = () => {
   if (!itemsRef.value) return 16
   
@@ -81,7 +146,10 @@ const calculateItemGap = () => {
   return 16 // Default gap
 }
 
-// Check carousel limits
+/**
+ * Check carousel limits and update navigation state
+ * @private
+ */
 const updateNavigationState = () => {
   if (!containerRef.value || !itemsRef.value) return
   
@@ -96,7 +164,10 @@ const updateNavigationState = () => {
   isAtEnd.value = translateX.value <= maxTranslate || contentWidth <= containerWidth
 }
 
-// Move to the next item
+/**
+ * Move to the next item
+ * @public
+ */
 const next = () => {
   console.log('Next button clicked')
   
@@ -150,7 +221,10 @@ const next = () => {
   }
 }
 
-// Move to the previous item
+/**
+ * Move to the previous item
+ * @public
+ */
 const prev = () => {
   // Safety check
   if (!itemsRef.value) return

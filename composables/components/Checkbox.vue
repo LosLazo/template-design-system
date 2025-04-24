@@ -1,8 +1,46 @@
 <script setup lang="ts">
+/**
+ * @component Checkbox
+ * @description A checkbox component for boolean inputs with customizable label and sizing.
+ * Follows accessibility best practices and provides visual feedback for different states.
+ * 
+ * @example <Checkbox v-model="isChecked" />
+ * @example <Checkbox v-model="agreeToTerms" label="I agree to the terms and conditions" />
+ * @example <Checkbox v-model="rememberMe" size="small" label="Remember me" />
+ * @example <Checkbox v-model="isDisabled" disabled />
+ */
+
+/**
+ * Checkbox component props
+ * @typedef {Object} CheckboxProps
+ */
 interface Props {
+  /**
+   * Current state of the checkbox (v-model)
+   * @type {boolean}
+   * @required
+   */
   modelValue: boolean;
+  
+  /**
+   * Whether the checkbox is disabled
+   * @type {boolean}
+   * @default false
+   */
   disabled?: boolean;
+  
+  /**
+   * Size variant for the checkbox
+   * @type {'small'|'default'}
+   * @default 'default'
+   */
   size?: 'small' | 'default';
+  
+  /**
+   * Text label displayed next to the checkbox
+   * @type {string}
+   * @default ''
+   */
   label?: string;
 }
 
@@ -12,10 +50,19 @@ const props = withDefaults(defineProps<Props>(), {
   label: ''
 });
 
+/**
+ * Events emitted by the Checkbox component
+ * @typedef {Object} CheckboxEmits
+ * @property {Function} update:modelValue - Emitted when the checkbox state changes
+ */
 const emit = defineEmits<{
   'update:modelValue': [value: boolean];
 }>();
 
+/**
+ * Toggles the checkbox state when clicked
+ * Does nothing if the checkbox is disabled
+ */
 const toggle = () => {
   if (!props.disabled) {
     emit('update:modelValue', !props.modelValue);

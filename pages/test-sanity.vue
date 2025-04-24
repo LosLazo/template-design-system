@@ -26,7 +26,7 @@
   </NuxtLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useSanityClient, CONTENT_TYPES } from '~/utils/sanity'
 

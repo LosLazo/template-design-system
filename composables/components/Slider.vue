@@ -39,11 +39,42 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
+/**
+ * @component Slider
+ * @description An interactive slider component for selecting a value within a range.
+ * Features a draggable thumb, visual track/rail, and tooltip showing the current value.
+ * @example
+ * <Slider v-model="volume" :min="0" :max="100" :step="5" />
+ */
+
 interface SliderProps {
+  /**
+   * Current value of the slider
+   */
   modelValue: number;
+  
+  /**
+   * Minimum allowed value
+   * @default 0
+   */
   min?: number;
+  
+  /**
+   * Maximum allowed value
+   * @default 100
+   */
   max?: number;
+  
+  /**
+   * Step increment value
+   * @default 1
+   */
   step?: number;
+  
+  /**
+   * Whether the slider is disabled
+   * @default false
+   */
   disabled?: boolean;
 }
 
@@ -54,23 +85,62 @@ const props = withDefaults(defineProps<SliderProps>(), {
   disabled: false
 });
 
+/**
+ * Define emitted events
+ */
 const emit = defineEmits<{
+  /**
+   * Emitted continuously as the slider value changes
+   * @param value - The current slider value
+   */
   'update:modelValue': [value: number];
+  
+  /**
+   * Emitted when the user stops dragging the slider
+   * @param value - The final slider value after drag ends
+   */
   'change': [value: number];
 }>();
 
+/**
+ * Whether the slider is currently being dragged
+ * @private
+ */
 const isDragging = ref(false);
+
+/**
+ * Reference to the slider root element
+ * @private
+ */
 const sliderEl = ref<HTMLElement | null>(null);
+
+/**
+ * Reference to the slider rail element
+ * @private
+ */
 const railEl = ref<HTMLElement | null>(null);
 
+/**
+ * Calculated percentage (0-100) based on current value
+ * @private
+ */
 const percentage = computed(() => {
   return ((props.modelValue - props.min) / (props.max - props.min)) * 100;
 });
 
+/**
+ * Rounded display value for the tooltip
+ * @private
+ */
 const displayValue = computed(() => {
   return Math.round(props.modelValue);
 });
 
+/**
+ * Start dragging the slider
+ * @param event - Mouse or touch event
+ * @private
+ */
 const startDrag = (event: MouseEvent | TouchEvent) => {
   if (props.disabled) return;
   
@@ -87,6 +157,11 @@ const startDrag = (event: MouseEvent | TouchEvent) => {
   document.addEventListener('touchend', stopDrag);
 };
 
+/**
+ * Update slider value based on current pointer position
+ * @param event - Mouse or touch event
+ * @private
+ */
 const updateValueFromEvent = (event: MouseEvent | TouchEvent) => {
   if (!railEl.value) return;
   
@@ -111,6 +186,11 @@ const updateValueFromEvent = (event: MouseEvent | TouchEvent) => {
   emit('update:modelValue', clampedValue);
 };
 
+/**
+ * Handle drag movement
+ * @param event - Mouse or touch event
+ * @private
+ */
 const onDrag = (event: MouseEvent | TouchEvent) => {
   if (!isDragging.value) return;
   
@@ -122,6 +202,10 @@ const onDrag = (event: MouseEvent | TouchEvent) => {
   updateValueFromEvent(event);
 };
 
+/**
+ * Stop dragging and clean up event listeners
+ * @private
+ */
 const stopDrag = () => {
   if (!isDragging.value) return;
   

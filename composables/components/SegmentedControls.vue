@@ -1,11 +1,50 @@
 <script setup lang="ts">
+/**
+ * @component SegmentedControls
+ * @description A component that provides a set of mutually exclusive options, similar to radio buttons but with a cohesive, button-like appearance.
+ * Commonly used for switching between views or toggling related options.
+ * @example
+ * <SegmentedControls
+ *   v-model="selectedOption"
+ *   :items="[
+ *     { id: 'day', label: 'Day' },
+ *     { id: 'week', label: 'Week' },
+ *     { id: 'month', label: 'Month', disabled: true }
+ *   ]"
+ *   size="default"
+ * />
+ */
+
 interface Props {
+  /**
+   * The selected value, should match an item's id
+   */
   modelValue: string | number;
+  
+  /**
+   * Array of items to display as segments
+   */
   items: Array<{
+    /**
+     * Unique identifier for the segment
+     */
     id: string | number;
+    
+    /**
+     * Display text for the segment
+     */
     label: string;
+    
+    /**
+     * Whether the segment is disabled
+     */
     disabled?: boolean;
   }>;
+  
+  /**
+   * Size of the segmented controls
+   * @default 'default'
+   */
   size?: 'small' | 'default';
 }
 
@@ -13,10 +52,21 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'default'
 });
 
+/**
+ * Define emitted events
+ */
 const emit = defineEmits<{
+  /**
+   * Emitted when the selected segment changes
+   * @param value - The id of the selected segment
+   */
   'update:modelValue': [value: string | number];
 }>();
 
+/**
+ * Select a segment by its id
+ * @param id - The id of the segment to select
+ */
 const selectSegment = (id: string | number) => {
   if (props.items.find(item => item.id === id)?.disabled) return;
   emit('update:modelValue', id);
