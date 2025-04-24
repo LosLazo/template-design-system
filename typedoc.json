@@ -1,0 +1,13 @@
+{
+  "entryPoints": ["docs-entry.ts"],
+  "out": "docs",
+  "plugin": ["typedoc-plugin-vue", "typedoc-plugin-markdown"],
+  "includeVersion": true,
+  "readme": "README.md",
+  "tsconfig": "tsconfig.docs.json",
+  "theme": "markdown",
+  "entryDocument": "README.md",
+  "hideBreadcrumbs": true,
+  "hideInPageTOC": false,
+  "gitRevision": "main"
+} 

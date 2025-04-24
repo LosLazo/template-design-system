@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noEmit": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "docs-entry.ts",
+    "vue-shims.d.ts"
+  ]
+} 
