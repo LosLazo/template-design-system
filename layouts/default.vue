@@ -11,11 +11,11 @@
           <div class="layout__logo" :class="{ 'layout__logo--collapsed': sideNavCollapsed }">
             <NuxtLink to="/">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="layout__logo-icon">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.0001 9.49006C15.1077 12.636 12.6361 15.1076 9.49015 16C12.6361 16.8924 15.1077 19.364 16.0001 22.5099C16.8925 19.364 19.3641 16.8924 22.51 16C19.3641 15.1076 16.8925 12.636 16.0001 9.49006Z" fill="var(--fg-object-strong)"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4545 1.45455H14.5455V4.36364H17.4545V1.45455ZM13.0909 0V5.81818H18.9091V0H13.0909Z" fill="var(--fg-object-strong)"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M30.5455 14.5455H27.6364V17.4545H30.5455V14.5455ZM26.1818 13.0909V18.9091H32V13.0909H26.1818Z" fill="var(--fg-object-strong)"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.36364 14.5455H1.45455V17.4545H4.36364V14.5455ZM0 13.0909V18.9091H5.81818V13.0909H0Z" fill="var(--fg-object-strong)"/>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4545 27.6364H14.5455V30.5455H17.4545V27.6364ZM13.0909 26.1818V32H18.9091V26.1818H13.0909Z" fill="var(--fg-object-strong)"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.0001 9.49006C15.1077 12.636 12.6361 15.1076 9.49015 16C12.6361 16.8924 15.1077 19.364 16.0001 22.5099C16.8925 19.364 19.3641 16.8924 22.51 16C19.3641 15.1076 16.8925 12.636 16.0001 9.49006Z" fill="var(--ei-color-fg-object-strong)"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4545 1.45455H14.5455V4.36364H17.4545V1.45455ZM13.0909 0V5.81818H18.9091V0H13.0909Z" fill="var(--ei-color-fg-object-strong)"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M30.5455 14.5455H27.6364V17.4545H30.5455V14.5455ZM26.1818 13.0909V18.9091H32V13.0909H26.1818Z" fill="var(--ei-color-fg-object-strong)"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.36364 14.5455H1.45455V17.4545H4.36364V14.5455ZM0 13.0909V18.9091H5.81818V13.0909H0Z" fill="var(--ei-color-fg-object-strong)"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4545 27.6364H14.5455V30.5455H17.4545V27.6364ZM13.0909 26.1818V32H18.9091V26.1818H13.0909Z" fill="var(--ei-color-fg-object-strong)"/>
               </svg>
             </NuxtLink>
             <div v-if="!sideNavCollapsed" class="layout__logo-text title-md">Glimmer</div>
@@ -211,7 +211,7 @@ const handleVersionSelect = (item) => {
   min-height: 100vh;
   width: 100vw;
   max-width: 100vw;
-  background-color: var(--bg-elevation-base);
+  background-color: var(--ei-color-bg-elevation-base);
   margin-bottom: 50vh;
 }
 
@@ -219,7 +219,7 @@ const handleVersionSelect = (item) => {
   display: flex;
   flex-direction: row;
   flex: 1;
-  padding: var(--layout-spacing);
+  padding: var(--ei-layout-spacing);
   width: 100%;
   min-height: 100vh;
   overflow-y: visible;
@@ -236,10 +236,10 @@ const handleVersionSelect = (item) => {
 /* Sidebar */
 .layout__sidebar {
   position: sticky;
-  top: var(--layout-spacing);
+  top: var(--ei-layout-spacing);
   z-index: 10;
-  height: calc(100vh - var(--layout-spacing) * 2);
-  max-height: calc(100vh - var(--layout-spacing) * 2);
+  height: calc(100vh - var(--ei-layout-spacing) * 2);
+  max-height: calc(100vh - var(--ei-layout-spacing) * 2);
   transition: width 0.3s ease;
   overflow-y: auto;
 }
@@ -248,7 +248,7 @@ const handleVersionSelect = (item) => {
 .layout__logo {
   display: flex;
   align-items: center;
-  gap: var(--layout-spacing);
+  gap: var(--ei-layout-spacing);
   flex-direction: row;
   width: 100%;
   padding: 0px 2px;
@@ -263,7 +263,7 @@ const handleVersionSelect = (item) => {
   min-height: 32px;
   width: 32px;
   height: 32px;
-  fill: var(--fg-object-solid-1000);
+  fill: var(--ei-color-fg-object-solid-1000);
 }
 
 .layout__logo-text {
@@ -273,7 +273,7 @@ const handleVersionSelect = (item) => {
 /* Main content area */
 .layout__main {
   flex: 1;
-  padding: 0 var(--layout-main-padding);
+  padding: 0 var(--ei-layout-main-padding);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -301,7 +301,7 @@ const handleVersionSelect = (item) => {
   
   .layout__main {
     width: 100%;
-    padding: var(--layout-main-padding) 0;
+    padding: var(--ei-layout-main-padding) 0;
   }
 
   .layout__main * {
@@ -312,11 +312,11 @@ const handleVersionSelect = (item) => {
 
 .sticky-navigation {
   position: sticky;
-  top: var(--layout-spacing);
+  top: var(--ei-layout-spacing);
   align-self: flex-start;
   z-index: 10;
-  height: calc(100vh - var(--layout-spacing) * 2);
-  max-height: calc(100vh - var(--layout-spacing) * 2);
+  height: calc(100vh - var(--ei-layout-spacing) * 2);
+  max-height: calc(100vh - var(--ei-layout-spacing) * 2);
   overflow-y: auto;
 }
 </style> 

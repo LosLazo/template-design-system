@@ -73,8 +73,8 @@ const props = withDefaults(defineProps<Props>(), {
 }
 
 .tooltip__content {
-  background-color: var(--fg-object-solid-1000, #101010);
-  color: var(--fg-text-strong-inverse);
+  background-color: var(--ei-color-fg-object-solid-1000, #101010);
+  color: var(--ei-color-fg-text-strong-inverse);
   font-size: 12px;
   line-height: 1.3em;
   padding: 12px 12px;
@@ -98,7 +98,7 @@ const props = withDefaults(defineProps<Props>(), {
   transform: translateY(-50%);
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
-  border-right: 5px solid var(--fg-object-solid-1000, #101010);
+  border-right: 5px solid var(--ei-color-fg-object-solid-1000, #101010);
 }
 
 .tooltip--left {
@@ -111,7 +111,7 @@ const props = withDefaults(defineProps<Props>(), {
   transform: translateY(-50%);
   border-top: 5px solid transparent;
   border-bottom: 5px solid transparent;
-  border-left: 5px solid var(--fg-object-solid-1000, #101010);
+  border-left: 5px solid var(--ei-color-fg-object-solid-1000, #101010);
 }
 
 .tooltip--top {
@@ -124,7 +124,7 @@ const props = withDefaults(defineProps<Props>(), {
   transform: translateX(-50%);
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid var(--fg-object-solid-1000, #101010);
+  border-top: 5px solid var(--ei-color-fg-object-solid-1000, #101010);
 }
 
 .tooltip--bottom {
@@ -137,6 +137,6 @@ const props = withDefaults(defineProps<Props>(), {
   transform: translateX(-50%);
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 5px solid var(--fg-object-solid-1000, #101010);
+  border-bottom: 5px solid var(--ei-color-fg-object-solid-1000, #101010);
 }
 </style> 

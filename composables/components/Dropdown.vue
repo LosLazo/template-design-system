@@ -183,16 +183,16 @@ const toggleItem = (index: number) => {
 }
 
 .dropdown-item {
-  margin-bottom: var(--unit-8);
+  margin-bottom: var(--ei-dimension-unit-8);
   border-radius: 8px;
-  background: var(--bg-elevation-base);
+  background: var(--ei-color-bg-elevation-base);
   overflow: hidden;
 }
 
 .dropdown-item.expanded,
 .dropdown-item.expanding,
 .dropdown-item.collapsing {
-  background: var(--bg-clickable-expanded);
+  background: var(--ei-color-bg-clickable-expanded);
   align-items: start;
   text-align: left;
 }
@@ -202,11 +202,11 @@ const toggleItem = (index: number) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--unit-16);
+  padding: var(--ei-dimension-unit-16);
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--fg-text-strong);
+  color: var(--ei-color-fg-text-strong);
   text-align: left;
   border-radius: 8px;
   transition: background-color 0.2s ease;
@@ -214,22 +214,22 @@ const toggleItem = (index: number) => {
 
 /* Only apply hover effect when not expanded, expanding, or collapsing */
 .dropdown-item:not(.expanded):not(.expanding):not(.collapsing) .dropdown-header:hover {
-  background: var(--bg-clickable-hover);
+  background: var(--ei-color-bg-clickable-hover);
 }
 
 .dropdown-panel {
   background: transparent;
   margin-top: -1px;
-  padding: 0 var(--unit-16) var(--unit-16);
-  color: var(--fg-text-soft);
+  padding: 0 var(--ei-dimension-unit-16) var(--ei-dimension-unit-16);
+  color: var(--ei-color-fg-text-soft);
   max-height: 1000px;
   height: auto;
 }
 
 .dropdown-icon {
-  width: var(--unit-20);
-  height: var(--unit-20);
-  color: var(--fg-text-soft);
+  width: var(--ei-dimension-unit-20);
+  height: var(--ei-dimension-unit-20);
+  color: var(--ei-color-fg-text-soft);
   transition: transform 0.3s ease;
 }
 

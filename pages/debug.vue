@@ -95,17 +95,17 @@ const fetchContent = async () => {
 }
 
 .search-form {
-  margin-top: var(--space-large);
-  padding: var(--space-medium);
-  background-color: var(--bg-surface-disabled);
-  border-radius: var(--radius-medium);
+  margin-top: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-medium);
+  background-color: var(--ei-color-bg-surface-disabled);
+  border-radius: var(--ei-dimension-radius-medium);
 }
 
 .form-row {
   display: flex;
   align-items: center;
-  margin-bottom: var(--space-medium);
-  gap: var(--space-medium);
+  margin-bottom: var(--ei-dimension-space-medium);
+  gap: var(--ei-dimension-space-medium);
 }
 
 .form-row label {
@@ -115,16 +115,16 @@ const fetchContent = async () => {
 .form-row select,
 .form-row input {
   padding: 8px 12px;
-  border: 1px solid var(--fg-border-disabled);
-  border-radius: var(--radius-small);
+  border: 1px solid var(--ei-color-fg-border-disabled);
+  border-radius: var(--ei-dimension-radius-small);
 }
 
 button {
   padding: 8px 16px;
-  background-color: var(--bg-interactive-default);
+  background-color: var(--ei-color-bg-interactive-default);
   color: white;
   border: none;
-  border-radius: var(--radius-small);
+  border-radius: var(--ei-dimension-radius-small);
   cursor: pointer;
 }
 
@@ -134,15 +134,15 @@ button:disabled {
 }
 
 .loading, .error {
-  margin-top: var(--space-large);
-  padding: var(--space-medium);
-  border-radius: var(--radius-medium);
+  margin-top: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-medium);
+  border-radius: var(--ei-dimension-radius-medium);
   font-size: 1.2rem;
 }
 
 .loading {
-  background-color: var(--bg-surface-disabled);
-  color: var(--fg-text-soft);
+  background-color: var(--ei-color-bg-surface-disabled);
+  color: var(--ei-color-fg-text-soft);
 }
 
 .error {
@@ -151,25 +151,25 @@ button:disabled {
 }
 
 .results {
-  margin-top: var(--space-large);
+  margin-top: var(--ei-dimension-space-large);
 }
 
 .result-info {
-  margin-top: var(--space-medium);
-  padding: var(--space-medium);
-  background-color: var(--bg-surface-disabled);
-  border-radius: var(--radius-medium);
+  margin-top: var(--ei-dimension-space-medium);
+  padding: var(--ei-dimension-space-medium);
+  background-color: var(--ei-color-bg-surface-disabled);
+  border-radius: var(--ei-dimension-radius-medium);
 }
 
 .section {
-  margin-top: var(--space-large);
-  margin-bottom: var(--space-large);
+  margin-top: var(--ei-dimension-space-large);
+  margin-bottom: var(--ei-dimension-space-large);
 }
 
 pre {
-  background: var(--bg-surface-disabled);
-  padding: var(--space-medium);
-  border-radius: var(--radius-medium);
+  background: var(--ei-color-bg-surface-disabled);
+  padding: var(--ei-dimension-space-medium);
+  border-radius: var(--ei-dimension-radius-medium);
   overflow: auto;
   max-height: 500px;
   white-space: pre-wrap;

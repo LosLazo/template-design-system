@@ -218,7 +218,7 @@ onUnmounted(() => {
 
 <style scoped>
 :root {
-  --carousel-gap: var(--space-medium, 16px);
+  --carousel-gap: var(--ei-dimension-space-medium, 16px);
   --carousel-item-width-desktop: 300px;
   --carousel-item-width-tablet: 240px;
   --carousel-item-width-mobile: calc(100vw - 48px);
@@ -229,7 +229,7 @@ onUnmounted(() => {
   max-width: 100%;
   position: relative;
   box-sizing: border-box;
-  margin: var(--space-large, 24px) 0;
+  margin: var(--ei-dimension-space-large, 24px) 0;
   overflow: visible;
 }
 
@@ -244,12 +244,12 @@ onUnmounted(() => {
   position: relative;
   z-index: 1;
   max-width: 100%;
-  width: var(--carousel-item-width-desktop);
+  width: var(--ei-carousel-item-width-desktop);
   box-sizing: border-box;
 }
 
 .collection-carousel__card {
-  width: var(--carousel-item-width-desktop);
+  width: var(--ei-carousel-item-width-desktop);
   box-sizing: border-box;
 }
 
@@ -263,8 +263,8 @@ onUnmounted(() => {
 .collection-carousel__loader {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--bg-clickable-hover);
-  border-top: 4px solid var(--fg-accent);
+  border: 4px solid var(--ei-color-bg-clickable-hover);
+  border-top: 4px solid var(--ei-color-fg-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -274,10 +274,10 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   min-height: 200px;
-  color: var(--fg-text-soft);
-  background-color: var(--bg-surface-disabled);
-  border-radius: var(--radius-medium, 8px);
-  padding: var(--space-medium, 16px);
+  color: var(--ei-color-fg-text-soft);
+  background-color: var(--ei-color-bg-surface-disabled);
+  border-radius: var(--ei-dimension-radius-medium, 8px);
+  padding: var(--ei-dimension-space-medium, 16px);
 }
 
 @keyframes spin {
@@ -288,17 +288,17 @@ onUnmounted(() => {
 /* Responsive styles */
 @media screen and (max-width: 1024px) {
   .collection-carousel__card {
-    width: var(--carousel-item-width-tablet);
+    width: var(--ei-carousel-item-width-tablet);
   }
 }
 
 @media screen and (max-width: 768px) {
   .collection-carousel__card {
-    width: var(--carousel-item-width-mobile);
+    width: var(--ei-carousel-item-width-mobile);
   }
   
   .collection-carousel {
-    margin: var(--space-medium, 16px) 0;
+    margin: var(--ei-dimension-space-medium, 16px) 0;
   }
 }
 

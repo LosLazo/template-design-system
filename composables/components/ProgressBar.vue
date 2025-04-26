@@ -31,14 +31,14 @@ const props = defineProps({
   width: 100%;
   height: 4px;
   border-radius: 4px;
-  background-color: var(--bg-elements-200);
+  background-color: var(--ei-color-bg-elements-200);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-bar__fill {
   height: 100%;
-  background-color: var(--fg-object-transparent-strong);
+  background-color: var(--ei-color-fg-object-transparent-strong);
   border-radius: 4px;
 }
 

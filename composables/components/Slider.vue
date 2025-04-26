@@ -255,7 +255,7 @@ onUnmounted(() => {
 
 .slider__line {
   height: 100%;
-  background-color: var(--fg-object-transparent-strong, #111111);
+  background-color: var(--ei-color-fg-object-transparent-strong, #111111);
   border-radius: 4px;
 }
 
@@ -279,8 +279,8 @@ onUnmounted(() => {
 .slider__circle {
   width: 14px;
   height: 14px;
-  background-color: var(--permanent-white, #FFFFFF);
-  border: 1px solid var(--fg-object-transparent-strong, #111111);
+  background-color: var(--ei-color-permanent-white, #FFFFFF);
+  border: 1px solid var(--ei-color-fg-object-transparent-strong, #111111);
   border-radius: 50%;
   box-sizing: border-box;
   transition: transform 0.1s ease;
@@ -294,7 +294,7 @@ onUnmounted(() => {
 .slider__tooltip {
   position: absolute;
   top: -40px;
-  background-color: var(--fg-object-solid-1000, #101010);
+  background-color: var(--ei-color-fg-object-solid-1000, #101010);
   border-radius: 4px;
   padding: 8px 12px;
   opacity: 0;
@@ -314,7 +314,7 @@ onUnmounted(() => {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid var(--fg-object-solid-1000, #101010);
+  border-top: 5px solid var(--ei-color-fg-object-solid-1000, #101010);
 }
 
 .slider__tooltip--visible {
@@ -323,8 +323,8 @@ onUnmounted(() => {
 }
 
 .slider__tooltip-text {
-  color: var(--permanent-white, #FFFFFF);
-  font-family: var(--font-text);
+  color: var(--ei-color-permanent-white, #FFFFFF);
+  font-family: var(--ei-typography-text);
   font-size: 12px;
   line-height: 1.3em;
 }

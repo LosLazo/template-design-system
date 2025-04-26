@@ -36,7 +36,7 @@ interface Props {
   
   /**
    * Margin around the divider in pixels or CSS value
-   * @default 'var(--space-medium)'
+   * @default 'var(--ei-dimension-space-medium)'
    */
   margin?: string | number;
 }
@@ -44,7 +44,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'horizontal',
   color: 'defined',
-  margin: 'var(--space-medium)'
+  margin: 'var(--ei-dimension-space-medium)'
 });
 
 const marginStyle = computed(() => {
@@ -68,7 +68,7 @@ const marginStyle = computed(() => {
 
 <style scoped>
 .divider {
-  --divider-color: var(--fg-border-defined);
+  --divider-color: var(--ei-color-fg-border-defined);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,37 +78,37 @@ const marginStyle = computed(() => {
 .divider--horizontal {
   width: 100%;
   height: 1px;
-  background-color: var(--divider-color);
+  background-color: var(--ei-divider-color);
 }
 
 .divider--vertical {
   width: 1px;
   height: 100%;
-  background-color: var(--divider-color);
+  background-color: var(--ei-divider-color);
 }
 
 /* Color variants */
 .divider--color-strong {
-  --divider-color: var(--fg-border-strong);
+  --divider-color: var(--ei-color-fg-border-strong);
 }
 
 .divider--color-defined {
-  --divider-color: var(--fg-border-defined);
+  --divider-color: var(--ei-color-fg-border-defined);
 }
 
 .divider--color-soft {
-  --divider-color: var(--fg-border-soft);
+  --divider-color: var(--ei-color-fg-border-soft);
 }
 
 .divider--color-subtle {
-  --divider-color: var(--fg-border-subtle);
+  --divider-color: var(--ei-color-fg-border-subtle);
 }
 
 .divider--color-discrete {
-  --divider-color: var(--fg-border-discrete, rgba(0, 0, 0, 0.05));
+  --divider-color: var(--ei-color-fg-border-discrete, rgba(0, 0, 0, 0.05));
 }
 
 .divider--color-disabled {
-  --divider-color: var(--fg-border-disabled);
+  --divider-color: var(--ei-color-fg-border-disabled);
 }
 </style> 

@@ -79,7 +79,7 @@ defineProps({
 <style>
 .avatar {
   overflow: hidden;
-  background-color: var(--bg-elements-100);
+  background-color: var(--ei-color-bg-elements-100);
 }
 
 .avatar--circle {
@@ -102,6 +102,6 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--content-secondary);
+  color: var(--ei-content-secondary);
 }
 </style> 

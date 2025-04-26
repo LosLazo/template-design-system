@@ -1,0 +1,90 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+:root {
+  /* This is not the default h1 tag, but it's primarily used for extra large numbers and statistics */
+  --ei-typography-display-xxl: 400 216px/100% var(--ei-string-font-family-display);
+  /* This is not the default h1 tag, but it's primarily used for extra large numbers and statistics */
+  --ei-typography-display-xl: 400 156px/100% var(--ei-string-font-family-display);
+  /* Headlines, when you want to be extra bold in your expression. */
+  --ei-typography-display-lg: 400 112px/100% var(--ei-string-font-family-display);
+  --ei-typography-headline-lg: 400 80px/100% var(--ei-string-font-family-display);
+  --ei-typography-headline-md: 400 56px/100% var(--ei-string-font-family-display);
+  --ei-typography-headline-sm: 400 40px/100% var(--ei-string-font-family-display);
+  --ei-typography-title-lg: 400 24px/100% var(--ei-string-font-family-display);
+  --ei-typography-title-md: 400 20px/100% var(--ei-string-font-family-display);
+  --ei-typography-title-sm: 400 16px/100% var(--ei-string-font-family-display);
+  --ei-typography-title-xs: 400 14px/100% var(--ei-string-font-family-display);
+  --ei-typography-body-strong-xl: var(--ei-string-font-weight-loud) 24px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-strong-lg: var(--ei-string-font-weight-loud) 20px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-strong-md: var(--ei-string-font-weight-loud) 16px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-strong-sm: var(--ei-string-font-weight-loud) 14px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-strong-xs: var(--ei-string-font-weight-loud) 12px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-normal-xl: var(--ei-string-font-weight-composed) 24px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-normal-lg: var(--ei-string-font-weight-composed) 20px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-normal-md: var(--ei-string-font-weight-composed) 16px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-normal-sm: var(--ei-string-font-weight-composed) 14px/130% var(--ei-string-font-family-text);
+  --ei-typography-body-normal-xs: var(--ei-string-font-weight-composed) 12px/130% var(--ei-string-font-family-text);
+}
+
+/* Utility classes for typography */
+.body-xl,
+.body-xl-loud {
+  font: var(--ei-typography-body-normal-xl);
+}
+
+.body-lg,
+.body-lg-loud {
+  font: var(--ei-typography-body-normal-lg);
+}
+
+.body-md,
+.body-md-loud {
+  font: var(--ei-typography-body-normal-md);
+}
+
+.body-sm,
+.body-sm-loud {
+  font: var(--ei-typography-body-normal-sm);
+}
+
+.body-xs,
+.body-xs-loud {
+  font: var(--ei-typography-body-normal-xs);
+}
+
+/* Loud variants */
+.body-xl-loud,
+.body-lg-loud,
+.body-md-loud,
+.body-sm-loud,
+.body-xs-loud {
+  font-weight: var(--ei-string-font-weight-loud);
+}
+
+/* Color utility classes */
+.color-strong {
+  color: var(--ei-color-fg-text-strong);
+}
+
+.color-defined {
+  color: var(--ei-color-fg-text-defined);
+}
+
+.color-soft {
+  color: var(--ei-color-fg-text-soft);
+}
+
+.color-inverse {
+  color: var(--ei-color-fg-text-inverse);
+}
+
+.color-strong-inverse {
+  color: var(--ei-color-fg-text-strong-inverse);
+}
+
+.color-soft-inverse {
+  color: var(--ei-color-fg-text-soft-inverse);
+}

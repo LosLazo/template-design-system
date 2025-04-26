@@ -13,7 +13,7 @@
           </div>
       </div>
       <div class="sidenav__scrollable">
-        <Divider color="discrete" margin="var(--space-medium)" />
+        <Divider color="discrete" margin="var(--ei-dimension-space-medium)" />
         <ul class="sidenav__menu">
           <div 
             v-for="(item, index) in items" 
@@ -241,13 +241,13 @@ onUnmounted(() => {
   width: 280px;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-surface);
+  background-color: var(--ei-color-surface);
   transition: width 0.3s ease;
   flex-shrink: 0;
   padding: 16px;
   justify-content: space-between;
   z-index: 1000;
-  background-color: var(--bg-clickable-hover-inverse);
+  background-color: var(--ei-color-bg-clickable-hover-inverse);
   backdrop-filter: blur(128px);
   border-radius: 8px;
   overflow: visible;
@@ -314,7 +314,7 @@ onUnmounted(() => {
 
 /* Header */
 .sidenav__header {
-  padding: var(--spacing-md);
+  padding: var(--ei-spacing-md);
 }
 
 .sidenav__logo {
@@ -353,11 +353,11 @@ onUnmounted(() => {
 }
 
 .nav-item__content:hover {
-  background-color: var(--bg-clickable-hover);
+  background-color: var(--ei-color-bg-clickable-hover);
 }
 
 .nav-item--active .nav-item__content {
-  background-color: var(--bg-clickable-active);
+  background-color: var(--ei-color-bg-clickable-active);
 }
 
 .nav-item__icon {
@@ -380,7 +380,7 @@ onUnmounted(() => {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--fg-accent-emphasis);
+  background-color: var(--ei-color-fg-accent-emphasis);
 }
 
 .sidenav--collapsed .nav-item__content {
@@ -405,7 +405,7 @@ onUnmounted(() => {
 }
 
 .sidenav__toggle:hover {
-  background-color: var(--bg-clickable-hover);
+  background-color: var(--ei-color-bg-clickable-hover);
 }
 
 .sidenav--collapsed .sidenav__toggle {
@@ -418,7 +418,7 @@ onUnmounted(() => {
 
 /* Child items */
 .nav-item__children {
-  background-color: var(--bg-clickable-hover-inverse);
+  background-color: var(--ei-color-bg-clickable-hover-inverse);
   margin-left: 24px;
   margin-top: 4px;
   border-radius: 4px;
@@ -433,11 +433,11 @@ onUnmounted(() => {
 }
 
 .nav-item__child:hover {
-  background-color: var(--bg-clickable-hover);
+  background-color: var(--ei-color-bg-clickable-hover);
 }
 
 .nav-item__child-label {
   display: block;
-  color: var(--fg-object-muted);
+  color: var(--ei-color-fg-object-muted);
 }
 </style> 

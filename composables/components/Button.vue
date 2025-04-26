@@ -149,9 +149,9 @@ defineEmits(['click'])
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-small);
+  gap: var(--ei-dimension-space-small);
   border: none;
-  font-family: var(--font-text);
+  font-family: var(--ei-typography-text);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -197,41 +197,41 @@ defineEmits(['click'])
 }
 
 .button--icon-only.button--large {
-  padding: var(--space-small);
+  padding: var(--ei-dimension-space-small);
   aspect-ratio: 1;
 }
 
 .button--icon-only.button--medium {
-  padding: var(--space-small);
+  padding: var(--ei-dimension-space-small);
   aspect-ratio: 1;
 }
 
 .button--icon-only.button--small {
-  padding: var(--space-tiny);
+  padding: var(--ei-dimension-space-tiny);
   aspect-ratio: 1;
 }
 
 .button--icon-only.button--tiny {
-  padding: var(--space-xxsmall);
+  padding: var(--ei-dimension-space-xxsmall);
   aspect-ratio: 1;
 }
 
 /* Variant styles */
 .button--primary {
-  background-color: var(--bg-clickable-primary-default);
-  color: var(--fg-text-strong-inverse);
+  background-color: var(--ei-color-bg-clickable-primary-default);
+  color: var(--ei-color-fg-text-strong-inverse);
 }
 .button--primary:hover {
-  background-color: var(--bg-clickable-primary-hover);
+  background-color: var(--ei-color-bg-clickable-primary-hover);
 }
 
 .button--primary:active {
-  background-color: var(--bg-clickable-primary-pressed);
+  background-color: var(--ei-color-bg-clickable-primary-pressed);
 }
 
 .button--primary:focus {
-  background-color: var(--bg-clickable-primary-default);
-  outline: 2px solid var(--fg-border-clickable-focus);
+  background-color: var(--ei-color-bg-clickable-primary-default);
+  outline: 2px solid var(--ei-color-fg-border-clickable-focus);
   outline-offset: 2px;
 }
 
@@ -241,51 +241,51 @@ defineEmits(['click'])
 }
 
 .button--primary.button--disabled {
-  background-color: var(--bg-clickable-primary-disabled);
+  background-color: var(--ei-color-bg-clickable-primary-disabled);
 }
 
 .button--secondary {
   background-color: transparent;
-  color: var(--fg-text-strong);
-  border: 1px solid var(--fg-border-defined);
+  color: var(--ei-color-fg-text-strong);
+  border: 1px solid var(--ei-color-fg-border-defined);
 }
 .button--secondary:hover {
-  background-color: var(--bg-clickable-hover);
+  background-color: var(--ei-color-bg-clickable-hover);
 }
 .button--secondary:active {
-  background-color: var(--bg-clickable-pressed);
+  background-color: var(--ei-color-bg-clickable-pressed);
 }
 .button--secondary.button--disabled {
-  color: var(--fg-text-disabled);
-  border-color: var(--fg-border-disabled);
+  color: var(--ei-color-fg-text-disabled);
+  border-color: var(--ei-color-fg-border-disabled);
 }
 
 .button--ghost {
   background-color: transparent;
-  color: var(--fg-text-strong);
+  color: var(--ei-color-fg-text-strong);
 }
 .button--ghost:hover {
-  background-color: var(--bg-clickable-hover);
+  background-color: var(--ei-color-bg-clickable-hover);
 }
 .button--ghost:active {
-  background-color: var(--bg-clickable-pressed);
+  background-color: var(--ei-color-bg-clickable-pressed);
 }
 .button--ghost.button--disabled {
-  color: var(--fg-text-disabled);
+  color: var(--ei-color-fg-text-disabled);
 }
 
 .button--danger {
-  background-color: var(--bg-clickable-danger-danger);
-  color: var(--fg-text-strong-inverse);
+  background-color: var(--ei-color-bg-clickable-danger-danger);
+  color: var(--ei-color-fg-text-strong-inverse);
 }
 .button--danger:hover {
-  background-color: var(--bg-clickable-danger-danger-hover);
+  background-color: var(--ei-color-bg-clickable-danger-danger-hover);
 }
 .button--danger:active {
-  background-color: var(--bg-clickable-danger-danger-pressed);
+  background-color: var(--ei-color-bg-clickable-danger-danger-pressed);
 }
 .button--danger.button--disabled {
-  background-color: var(--bg-clickable-danger-disabled);
+  background-color: var(--ei-color-bg-clickable-danger-disabled);
 }
 
 .button__icon {

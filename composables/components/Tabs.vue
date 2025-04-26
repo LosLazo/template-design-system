@@ -125,8 +125,8 @@ onMounted(() => {
 <style scoped>
 .tabs {
   display: flex;
-  gap: var(--space-medium);
-  border-bottom: 1px solid var(--fg-border-discrete);
+  gap: var(--ei-dimension-space-medium);
+  border-bottom: 1px solid var(--ei-color-fg-border-discrete);
   position: relative;
 }
 
@@ -134,7 +134,7 @@ onMounted(() => {
   padding: 8px 16px;
   border: none;
   background: none;
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -144,11 +144,11 @@ onMounted(() => {
 }
 
 .tabs__item:hover:not(.tabs__item--disabled) {
-  color: var(--fg-text-strong);
+  color: var(--ei-color-fg-text-strong);
 }
 
 .tabs__item--active {
-  color: var(--fg-text-strong);
+  color: var(--ei-color-fg-text-strong);
 }
 
 .tabs__item--disabled {
@@ -161,7 +161,7 @@ onMounted(() => {
   bottom: -1px;
   left: 0;
   height: 1px;
-  background-color: var(--fg-border-strong);
+  background-color: var(--ei-color-fg-border-strong);
   transition: all 0.3s ease;
   z-index: 1;
 }

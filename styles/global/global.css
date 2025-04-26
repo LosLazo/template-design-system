@@ -1,5 +1,5 @@
-@import './fonts.css';
-@import './typography.css';
+@import '~/styles/global/fonts.css';
+@import '~/styles/base/typography.css';
   
 /* Add this file to your css array in nuxt.config.ts */
 
@@ -29,7 +29,7 @@
 
   /* Global focus styles - no transition for immediate feedback */
   :focus-visible {
-    outline: 2px solid var(--fg-border-clickable-focus);
+    outline: 2px solid var(--ei-color-fg-border-clickable-focus);
     outline-offset: 2px;
     border-radius: inherit;
   }

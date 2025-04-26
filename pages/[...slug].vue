@@ -175,7 +175,7 @@ onMounted(async () => {
   height: 50vh;
   width: 100%;
   font-size: 1.5rem;
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
   padding: 2rem;
 }
 

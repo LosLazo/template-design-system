@@ -93,7 +93,7 @@ const currentIndex = ref(0)
  * Gap between carousel items in pixels
  * @private
  */
-const itemGap = ref(16) // --space-medium in pixels
+const itemGap = ref(16) // --ei-dimension-space-medium in pixels
 
 /**
  * Whether the carousel is at the start position
@@ -292,7 +292,7 @@ watch(() => getCarouselItems().length, () => {
   display: flex;
   flex-direction: column;
   overflow: visible;
-  gap: var(--space-medium);
+  gap: var(--ei-dimension-space-medium);
 }
 
 .carousel__container {
@@ -305,7 +305,7 @@ watch(() => getCarouselItems().length, () => {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: max-content;
-  gap: var(--space-medium);
+  gap: var(--ei-dimension-space-medium);
   transition: transform 0.3s ease;
   overflow: visible;
   width: max-content;
@@ -322,9 +322,9 @@ watch(() => getCarouselItems().length, () => {
   bottom: 0;
   left: 0;
   display: flex;
-  gap: var(--space-tiny);
-  background-color: var(--bg-elevation-base);
-  border-radius: var(--units-radius-for-surface-clickable);
+  gap: var(--ei-dimension-space-tiny);
+  background-color: var(--ei-color-bg-elevation-base);
+  border-radius: var(--ei-dimension-unit-radius-for-surface-clickable);
   z-index: 10;
 }
 

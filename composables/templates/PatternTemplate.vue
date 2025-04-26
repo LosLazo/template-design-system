@@ -61,18 +61,18 @@ const props = defineProps({
   padding: 0px 0px 128px 0px;
   align-items: start;
   justify-content: start;
-  gap: var(--space-large);
+  gap: var(--ei-dimension-space-large);
   width: 100%;
 }
 
 .intro-block {
   display: flex;
   flex-direction: column;
-  gap: var(--space-small);
+  gap: var(--ei-dimension-space-small);
   width: 100%;
   padding-top: 32px;
   padding-bottom: 64px;
-  border-top: 1px solid var(--fg-border-disabled);
+  border-top: 1px solid var(--ei-color-fg-border-disabled);
   position: relative;
   align-items: center;
 }
@@ -87,26 +87,26 @@ const props = defineProps({
   width: 100%;
   max-width: 740px;
   margin: 0 auto;
-  gap: var(--space-large);
-  padding: var(--space-large) 0px;
+  gap: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-large) 0px;
 }
 
 .example-block {
-  margin-bottom: var(--space-large);
-  padding: var(--space-medium);
-  border: 1px solid var(--fg-border-disabled);
-  border-radius: var(--radius-medium);
+  margin-bottom: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-medium);
+  border: 1px solid var(--ei-color-fg-border-disabled);
+  border-radius: var(--ei-dimension-radius-medium);
 }
 
 .pattern-section {
-  margin-bottom: var(--space-large);
+  margin-bottom: var(--ei-dimension-space-large);
   display: flex;
   flex-direction: column;
-  gap: var(--space-small);
+  gap: var(--ei-dimension-space-small);
 }
 
 .guidelines-section {
-  margin-top: var(--space-xlarge);
+  margin-top: var(--ei-dimension-space-xlarge);
 }
 
 .guidelines-list {
@@ -115,14 +115,14 @@ const props = defineProps({
 }
 
 .guidelines-list li {
-  margin-bottom: var(--space-small);
+  margin-bottom: var(--ei-dimension-space-small);
 }
 
 @media (max-width: 768px) {
   .intro-block,
   .content-block {
-    padding-left: var(--space-small);
-    padding-right: var(--space-small);
+    padding-left: var(--ei-dimension-space-small);
+    padding-right: var(--ei-dimension-space-small);
   }
 }
 </style> 

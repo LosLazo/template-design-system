@@ -26,7 +26,7 @@ defineProps({
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--bg-elevation-base);
+  background-color: var(--ei-color-bg-elevation-base);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,7 +37,7 @@ defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-large);
+  gap: var(--ei-dimension-space-large);
 }
 
 .loading-screen__progress {

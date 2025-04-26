@@ -31,7 +31,7 @@ import Footer from '~/composables/patterns/Footer.vue'
   flex-direction: column;
   min-height: 100vh;
   width: 100vw;
-  background-color: var(--bg-elevation-base);
+  background-color: var(--ei-color-bg-elevation-base);
 }
 
 .minimal-header {
@@ -39,7 +39,7 @@ import Footer from '~/composables/patterns/Footer.vue'
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  border-bottom: 1px solid var(--border-subtle-1);
+  border-bottom: 1px solid var(--ei-color-border-subtle-1);
 }
 
 .logo-container {
@@ -51,7 +51,7 @@ import Footer from '~/composables/patterns/Footer.vue'
 .logo-svg {
   width: 32px;
   height: 32px;
-  fill: var(--fg-object-solid-1000);
+  fill: var(--ei-color-fg-object-solid-1000);
 }
 
 .minimal-main {

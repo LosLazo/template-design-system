@@ -32,12 +32,12 @@ defineProps({
 <style>
 .message {
   display: flex;
-  gap: var(--space-medium);
-  padding: var(--space-medium);
-  padding-right: var(--space-large);
-  background-color: var(--bg-elevation-background–inverse);
-  border-radius: var(--unit-8);
-  color: var(--fg-text-strong-inverse);
+  gap: var(--ei-dimension-space-medium);
+  padding: var(--ei-dimension-space-medium);
+  padding-right: var(--ei-dimension-space-large);
+  background-color: var(--ei-color-bg-elevation-background–inverse);
+  border-radius: var(--ei-dimension-unit-8);
+  color: var(--ei-color-fg-text-strong-inverse);
   overflow: hidden;
 }
 
@@ -53,12 +53,12 @@ defineProps({
 
 .message__header {
   margin: 0;
-  margin-bottom: var(--space-xxsmall);
-  color: var(--fg-text-strong-inverse);
+  margin-bottom: var(--ei-dimension-space-xxsmall);
+  color: var(--ei-color-fg-text-strong-inverse);
 }
 
 .message__body {
   margin: 0;
-  color: var(--fg-text-soft-inverse);
+  color: var(--ei-color-fg-text-soft-inverse);
 }
 </style> 

@@ -1,0 +1,89 @@
+@import '~/styles/base/typography.css';
+
+:root {
+    --ei-font-size-xxl: var(--ei-dimension-font-size-48);
+    --ei-font-size-xl: var(--ei-dimension-font-size-32);
+    --ei-font-size-lg: var(--ei-dimension-font-size-24);
+    --ei-font-size-md: var(--ei-dimension-font-size-16);
+    --ei-font-size-sm: var(--ei-dimension-font-size-14);
+}
+
+@font-face {
+    font-family: 'KH Interference';
+    src: url('/fonts/KHInterference-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KH Interference';
+    src: url('/fonts/KHInterference-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KH Interference';
+    src: url('/fonts/KHInterference-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KH Teka';
+    src: url('/fonts/KHTekaPro-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KH Teka';
+    src: url('/fonts/KHTekaPro-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Eidra Sans Display';
+    src: url('/fonts/EidraSans-Bold.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Eidra Sans Text';
+    src: url('/fonts/EidraSans-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--ei-string-font-family-display);
+    font-weight: var(--ei-string-font-weight-loud);
+}
+
+h1 {
+    font-size: var(--ei-font-size-xxl);
+}
+
+h2 {
+    font-size: var(--ei-font-size-xl);
+}
+
+h3 {
+    font-size: var(--ei-font-size-lg);
+}
+
+h4 {
+    font-size: var(--ei-font-size-md);
+}
+
+h5 {
+    font-size: var(--ei-font-size-sm);
+}
+
+
+p, a, li, ul, ol, span, div {
+    font-family: var(--ei-string-font-family-text);
+    font-weight: var(--ei-string-font-weight-composed);
+}

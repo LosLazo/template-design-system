@@ -38,9 +38,9 @@ defineEmits(['dismiss'])
 <style>
 .banner {
   width: 100%;
-  background-color: var(--bg-elevation-background–inverse);
-  padding: var(--space-tiny) 32px;
-  color: var(--fg-text-strong-inverse);
+  background-color: var(--ei-color-bg-elevation-background–inverse);
+  padding: var(--ei-dimension-space-tiny) 32px;
+  color: var(--ei-color-fg-text-strong-inverse);
   position: sticky;
   top: 0;
   left: 0;
@@ -49,18 +49,18 @@ defineEmits(['dismiss'])
 }
 
 .banner--info {
-  color: var(--fg-text-strong-inverse);
+  color: var(--ei-color-fg-text-strong-inverse);
 }
 
 .banner__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-sm);
+  font-size: var(--ei-typography-size-sm);
+  line-height: var(--ei-line-height-sm);
 }
 
 .banner--dismissible .banner__content {
-  padding-right: var(--space-small);
+  padding-right: var(--ei-dimension-space-small);
 }
 </style> 

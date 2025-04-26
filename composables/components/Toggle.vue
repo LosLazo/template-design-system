@@ -92,7 +92,7 @@ const toggle = () => {
   border: none;
   background: none;
   cursor: pointer;
-  border-radius: var(--units-radius-for-surface-clickable);
+  border-radius: var(--ei-dimension-unit-radius-for-surface-clickable);
 }
 
 .toggle--disabled {
@@ -108,7 +108,7 @@ const toggle = () => {
   height: 24px;
   padding: 2px;
   border-radius: 24px;
-  background-color: var(--bg-elements-400);
+  background-color: var(--ei-color-bg-elements-400);
   transition: background-color 0.2s ease;
 }
 
@@ -124,7 +124,7 @@ const toggle = () => {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--bg-elements-100);
+  background-color: var(--ei-color-bg-elements-100);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transform: translateX(0);
   transition: transform 0.2s ease;
@@ -145,7 +145,7 @@ const toggle = () => {
 
 /* active track */
 .toggle--active .toggle__track {
-  background-color: var(--bg-elements-900);
+  background-color: var(--ei-color-bg-elements-900);
 }
 
 .toggle--active .toggle__thumb {

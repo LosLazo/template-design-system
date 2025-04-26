@@ -64,7 +64,7 @@ onMounted(() => {
   position: relative;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--fg-border-discrete);
+  border-top: 1px solid var(--ei-color-fg-border-discrete);
 }
 
 .text-row--loading {

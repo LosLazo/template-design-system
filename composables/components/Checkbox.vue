@@ -113,7 +113,7 @@ const toggle = () => {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-small);
+  gap: var(--ei-dimension-space-small);
   cursor: pointer;
   user-select: none;
 }
@@ -137,9 +137,9 @@ const toggle = () => {
   justify-content: center;
   width: 24px;
   height: 24px;
-  border: 1px solid var(--fg-border-defined);
+  border: 1px solid var(--ei-color-fg-border-defined);
   border-radius: 4px;
-  background-color: var(--bg-elements-100);
+  background-color: var(--ei-color-bg-elements-100);
   transition: all 0.2s ease;
 }
 
@@ -149,27 +149,27 @@ const toggle = () => {
 }
 
 .checkbox__input:focus-visible + .checkbox__box {
-  border-color: var(--fg-border-clickable-focus);
-  box-shadow: 0 0 0 2px var(--fg-border-clickable-focus);
+  border-color: var(--ei-color-fg-border-clickable-focus);
+  box-shadow: 0 0 0 2px var(--ei-color-fg-border-clickable-focus);
 }
 
 .checkbox__input:checked + .checkbox__box {
-  background-color: var(--bg-clickable-primary-default);
-  border-color: var(--bg-clickable-primary-default);
+  background-color: var(--ei-color-bg-clickable-primary-default);
+  border-color: var(--ei-color-bg-clickable-primary-default);
 }
 
 .checkbox__input:not(:disabled):hover + .checkbox__box {
-  background-color: var(--bg-clickable-hover);
+  background-color: var(--ei-color-bg-clickable-hover);
 }
 
 .checkbox__input:not(:disabled):active + .checkbox__box {
-  background-color: var(--bg-clickable-pressed);
+  background-color: var(--ei-color-bg-clickable-pressed);
 }
 
 .checkbox__check {
   width: 16px;
   height: 16px;
-  color: var(--fg-text-strong-inverse);
+  color: var(--ei-color-fg-text-strong-inverse);
 }
 
 .checkbox--small .checkbox__check {
@@ -178,12 +178,12 @@ const toggle = () => {
 }
 
 .checkbox__label {
-  font-size: var(--units-font-size-300);
-  line-height: var(--units-line-height-300);
-  color: var(--fg-text-strong);
+  font-size: var(--ei-dimension-unit-font-size-300);
+  line-height: var(--ei-dimension-unit-line-height-300);
+  color: var(--ei-color-fg-text-strong);
 }
 
 .checkbox--disabled .checkbox__label {
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
 }
 </style> 

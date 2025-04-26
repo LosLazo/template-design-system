@@ -2,7 +2,7 @@
   /* Grid System */
   --grid-max-width: 1720px;
   --grid-columns: 12;
-  --grid-gap: var(--space-small);
+  --grid-gap: var(--ei-dimension-space-small);
   
   /* Breakpoints */
   --breakpoint-xs: 0;
@@ -15,8 +15,8 @@
 /* Container with max-width */
 .container-fluid {
   width: 100%;
-  padding-right: var(--space-medium);
-  padding-left: var(--space-medium);
+  padding-right: var(--ei-dimension-space-medium);
+  padding-left: var(--ei-dimension-space-medium);
   margin-right: auto;
   margin-left: auto;
 }
@@ -42,15 +42,15 @@
 
 @media (min-width: 1200px) {
   .container {
-    max-width: var(--grid-max-width);
+    max-width: var(--ei-grid-max-width);
   }
 }
 
 /* Grid Row - using CSS Grid instead of Flexbox */
 .row {
   display: grid !important;
-  grid-template-columns: repeat(var(--grid-columns), 1fr);
-  gap: var(--grid-gap);
+  grid-template-columns: repeat(var(--ei-grid-columns), 1fr);
+  gap: var(--ei-grid-gap);
   width: 100%;
   flex-shrink: 0;
 }
@@ -152,20 +152,20 @@
 .row-auto-fill {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: var(--grid-gap);
+  gap: var(--ei-grid-gap);
 }
 
 /* Grid row with auto-fit (expands columns to fill available space) */
 .row-auto-fit {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--grid-gap);
+  gap: var(--ei-grid-gap);
 }
 
 /* Grid area classes for more complex layouts */
 .grid-area {
   display: grid;
-  gap: var(--grid-gap);
+  gap: var(--ei-grid-gap);
   grid-auto-rows: max-content;
 }
 
@@ -202,7 +202,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: var(--space-small);
+  gap: var(--ei-dimension-space-small);
   width: 100%;
   padding-top: 32px;
 }

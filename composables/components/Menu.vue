@@ -37,10 +37,10 @@ const handleVersionSelect = (item) => {
 
 <style>
 .menu {
-  background-color: var(--bg-elevation-background–inverse);
-  border-radius: var(--unit-8);
+  background-color: var(--ei-color-bg-elevation-background–inverse);
+  border-radius: var(--ei-dimension-unit-8);
   overflow: hidden;
-  color: var(--fg-text-soft-inverse);
+  color: var(--ei-color-fg-text-soft-inverse);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -50,7 +50,7 @@ const handleVersionSelect = (item) => {
 }
 
 .menu__item {
-  border-radius: var(--unit-4);
+  border-radius: var(--ei-dimension-unit-4);
   overflow: hidden;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -61,16 +61,16 @@ const handleVersionSelect = (item) => {
   justify-content: space-between;
   align-items: center;
   padding: 4px 8px;
-  gap: var(--unit-16);
+  gap: var(--ei-dimension-unit-16);
 }
 
 .menu__item:hover {
-  color: var(--fg-text-strong-inverse);
-  background-color: var(--bg-clickable-hover-inverse);
+  color: var(--ei-color-fg-text-strong-inverse);
+  background-color: var(--ei-color-bg-clickable-hover-inverse);
 }
 
 .menu__item--selected {
-  background-color: var(--bg-elements-700);
-  color: var(--fg-text-strong-inverse);
+  background-color: var(--ei-color-bg-elements-700);
+  color: var(--ei-color-fg-text-strong-inverse);
 }
 </style> 

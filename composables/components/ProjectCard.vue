@@ -160,7 +160,7 @@ defineEmits<{
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: var(--bg-surface);
+  background-color: var(--ei-color-bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,11 +220,11 @@ defineEmits<{
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--space-small);
+  padding: var(--ei-dimension-space-small);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--fg-text-strong) !important;
+  color: var(--ei-color-fg-text-strong) !important;
   z-index: 1;
 }
 

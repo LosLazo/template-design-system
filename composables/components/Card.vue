@@ -165,7 +165,7 @@ const cardStyle = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: var(--space-tiny);
+  gap: var(--ei-dimension-space-tiny);
 }
 
 .card__content {
@@ -178,14 +178,14 @@ const cardStyle = computed(() => {
 
 .card__actions {
   display: flex;
-  gap: var(--space-small);
-  margin-top: var(--space-small);
+  gap: var(--ei-dimension-space-small);
+  margin-top: var(--ei-dimension-space-small);
 }
 
 .card__link-icon {
   position: absolute;
-  bottom: var(--space-medium);
-  right: var(--space-medium);
-  color: var(--fg-text-strong);
+  bottom: var(--ei-dimension-space-medium);
+  right: var(--ei-dimension-space-medium);
+  color: var(--ei-color-fg-text-strong);
 }
 </style> 

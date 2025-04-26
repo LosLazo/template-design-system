@@ -222,7 +222,7 @@ onUnmounted(() => {
   top: 100%;
   left: 0;
   right: 0;
-  margin-top: var(--space-tiny);
+  margin-top: var(--ei-dimension-space-tiny);
   z-index: 1000;
 }
 

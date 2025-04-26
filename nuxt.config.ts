@@ -1,21 +1,24 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { defineNuxtConfig } from 'nuxt/config'
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   css: [
-    '~/styles/css/global.css',
-    '~/styles/css/primitives.css',
-    '~/styles/css/usage-light.css',
-    '~/styles/css/usage-dark.css',
-    '~/styles/css/grid.css'
+    '~/styles/index.css',
+    '~/styles/global/fonts.css',
+    '~/styles/global/grid.css',
+    '~/styles/global/global.css',
   ],
   modules: ['@nuxtjs/color-mode'],
+  // @ts-ignore - colorMode is added by the @nuxtjs/color-mode module
   colorMode: {
-    classSuffix: '',
+    classSuffix: '-mode',
     fallback: 'light',
     preference: 'system',
     dataValue: 'theme',
-    storageKey: 'nuxt-color-mode'
+    storageKey: 'nuxt-color-mode',
+    classPrefix: 'theme-'
   },
   postcss: {
     plugins: {

@@ -15,7 +15,7 @@
  * The spinner can be customized with different sizes and colors.
  * 
  * @example <Spinner />
- * @example <Spinner size="large" color="var(--color-primary)" />
+ * @example <Spinner size="large" color="var(--ei-color-primary)" />
  * @example <Spinner size="small" color="#ff0000" />
  */
 
@@ -40,11 +40,11 @@ defineProps({
    * Color of the spinner
    * Can be a CSS color value or a CSS variable
    * @type {String}
-   * @default 'var(--content-primary)'
+   * @default 'var(--ei-content-primary)'
    */
   color: {
     type: String,
-    default: 'var(--content-primary)'
+    default: 'var(--ei-content-primary)'
   }
 })
 </script>

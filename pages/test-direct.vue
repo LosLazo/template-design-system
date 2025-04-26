@@ -97,16 +97,16 @@ async function testAllComponentPages() {
 
 .btn-group {
   display: flex;
-  gap: var(--space-medium);
-  margin-top: var(--space-large);
+  gap: var(--ei-dimension-space-medium);
+  margin-top: var(--ei-dimension-space-large);
 }
 
 button {
   padding: 8px 16px;
-  background-color: var(--bg-interactive-default);
+  background-color: var(--ei-color-bg-interactive-default);
   color: white;
   border: none;
-  border-radius: var(--radius-small);
+  border-radius: var(--ei-dimension-radius-small);
   cursor: pointer;
 }
 
@@ -116,14 +116,14 @@ button:disabled {
 }
 
 .loading, .error, .result {
-  margin-top: var(--space-large);
-  padding: var(--space-medium);
-  border-radius: var(--radius-medium);
+  margin-top: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-medium);
+  border-radius: var(--ei-dimension-radius-medium);
 }
 
 .loading {
-  background-color: var(--bg-surface-disabled);
-  color: var(--fg-text-soft);
+  background-color: var(--ei-color-bg-surface-disabled);
+  color: var(--ei-color-fg-text-soft);
 }
 
 .error {

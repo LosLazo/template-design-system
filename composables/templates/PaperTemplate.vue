@@ -55,7 +55,7 @@ const props = defineProps({
   padding: 0px 0px 128px 0px;
   align-items: start;
   justify-content: start;
-  gap: var(--space-large);
+  gap: var(--ei-dimension-space-large);
   width: 100%;
 }
 
@@ -64,24 +64,24 @@ const props = defineProps({
   flex-direction: column;
   width: 100%;
   max-width: 740px;
-  gap: var(--space-large);
-  padding: var(--space-large) 0px;
+  gap: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-large) 0px;
 }
 
 .intro-block{
   display: flex;
   flex-direction: column;
-  gap: var(--space-small);
+  gap: var(--ei-dimension-space-small);
   width: 100%;
   padding-top: 32px;
   padding-bottom: 64px;
-  border-top: 1px solid var(--fg-border-disabled);
+  border-top: 1px solid var(--ei-color-fg-border-disabled);
   position: relative;
   align-items: center;
 }
 
 .readtime{
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
   position: absolute;
   left: 0;
   top: 32px;
@@ -93,10 +93,10 @@ const props = defineProps({
 }
 
 .author-block{
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
   display: flex;
   flex-direction: row;
-  gap: var(--space-small);
+  gap: var(--ei-dimension-space-small);
   align-items: start;
   justify-self: start;
   margin-top: 64px;
@@ -110,12 +110,12 @@ const props = defineProps({
   .readtime {
     position: static;
     order: 2;
-    margin-top: var(--space-small);
+    margin-top: var(--ei-dimension-space-small);
   }
   
   .intro-block {
-    padding-left: var(--space-small);
-    padding-right: var(--space-small);
+    padding-left: var(--ei-dimension-space-small);
+    padding-right: var(--ei-dimension-space-small);
   }
 }
 </style> 

@@ -91,7 +91,7 @@ defineEmits(['change', 'update'])</pre>
       
       <!-- Loading state with spinner -->
       <div v-if="loading" class="components__loading">
-        <Spinner size="large" color="var(--color-primary)" />
+        <Spinner size="large" color="var(--ei-color-primary)" />
         <p class="components__loading-text">Loading component data...</p>
       </div>
         
@@ -314,19 +314,19 @@ onMounted(loadComponentData);
   flex-direction: column;
   align-items: start;
   justify-content: start;
-  gap: var(--space-medium);
+  gap: var(--ei-dimension-space-medium);
   width: 100%;
 }
 
 .grid {
-  margin-top: var(--space-large);
+  margin-top: var(--ei-dimension-space-large);
 }
 
 .component__cms-content {
   display: flex;
   width: 100% !important;
   flex-direction: column;
-  gap: var(--space-large);
+  gap: var(--ei-dimension-space-large);
 }
 
 .components__loading {
@@ -334,20 +334,20 @@ onMounted(loadComponentData);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xlarge) 0;
+  padding: var(--ei-dimension-space-xlarge) 0;
 }
 
 .components__loading-text,
 .components__error,
 .component__no-content {
   text-align: center;
-  margin-top: var(--space-medium);
+  margin-top: var(--ei-dimension-space-medium);
 }
 
 .components__retry-button {
-  margin-top: var(--space-small);
+  margin-top: var(--ei-dimension-space-small);
   padding: 8px 16px;
-  background-color: var(--color-primary);
+  background-color: var(--ei-color-primary);
   color: white;
   border: none;
   border-radius: 4px;
@@ -356,22 +356,22 @@ onMounted(loadComponentData);
 
 .component__examples,
 .component__props {
-  margin-top: var(--space-xlarge);
-  margin-bottom: var(--space-xlarge);
+  margin-top: var(--ei-dimension-space-xlarge);
+  margin-bottom: var(--ei-dimension-space-xlarge);
 }
 
 .component__example {
-  margin-top: var(--space-large);
-  padding: var(--space-medium);
-  border: 1px solid var(--color-border);
+  margin-top: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-medium);
+  border: 1px solid var(--ei-color-border);
   border-radius: 8px;
-  background-color: var(--color-surface);
+  background-color: var(--ei-color-surface);
 }
 
 .component__code {
-  margin-top: var(--space-medium);
-  padding: var(--space-medium);
-  background-color: var(--color-code-bg, #f6f8fa);
+  margin-top: var(--ei-dimension-space-medium);
+  padding: var(--ei-dimension-space-medium);
+  background-color: var(--ei-color-code-bg, #f6f8fa);
   border-radius: 4px;
   overflow-x: auto;
 }
@@ -379,14 +379,14 @@ onMounted(loadComponentData);
 .component__props-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: var(--space-medium);
+  margin-top: var(--ei-dimension-space-medium);
 }
 
 .component__props-table th,
 .component__props-table td {
-  padding: var(--space-small);
+  padding: var(--ei-dimension-space-small);
   text-align: left;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--ei-color-border);
 }
 
 .component__props-table th {
@@ -394,10 +394,10 @@ onMounted(loadComponentData);
 }
 
 .components__debug {
-  margin-top: var(--space-medium);
+  margin-top: var(--ei-dimension-space-medium);
   text-align: left;
   background-color: #f8f8f8;
-  padding: var(--space-medium);
+  padding: var(--ei-dimension-space-medium);
   border-radius: 4px;
   max-width: 800px;
   margin-left: auto;
@@ -412,22 +412,22 @@ onMounted(loadComponentData);
 
 /* Documentation Guide Styles */
 .documentation-guide {
-  margin-top: var(--space-large);
-  padding: var(--space-medium);
-  background-color: var(--color-surface);
+  margin-top: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-medium);
+  background-color: var(--ei-color-surface);
   border-radius: 8px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--ei-color-border);
   width: 100%;
 }
 
 .documentation-guide__section {
-  margin-top: var(--space-medium);
+  margin-top: var(--ei-dimension-space-medium);
 }
 
 .documentation-guide__code {
-  margin-top: var(--space-small);
-  padding: var(--space-medium);
-  background-color: var(--color-code-bg, #f6f8fa);
+  margin-top: var(--ei-dimension-space-small);
+  padding: var(--ei-dimension-space-medium);
+  background-color: var(--ei-color-code-bg, #f6f8fa);
   border-radius: 4px;
   overflow-x: auto;
   white-space: pre-wrap;

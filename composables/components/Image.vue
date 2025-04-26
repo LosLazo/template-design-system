@@ -119,7 +119,7 @@ const isPortrait = computed(() => props.orientation === 'portrait')
 }
 
 .image-background {
-  background-color: var(--bg-elements-300);
+  background-color: var(--ei-color-bg-elements-300);
 }
 
 /* Aspect ratio classes */
@@ -150,7 +150,7 @@ const isPortrait = computed(() => props.orientation === 'portrait')
 /* Portrait mode adjustments */
 .image-container--portrait {
   padding-bottom: 0;
-  padding-top: var(--aspect-ratio-padding);
+  padding-top: var(--ei-aspect-ratio-padding);
 }
 
 .image-container--portrait.image-container--16x9 {

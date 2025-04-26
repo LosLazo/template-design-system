@@ -1,0 +1,32 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+:root {
+  --ei-dimension-unit-2: 2px;
+  --ei-dimension-unit-4: 4px;
+  --ei-dimension-unit-8: 8px;
+  --ei-dimension-unit-12: 12px;
+  --ei-dimension-unit-16: 16px;
+  --ei-dimension-unit-20: 20px;
+  --ei-dimension-unit-24: 24px;
+  --ei-dimension-unit-32: 32px;
+  --ei-dimension-unit-40: 40px;
+  --ei-dimension-unit-48: 48px;
+  --ei-dimension-unit-56: 56px;
+  --ei-dimension-unit-64: 64px;
+  --ei-dimension-unit-80: 80px;
+  --ei-dimension-unit-96: 96px;
+  --ei-dimension-unit-120: 120px;
+  --ei-dimension-fg-border-clickable-focus-width: 2px;
+  --ei-dimension-radius-sm: 2px;
+  --ei-dimension-radius-md: 4px;
+  --ei-dimension-radius-lg: 8px;
+  --ei-dimension-radius-round: 100px;
+  --ei-dimension-space-tiny: var(--ei-dimension-unit-4);
+  --ei-dimension-space-small: var(--ei-dimension-unit-16);
+  --ei-dimension-space-medium: var(--ei-dimension-unit-24);
+  --ei-dimension-space-large: var(--ei-dimension-unit-48);
+  --ei-dimension-space-huge: var(--ei-dimension-unit-80);
+}

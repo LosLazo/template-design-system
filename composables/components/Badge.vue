@@ -76,10 +76,10 @@ const formattedValue = computed(() => {
   min-width: 20px;
   height: 20px;
   padding: 8px;
-  background-color: var(--bg-clickable-danger-danger);
+  background-color: var(--ei-color-bg-clickable-danger-danger);
   border-radius: 4px;
-  font-size: var(--unit-12);
-  font-weight: var(--font-weight-composed);
+  font-size: var(--ei-dimension-unit-12);
+  font-weight: var(--ei-typography-weight-composed);
   border-radius: 4px;
 }
 

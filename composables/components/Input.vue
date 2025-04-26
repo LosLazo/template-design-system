@@ -266,7 +266,7 @@ const buttonSize = computed(() => {
 <style>
 .input-wrapper {
   display: flex;
-  gap: var(--space-tiny);
+  gap: var(--ei-dimension-space-tiny);
   flex-direction: column;
   width: 100%;
 }
@@ -276,32 +276,32 @@ const buttonSize = computed(() => {
   display: flex;
   align-items: center;
   background-color: transparent;
-  border: 1px solid var(--fg-border-disabled);
-  border-radius: var(--units-radius-for-surface-clickable);
+  border: 1px solid var(--ei-color-fg-border-disabled);
+  border-radius: var(--ei-dimension-unit-radius-for-surface-clickable);
   transition: all 0.2s ease;
 }
 
 .input__container:hover {
-  border: 1px solid var(--fg-border-strong);
+  border: 1px solid var(--ei-color-fg-border-strong);
 }
 
 .input__field {
   width: 100%;
   border: none;
   background: transparent;
-  color: var(--fg-text-strong);
+  color: var(--ei-color-fg-text-strong);
 }
 
 .input__field--large {
-  padding: 0 var(--space-medium);
+  padding: 0 var(--ei-dimension-space-medium);
 }
 
 .input__field--medium {
-  padding: 0 var(--space-small);
+  padding: 0 var(--ei-dimension-space-small);
 }
 
 .input__field--small {
-  padding: 0 var(--space-tiny);
+  padding: 0 var(--ei-dimension-space-tiny);
 }
 
 .input__field:focus {
@@ -309,53 +309,53 @@ const buttonSize = computed(() => {
 }
 
 .input__container:focus-within {
-  border-color: var(--fg-border-clickable-focus);
-  box-shadow: 0 0 0 2px var(--fg-border-clickable-focus);
+  border-color: var(--ei-color-fg-border-clickable-focus);
+  box-shadow: 0 0 0 2px var(--ei-color-fg-border-clickable-focus);
 }
 
 .input__icon {
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
   flex-shrink: 0;
 }
 
 .input__icon--prefix {
-  margin-left: var(--space-small);
+  margin-left: var(--ei-dimension-space-small);
 }
 
 .input__icon--suffix {
-  margin-right: var(--space-tiny);
+  margin-right: var(--ei-dimension-space-tiny);
 }
 
 .input__error {
-  color: var(--system-danger-default);
+  color: var(--ei-color-system-danger-default);
 }
 
 .input__error--large {
-  line-height: var(--line-height-medium);
+  line-height: var(--ei-line-height-medium);
 }
 
 .input__error--medium {
-  line-height: var(--line-height-small);
+  line-height: var(--ei-line-height-small);
 }
 
 .input__error--small {
-  line-height: var(--line-height-xsmall);
+  line-height: var(--ei-line-height-xsmall);
 }
 
 .input__success {
-  color: var(--system-success-default);
+  color: var(--ei-color-system-success-default);
 }
 
 .input__success--large {
-  line-height: var(--line-height-medium);
+  line-height: var(--ei-line-height-medium);
 }
 
 .input__success--medium {
-  line-height: var(--line-height-small);
+  line-height: var(--ei-line-height-small);
 }
 
 .input__success--small {
-  line-height: var(--line-height-xsmall);
+  line-height: var(--ei-line-height-xsmall);
 }
 
 /* Size variants */
@@ -376,11 +376,11 @@ const buttonSize = computed(() => {
 
 /* States */
 .input-wrapper--error .input__container {
-  border-color: var(--system-danger-default);
+  border-color: var(--ei-color-system-danger-default);
 }
 
 .input-wrapper--success .input__container {
-  border-color: var(--system-success-default);
+  border-color: var(--ei-color-system-success-default);
 }
 
 .input-wrapper--disabled {
@@ -389,8 +389,8 @@ const buttonSize = computed(() => {
 }
 
 .input-wrapper--disabled .input__container {
-  background-color: var(--bg-clickable-disabled);
-  border-color: var(--fg-border-defined);
+  background-color: var(--ei-color-bg-clickable-disabled);
+  border-color: var(--ei-color-fg-border-defined);
 }
 
 .input-wrapper--disabled .input__field {
@@ -399,11 +399,11 @@ const buttonSize = computed(() => {
 
 /* Placeholder styling */
 .input__field::placeholder {
-  color: var(--fg-text-disabled);
+  color: var(--ei-color-fg-text-disabled);
 }
 
 .input__clear-button {
-  margin: 0 var(--space-tiny);
+  margin: 0 var(--ei-dimension-space-tiny);
   opacity: 1;
   transition: opacity 0.2s ease;
 }
@@ -421,6 +421,6 @@ const buttonSize = computed(() => {
 /* Change appearance of readonly fields without looking disabled */
 .input__field--readonly {
   opacity: 1;
-  color: var(--fg-text-strong);
+  color: var(--ei-color-fg-text-strong);
 }
 </style> 

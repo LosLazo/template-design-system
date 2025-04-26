@@ -102,7 +102,7 @@ onMounted(loadHomeContent)
 <style scoped>
 :root {
   --home-max-width: 1200px;
-  --home-padding: var(--space-large, 24px);
+  --home-padding: var(--ei-dimension-space-large, 24px);
   --home-title-spacing: 48px;
   --home-hero-padding-top: 128px;
   --home-hero-padding-bottom: 64px;
@@ -123,7 +123,7 @@ onMounted(loadHomeContent)
 
 .home__title {
   text-align: center;
-  margin-bottom: var(--home-title-spacing);
+  margin-bottom: var(--ei-home-title-spacing);
 }
 
 .home__search {
@@ -138,8 +138,8 @@ onMounted(loadHomeContent)
 
 /* Content area */
 .home__content {
-  max-width: var(--home-max-width);
-  padding: var(--home-padding) 0;
+  max-width: var(--ei-home-max-width);
+  padding: var(--ei-home-padding) 0;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
@@ -158,54 +158,54 @@ onMounted(loadHomeContent)
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--space-large) * 2);
-  gap: var(--space-medium);
+  padding: calc(var(--ei-dimension-space-large) * 2);
+  gap: var(--ei-dimension-space-medium);
 }
 
 .home__loader {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--bg-clickable-hover);
-  border-top: 4px solid var(--fg-accent);
+  border: 4px solid var(--ei-color-bg-clickable-hover);
+  border-top: 4px solid var(--ei-color-fg-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 .home__loading-text {
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
 }
 
 /* Error styles */
 .home__error {
-  background-color: var(--bg-surface-disabled);
-  border-radius: var(--radius-medium, 8px);
-  padding: var(--space-large);
-  color: var(--fg-error);
+  background-color: var(--ei-color-bg-surface-disabled);
+  border-radius: var(--ei-dimension-radius-medium, 8px);
+  padding: var(--ei-dimension-space-large);
+  color: var(--ei-color-fg-error);
   text-align: center;
-  margin: var(--space-large) 0;
+  margin: var(--ei-dimension-space-large) 0;
 }
 
 .home__retry-button {
-  background-color: var(--bg-clickable);
-  color: var(--fg-text-strong);
+  background-color: var(--ei-color-bg-clickable);
+  color: var(--ei-color-fg-text-strong);
   border: none;
-  padding: var(--space-small) var(--space-medium);
-  margin-top: var(--space-medium);
-  border-radius: var(--radius-small, 4px);
+  padding: var(--ei-dimension-space-small) var(--ei-dimension-space-medium);
+  margin-top: var(--ei-dimension-space-medium);
+  border-radius: var(--ei-dimension-radius-small, 4px);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .home__retry-button:hover {
-  background-color: var(--bg-clickable-hover);
+  background-color: var(--ei-color-bg-clickable-hover);
 }
 
 .home__no-content {
   text-align: center;
-  padding: var(--space-large);
-  color: var(--fg-text-soft);
-  background-color: var(--bg-surface-disabled);
-  border-radius: var(--radius-medium, 8px);
+  padding: var(--ei-dimension-space-large);
+  color: var(--ei-color-fg-text-soft);
+  background-color: var(--ei-color-bg-surface-disabled);
+  border-radius: var(--ei-dimension-radius-medium, 8px);
   width: 100%;
 }
 
@@ -217,7 +217,7 @@ onMounted(loadHomeContent)
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .home__content {
-    padding: var(--home-padding);
+    padding: var(--ei-home-padding);
   }
 }
 
@@ -235,7 +235,7 @@ onMounted(loadHomeContent)
 
 @media (max-width: 480px) {
   :root {
-    --home-padding: var(--space-medium, 16px);
+    --home-padding: var(--ei-dimension-space-medium, 16px);
   }
   
   .home__title {

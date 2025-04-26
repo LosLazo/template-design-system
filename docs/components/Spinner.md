@@ -11,7 +11,7 @@ description:
 
 ```vue
 <Spinner />
-<Spinner size="large" color="var(--color-primary)" />
+<Spinner size="large" color="var(--ei-color-primary)" />
 <Spinner size="small" color="#ff0000" />
 ```
 

@@ -144,7 +144,7 @@ onUnmounted(() => {
   width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
-  border-radius: var(--radius-medium);
+  border-radius: var(--ei-dimension-radius-medium);
 }
 
 .image-carousel__image-container {
@@ -174,8 +174,8 @@ onUnmounted(() => {
   position: absolute;
   left: 0;
   right: 0;
-  padding: var(--space-small);
-  color: var(--permanent-white) !important;
+  padding: var(--ei-dimension-space-small);
+  color: var(--ei-color-permanent-white) !important;
 }
 
 .image-carousel__overlay--top {
@@ -187,13 +187,13 @@ onUnmounted(() => {
 }
 
 .image-carousel__title {
-  margin-bottom: var(--space-medium);
+  margin-bottom: var(--ei-dimension-space-medium);
 }
 
 .image-carousel__pagination {
   display: flex;
-  gap: var(--space-small);
-  border-radius: var(--radius-medium);
+  gap: var(--ei-dimension-space-small);
+  border-radius: var(--ei-dimension-radius-medium);
   width: fit-content;
 }
 
@@ -202,7 +202,7 @@ onUnmounted(() => {
   cursor: pointer;
   height: 4px;
   background-color: transparent;
-  border-radius: var(--radius-small);
+  border-radius: var(--ei-dimension-radius-small);
   overflow: hidden;
   display: flex;
   align-items: center;

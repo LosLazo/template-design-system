@@ -103,7 +103,7 @@ const selectSegment = (id: string | number) => {
 .segmented-controls {
   display: inline-flex;
   padding: 2px;
-  background-color: var(--bg-elements-200);
+  background-color: var(--ei-color-bg-elements-200);
   border-radius: 8px;
 }
 
@@ -116,7 +116,7 @@ const selectSegment = (id: string | number) => {
   padding: 8px 16px;
   border: none;
   background: none;
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -132,12 +132,12 @@ const selectSegment = (id: string | number) => {
 }
 
 .segmented-controls__item:hover:not(.segmented-controls__item--disabled) {
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
 }
 
 .segmented-controls__item--active {
-  color: var(--fg-text-strong);
-  background-color: var(--bg-elevation-base);
+  color: var(--ei-color-fg-text-strong);
+  background-color: var(--ei-color-bg-elevation-base);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 

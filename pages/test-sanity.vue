@@ -95,15 +95,15 @@ onMounted(async () => {
 }
 
 .loading, .error {
-  margin-top: var(--space-large);
-  padding: var(--space-medium);
-  border-radius: var(--radius-medium);
+  margin-top: var(--ei-dimension-space-large);
+  padding: var(--ei-dimension-space-medium);
+  border-radius: var(--ei-dimension-radius-medium);
   font-size: 1.2rem;
 }
 
 .loading {
-  background-color: var(--bg-surface-disabled);
-  color: var(--fg-text-soft);
+  background-color: var(--ei-color-bg-surface-disabled);
+  color: var(--ei-color-fg-text-soft);
 }
 
 .error {
@@ -112,18 +112,18 @@ onMounted(async () => {
 }
 
 .results {
-  margin-top: var(--space-large);
+  margin-top: var(--ei-dimension-space-large);
 }
 
 .section {
-  margin-top: var(--space-large);
-  margin-bottom: var(--space-large);
+  margin-top: var(--ei-dimension-space-large);
+  margin-bottom: var(--ei-dimension-space-large);
 }
 
 pre {
-  background: var(--bg-surface-disabled);
-  padding: var(--space-medium);
-  border-radius: var(--radius-medium);
+  background: var(--ei-color-bg-surface-disabled);
+  padding: var(--ei-dimension-space-medium);
+  border-radius: var(--ei-dimension-radius-medium);
   overflow: auto;
   max-height: 300px;
   white-space: pre-wrap;

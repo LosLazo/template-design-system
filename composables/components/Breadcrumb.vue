@@ -216,7 +216,7 @@ watch(() => route.path, () => {
 
 <style scoped>
 .breadcrumb {
-  padding: var(--space-small) 0;
+  padding: var(--ei-dimension-space-small) 0;
   width: 100%;
   padding: 30px 0px;
   z-index: 1000;
@@ -237,7 +237,7 @@ watch(() => route.path, () => {
 }
 
 .breadcrumb a {
-  color: var(--fg-text-soft);
+  color: var(--ei-color-fg-text-soft);
   text-decoration: none;
 }
 
@@ -246,12 +246,12 @@ watch(() => route.path, () => {
 }
 
 .breadcrumb a.active {
-  color: var(--fg-text-strong);
+  color: var(--ei-color-fg-text-strong);
   pointer-events: none;
 }
 
 .chevron {
-  margin: 0 var(--space-x-small);
-  color: var(--fg-text-soft);
+  margin: 0 var(--ei-dimension-space-x-small);
+  color: var(--ei-color-fg-text-soft);
 }
 </style> 
